@@ -1,2 +1,2 @@
 #/bin/bash
-./generate.sh && ./build.sh
+rm -rf build/src ; ./generate.sh && ./build.sh
