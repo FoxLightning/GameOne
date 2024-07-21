@@ -1,4 +1,6 @@
 #include <SDL3/SDL.h>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/io.hpp>
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -30,6 +32,20 @@ int main(int argc, char* argv[]) {
 
     // Event handler
     SDL_Event e;
+
+
+	// check boost 
+	namespace ublas = boost::numeric::ublas;
+    // Define a vector of size 3
+    ublas::vector<double> v1(2);
+	v1[0] = 20;
+	v1[1] = 30;
+    ublas::vector<double> v2(2);
+	v2[0] = 20;
+	v2[1] = 30;
+
+	std::cout << "hello";
+	std::cout << v1 + v2;
 
     // While application is running
     while (!quit) {
