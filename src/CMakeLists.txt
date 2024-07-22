@@ -1,5 +1,5 @@
 file(GLOB_RECURSE CPP_FILES *.cpp)
-include_directories(${PROJECT_SOURCE_DIR}/src)
+include_directories(${PROJECT_SOURCE_DIR}/src/include)
 add_executable(${PROJECT_NAME} ${CPP_FILES})
 
 # Set the path to your custom clang-tidy configuration file
