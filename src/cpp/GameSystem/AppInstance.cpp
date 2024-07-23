@@ -1,18 +1,27 @@
 
-#include <iostream>
 #include "GameSystem/AppInstance.h"
+#include "GameBase/GameState.h"
+#include <iostream>
+#include <memory>
 
-GameSystem::AppInstance::AppInstance()
+namespace GameSystem
 {
-    std::cout << "Init\n";
+
+std::shared_ptr<GameBase::GameState> AppInstance::currentAppState;
+
+AppInstance::AppInstance()
+{
+    currentAppState = std::make_shared<GameBase::GameState>();
 }
 
-GameSystem::AppInstance::~AppInstance()
-{
-    std::cout << "Deinit\n";
-}
-
-void GameSystem::AppInstance::Start()
+void AppInstance::Start()
 {
     std::cout << "start\n";
 }
+
+auto AppInstance::GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>
+{
+    return currentAppState;
+}
+
+} // namespace GameSystem

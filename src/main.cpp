@@ -1,10 +1,18 @@
 #include "GameSystem/AppInstance.h"
+#include <exception>
+#include <iostream>
 #include <memory>
 
-int main(int argc, char *argv[]) 
+auto main(int /* argc */, char ** /* argv[] */) -> int
 {
-    using namespace GameSystem;
-    std::shared_ptr<AppInstance> gameInstance = std::make_shared<AppInstance>();
-    gameInstance->Start();
-    return 0;
+    try
+    {
+        auto gameInstance = std::make_shared<GameSystem::AppInstance>();
+        gameInstance->Start();
+        return 0;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }

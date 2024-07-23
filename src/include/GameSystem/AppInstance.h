@@ -1,23 +1,30 @@
 #pragma once
 
+#include <memory>
+
+namespace GameBase
+{
+class GameState;
+}
+
 namespace GameSystem
 {
+
 class AppInstance
 {
   public:
     AppInstance();
-    ~AppInstance();
 
-    void Start();
+    static void Start();
 
-    // static void *GetCurrentAppState();
+    static auto GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>;
 
     // static void *GetRender();
     // static void *GetInputManager();
     // static void *GetResurceManager();
 
   private:
-    // static void *currentAppState;
+    static std::shared_ptr<GameBase::GameState> currentAppState;
 
     // static void *render;
     // static void *inputManager;
