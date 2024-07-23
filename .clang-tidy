@@ -1,3 +1,13 @@
-Checks: '-*,clang-analyzer-core.UndefinedBinaryOperatorResult,clang-analyzer-core.CallAndMessage,clang-analyzer-core.NonNullParamChecker,clang-analyzer-core.NullDereference'
+Checks: >
+  -*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  performance-*,
+  modernize-*,
+  readability-*,
+  misc-*,
+  bugprone-*,
+  google-*,
+  cert-*,
 WarningsAsErrors: true
 HeaderFilterRegex: '.*'
