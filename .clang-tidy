@@ -10,4 +10,4 @@ Checks: >
   google-*,
   cert-*,
 WarningsAsErrors: true
-HeaderFilterRegex: '.*'
+HeaderFilterRegex: '^(?!(boost|SDL)).*'
