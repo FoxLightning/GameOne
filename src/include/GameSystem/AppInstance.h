@@ -9,6 +9,7 @@ class GameState;
 
 namespace GameSystem
 {
+class ConfigManager;
 
 class AppInstance
 {
@@ -19,6 +20,7 @@ class AppInstance
 
     static auto GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>;
 
+    static auto GetConfigManager() -> std::shared_ptr<ConfigManager>;
     // static void *GetRender();
     // static void *GetInputManager();
     // static void *GetResurceManager();
@@ -26,6 +28,7 @@ class AppInstance
   private:
     static std::shared_ptr<GameBase::GameState> currentAppState;
 
+    static std::shared_ptr<ConfigManager> configManagerInstance;
     // static void *render;
     // static void *inputManager;
     // static void *resurceManager;

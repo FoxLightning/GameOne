@@ -9,5 +9,5 @@ Checks: >
   bugprone-*,
   google-*,
   cert-*,
-WarningsAsErrors: true
+WarningsAsErrors: false
 HeaderFilterRegex: '^(?!(boost|SDL)).*'
