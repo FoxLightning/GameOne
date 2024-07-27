@@ -18,6 +18,7 @@ class AppInstance
     AppInstance();
 
     static void Start();
+    static void Stop();
 
     static auto GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>;
 
@@ -31,9 +32,12 @@ class AppInstance
 
     static std::shared_ptr<ConfigManager> configManagerInstance;
     static std::shared_ptr<Renderer> rendererInstance;
+    static std::shared_ptr<InputManager> inputManagerInstance;
     // static void *render;
     // static void *inputManager;
     // static void *resurceManager;
+
+    static bool isRunning;
 };
 
 }; // namespace GameSystem

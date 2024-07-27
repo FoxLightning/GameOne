@@ -3,6 +3,7 @@
 
 #include "GameBase/GameState.h"
 #include "GameSystem/ConfigManager.h"
+#include "GameSystem/InputManager.h"
 #include "GameSystem/Renderer.h"
 
 #include "SDL3/SDL.h"
@@ -18,33 +19,29 @@ namespace GameSystem
 std::shared_ptr<GameBase::GameState> AppInstance::currentAppState;
 std::shared_ptr<ConfigManager> AppInstance::configManagerInstance;
 std::shared_ptr<Renderer> AppInstance::rendererInstance;
+std::shared_ptr<InputManager> AppInstance::inputManagerInstance;
+bool AppInstance::isRunning;
 
 AppInstance::AppInstance()
 {
     configManagerInstance = std::make_shared<ConfigManager>();
     rendererInstance = std::make_shared<Renderer>();
+    inputManagerInstance = std::make_shared<InputManager>();
     currentAppState = std::make_shared<GameBase::GameState>();
 }
 
 void AppInstance::Start()
 {
-    bool running = true;
-
-    SDL_Event event;
+    assert(!isRunning);
+    isRunning = true;
 
     const auto duration_double = std::chrono::duration<double, std::milli>(1000. / configManagerInstance->frameRate);
     const auto frameDelay = std::chrono::duration_cast<std::chrono::milliseconds>(duration_double);
     auto lastFrameTime = std::chrono::high_resolution_clock::now();
-    while (running)
-    {
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_EVENT_QUIT)
-            {
-                running = false;
-            }
-        }
 
+    while (true)
+    {
+        inputManagerInstance->ProcessInput();
         auto now = std::chrono::high_resolution_clock::now();
         auto frameTime = now - lastFrameTime;
         if (frameTime >= frameDelay)
@@ -58,6 +55,12 @@ void AppInstance::Start()
         rendererInstance->Draw();
         rendererInstance->Render();
     }
+}
+
+void AppInstance::Stop()
+{
+    assert(isRunning);
+    isRunning = false;
 }
 
 auto AppInstance::GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>
