@@ -32,7 +32,7 @@ void AppInstance::Start()
 
     SDL_Event event;
 
-    const auto duration_double = std::chrono::duration<double, std::milli>(1000.);
+    const auto duration_double = std::chrono::duration<double, std::milli>(1000. / configManagerInstance->frameRate);
     const auto frameDelay = std::chrono::duration_cast<std::chrono::milliseconds>(duration_double);
     auto lastFrameTime = std::chrono::high_resolution_clock::now();
     while (running)
@@ -49,10 +49,14 @@ void AppInstance::Start()
         auto frameTime = now - lastFrameTime;
         if (frameTime >= frameDelay)
         {
-            rendererInstance->Clear();
-            rendererInstance->Draw();
-            rendererInstance->Render();
+            lastFrameTime = now;
+            double deltaTime =
+                static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(frameTime).count()) / .1E7;
+            // Update(deltaTime)
         }
+        rendererInstance->Clear();
+        rendererInstance->Draw();
+        rendererInstance->Render();
     }
 }
 
