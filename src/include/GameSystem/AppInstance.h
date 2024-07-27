@@ -17,7 +17,7 @@ class AppInstance
   public:
     AppInstance();
 
-    static void Start();
+    void Start();
     static void Stop();
 
     static auto GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>;
@@ -28,7 +28,7 @@ class AppInstance
     // static void *GetResurceManager();
 
   private:
-    static std::shared_ptr<GameBase::GameState> currentAppState;
+    std::shared_ptr<GameBase::GameState> currentAppState;
 
     static std::shared_ptr<ConfigManager> configManagerInstance;
     static std::shared_ptr<Renderer> rendererInstance;

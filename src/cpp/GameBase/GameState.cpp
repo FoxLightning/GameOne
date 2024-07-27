@@ -8,4 +8,8 @@ GameState::GameState()
 {
     std::cout << "GameState init\n";
 }
+
+void GameState::Update(double deltaTime)
+{
+}
 } // namespace GameBase

@@ -6,5 +6,6 @@ class GameState
 {
   public:
     GameState();
+    void Update(double deltaTime);
 };
 }; // namespace GameBase

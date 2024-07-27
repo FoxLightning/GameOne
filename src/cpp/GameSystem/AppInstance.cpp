@@ -38,6 +38,7 @@ void AppInstance::Start()
     const auto duration_double = std::chrono::duration<double, std::milli>(1000. / configManagerInstance->frameRate);
     const auto frameDelay = std::chrono::duration_cast<std::chrono::milliseconds>(duration_double);
     auto lastFrameTime = std::chrono::high_resolution_clock::now();
+    currentAppState = std::make_shared<GameBase::GameState>();
 
     while (true)
     {
@@ -49,7 +50,7 @@ void AppInstance::Start()
             lastFrameTime = now;
             double deltaTime =
                 static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(frameTime).count()) / .1E7;
-            // Update(deltaTime)
+            currentAppState->Update(deltaTime);
         }
         rendererInstance->Clear();
         rendererInstance->Draw();
