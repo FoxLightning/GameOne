@@ -10,6 +10,6 @@ class ConfigManager
   public:
     ConfigManager() = default;
     Vector2L windowResolution = {1280L, 720L};
-    double frameRate = 120.;
+    double frameRate = 30.;
 };
 }; // namespace GameSystem

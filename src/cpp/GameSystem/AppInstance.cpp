@@ -39,7 +39,7 @@ void AppInstance::Start()
     auto lastFrameTime = std::chrono::high_resolution_clock::now();
     currentAppState = std::make_shared<GameBase::GameState>();
 
-    while (true)
+    while (isRunning)
     {
         inputManagerInstance->ProcessInput();
         auto now = std::chrono::high_resolution_clock::now();
@@ -59,7 +59,6 @@ void AppInstance::Start()
 
 void AppInstance::Stop()
 {
-    assert(isRunning);
     isRunning = false;
 }
 
@@ -67,6 +66,13 @@ auto AppInstance::GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>
 {
     assert(currentAppState);
     return currentAppState;
+}
+
+
+auto AppInstance::GetInputManager() -> std::shared_ptr<InputManager>
+{
+    assert(inputManagerInstance);
+    return inputManagerInstance;
 }
 
 auto AppInstance::GetConfigManager() -> std::shared_ptr<ConfigManager>

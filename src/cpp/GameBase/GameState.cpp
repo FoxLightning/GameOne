@@ -10,8 +10,9 @@ namespace GameBase
 GameState::GameState()
 {
     gameWorld = std::make_shared<GameWorld>();
-    auto entity = gameWorld->AddEntity<Entity>(Box2D(Vector2D(0, 0), Vector2D(10, 10)), 1.);
+    auto entity = gameWorld->AddEntity<Entity>(Box2D(Vector2D(0, 0), Vector2D(50, 50)), 100.);
     playerController = std::make_shared<BaseController>(entity);
+    playerController->SubscribeInput();
 };
 
 void GameState::Update(const double deltaTime)
