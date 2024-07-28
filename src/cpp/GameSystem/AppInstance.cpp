@@ -27,7 +27,6 @@ AppInstance::AppInstance()
     configManagerInstance = std::make_shared<ConfigManager>();
     rendererInstance = std::make_shared<Renderer>();
     inputManagerInstance = std::make_shared<InputManager>();
-    currentAppState = std::make_shared<GameBase::GameState>();
 }
 
 void AppInstance::Start()
@@ -53,7 +52,7 @@ void AppInstance::Start()
             currentAppState->Update(deltaTime);
         }
         rendererInstance->Clear();
-        rendererInstance->Draw();
+        currentAppState->Draw(rendererInstance);
         rendererInstance->Render();
     }
 }

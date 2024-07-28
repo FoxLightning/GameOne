@@ -1,7 +1,6 @@
 #include "GameSystem/Renderer.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
-#include "types.h"
 #include <SDL3/SDL.h>
 
 namespace GameSystem
@@ -48,8 +47,11 @@ void Renderer::Clear()
     SDL_RenderClear(renderer);
 }
 
-void Renderer::Draw()
+void Renderer::Draw(const Box2D &shape)
 {
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
+    SDL_FRect rectangle = CastSDL_FRect(shape);
+    SDL_RenderFillRect(renderer, &rectangle);
 }
 
 void Renderer::Render()

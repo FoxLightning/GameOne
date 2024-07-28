@@ -11,6 +11,13 @@ namespace GameSystem
 {
 class ConfigManager;
 class Renderer;
+class InputManager;
+
+class IUpdateble
+{
+  public:
+    virtual void Update(const double deltaTime) = 0;
+};
 
 class AppInstance
 {
@@ -28,7 +35,7 @@ class AppInstance
     // static void *GetResurceManager();
 
   private:
-    std::shared_ptr<GameBase::GameState> currentAppState;
+    static std::shared_ptr<GameBase::GameState> currentAppState;
 
     static std::shared_ptr<ConfigManager> configManagerInstance;
     static std::shared_ptr<Renderer> rendererInstance;
