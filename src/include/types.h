@@ -1,69 +1,76 @@
 #pragma once
 
+#include "SDL3/SDL.h"
 #include "boost/geometry.hpp"
 #include "boost/geometry/geometries/point.hpp"
-#include "SDL3/SDL.h"
 #include <cstdint>
 
 namespace bg = boost::geometry;
 namespace bgm = bg::model;
 
-typedef bgm::d2::point_xy<double> Vector2D;
-typedef bgm::d2::point_xy<float> Vector2F;
-typedef bgm::d2::point_xy<int32_t> Vector2I;
-typedef bgm::d2::point_xy<int64_t> Vector2L;
-typedef bgm::box<bgm::d2::point_xy<double>> Box2D;
+using Vector2D = bgm::d2::point_xy<double>;
+using Vector2F = bgm::d2::point_xy<float>;
+using Vector2I = bgm::d2::point_xy<int32_t>;
+using Vector2L = bgm::d2::point_xy<int64_t>;
+using Box2D = bgm::box<bgm::d2::point_xy<double>>;
 
 #define AreIntersects bg::intersects
 #define Distance bg::distance
 
 template <typename T>
-bgm::d2::point_xy<T> operator+(const bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right)
+auto operator+(const bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right) -> bgm::d2::point_xy<T>
 {
     return bgm::d2::point_xy<T>(left.x() + right.x(), left.y() + right.y());
 }
 
 template <typename T>
-bgm::d2::point_xy<T> operator-(const bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right)
+auto operator-(const bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right) -> bgm::d2::point_xy<T>
 {
     return bgm::d2::point_xy<T>(left.x() - right.x(), left.y() - right.y());
 }
 
-template <typename T> bgm::d2::point_xy<T> operator+=(bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right)
+template <typename T>
+auto operator+=(bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right) -> bgm::d2::point_xy<T>
 {
     left.x(left.x() + right.x());
     left.y(left.y() + right.y());
     return left;
 }
 
-template <typename T> bgm::d2::point_xy<T> operator-=(bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right)
+template <typename T>
+auto operator-=(bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right) -> bgm::d2::point_xy<T>
 {
     left.x(left.x() - right.x());
     left.y(left.y() - right.y());
     return left;
 }
 
-template <typename T> bgm::d2::point_xy<T> operator*(const bgm::d2::point_xy<T> &point, T scalar)
+template <typename T>
+auto operator*(const bgm::d2::point_xy<T> &point, T scalar) -> bgm::d2::point_xy<T>
 {
     return bgm::d2::point_xy<T>(point.x() * scalar, point.y() * scalar);
 }
 
-template <typename T> bgm::d2::point_xy<T> operator*(T scalar, const bgm::d2::point_xy<T> &point)
+template <typename T>
+auto operator*(T scalar, const bgm::d2::point_xy<T> &point) -> bgm::d2::point_xy<T>
 {
     return bgm::d2::point_xy<T>(point.x() * scalar, point.y() * scalar);
 }
 
-template <typename T> bgm::d2::point_xy<T> operator/(const bgm::d2::point_xy<T> &point, T scalar)
+template <typename T>
+auto operator/(const bgm::d2::point_xy<T> &point, T scalar) -> bgm::d2::point_xy<T>
 {
     return bgm::d2::point_xy<T>(point.x() / scalar, point.y() / scalar);
 }
 
-template <typename T> bgm::d2::point_xy<T> operator/(T scalar, const bgm::d2::point_xy<T> &point)
+template <typename T>
+auto operator/(T scalar, const bgm::d2::point_xy<T> &point) -> bgm::d2::point_xy<T>
 {
     return bgm::d2::point_xy<T>(point.x() / scalar, point.y() / scalar);
 }
 
-template <typename T> T Normalize(const T &point)
+template <typename T>
+auto Normalize(const T &point) -> T
 {
     auto dst = Distance(Vector2D(), point);
     if (dst > 0)
@@ -74,7 +81,8 @@ template <typename T> T Normalize(const T &point)
 }
 
 template <typename T>
-bgm::box<bgm::d2::point_xy<T>> MoveBox(const bgm::box<bgm::d2::point_xy<T>> &box, const bgm::d2::point_xy<T> &point)
+auto MoveBox(const bgm::box<bgm::d2::point_xy<T>> &box,
+             const bgm::d2::point_xy<T> &point) -> bgm::box<bgm::d2::point_xy<T>>
 {
     bgm::d2::point_xy<T> min_corner(box.min_corner() + point);
 
@@ -83,18 +91,16 @@ bgm::box<bgm::d2::point_xy<T>> MoveBox(const bgm::box<bgm::d2::point_xy<T>> &box
 }
 
 template <typename T>
-bgm::box<bgm::d2::point_xy<T>> operator+=(bgm::box<bgm::d2::point_xy<T>> &box, const bgm::d2::point_xy<T> &point)
+auto operator+=(bgm::box<bgm::d2::point_xy<T>> &box,
+                const bgm::d2::point_xy<T> &point) -> bgm::box<bgm::d2::point_xy<T>>
 {
     return box = MoveBox(box, point);
 }
 
 template <typename T>
-SDL_FRect CastSDL_FRect(const bgm::box<bgm::d2::point_xy<T>>& box)
+auto CastSDL_FRect(const bgm::box<bgm::d2::point_xy<T>> &box) -> SDL_FRect
 {
-    return SDL_FRect{
-        static_cast<float>(box.min_corner().x()),
-        static_cast<float>(box.min_corner().y()),
-        static_cast<float>(box.max_corner().x() - box.min_corner().x()),
-        static_cast<float>(box.max_corner().y() - box.min_corner().y())
-    };
+    return SDL_FRect{static_cast<float>(box.min_corner().x()), static_cast<float>(box.min_corner().y()),
+                     static_cast<float>(box.max_corner().x() - box.min_corner().x()),
+                     static_cast<float>(box.max_corner().y() - box.min_corner().y())};
 }
