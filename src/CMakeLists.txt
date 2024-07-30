@@ -8,6 +8,11 @@ if (WIN32)
     )
 endif()
 
+# need to produce correct json build target
+add_compile_options(
+    -Wno-missing-template-arg-list-after-template-kw
+)
+
 # third party libs
 target_link_libraries(${PROJECT_NAME} PRIVATE
     SDL3::SDL3
