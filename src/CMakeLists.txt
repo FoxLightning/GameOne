@@ -19,7 +19,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
 if(CLANG_TIDY_EXE)
     set(CLANG_TIDY_CONFIG_FILE ${PROJECT_SOURCE_DIR}/.clang-tidy)
-    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE};-config-file=${CLANG_TIDY_CONFIG_FILE}")
+    # --extra-arg-before=-Wno-missing-template-arg-list-after-template-kw need for lint boost without error
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE};-config-file=${CLANG_TIDY_CONFIG_FILE};--extra-arg-before=-Wno-missing-template-arg-list-after-template-kw")
     message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
     message(STATUS "Using clang-tidy configuration: ${CLANG_TIDY_CONFIG_FILE}")
 else()
