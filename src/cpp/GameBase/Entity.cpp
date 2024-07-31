@@ -1,3 +1,5 @@
+#include "Constants.h"
+#include "GameSystem/AppInstance.h"
 #include "Types.h"
 #include <GameBase/Entity.h>
 #include <cassert>
@@ -26,7 +28,8 @@ Entity::Entity(const Box2D &inRectangle, const double &inMaxSpeed)
 
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    inRenderer->Draw(rectangle);
+    auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::ship);
+    inRenderer->Draw(rectangle, texture);
 }
 
 void Entity::SetWaitForDelete()

@@ -5,6 +5,7 @@
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/InputManager.h"
 #include "GameSystem/Renderer.h"
+#include "GameSystem/ResurceManager.h"
 
 #include "SDL3/SDL.h"
 #include <cassert>
@@ -20,6 +21,7 @@ std::shared_ptr<GameBase::GameState> AppInstance::currentAppState;
 std::shared_ptr<ConfigManager> AppInstance::configManagerInstance;
 std::shared_ptr<Renderer> AppInstance::rendererInstance;
 std::shared_ptr<InputManager> AppInstance::inputManagerInstance;
+std::shared_ptr<ResurceManager> AppInstance::resurceManagerInstance;
 bool AppInstance::isRunning;
 
 AppInstance::AppInstance()
@@ -27,6 +29,7 @@ AppInstance::AppInstance()
     configManagerInstance = std::make_shared<ConfigManager>();
     rendererInstance = std::make_shared<Renderer>();
     inputManagerInstance = std::make_shared<InputManager>();
+    resurceManagerInstance = std::make_shared<ResurceManager>();
 }
 
 void AppInstance::Start()
@@ -68,6 +71,17 @@ auto AppInstance::GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>
     return currentAppState;
 }
 
+auto AppInstance::GetRender() -> std::shared_ptr<Renderer>
+{
+    assert(rendererInstance);
+    return rendererInstance;
+}
+
+auto AppInstance::GetResurceManager() -> std::shared_ptr<ResurceManager>
+{
+    assert(resurceManagerInstance);
+    return resurceManagerInstance;
+}
 
 auto AppInstance::GetInputManager() -> std::shared_ptr<InputManager>
 {

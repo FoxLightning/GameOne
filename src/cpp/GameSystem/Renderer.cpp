@@ -47,11 +47,21 @@ void Renderer::Clear()
     SDL_RenderClear(renderer);
 }
 
-void Renderer::Draw(const Box2D &shape)
+void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
 {
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
     SDL_FRect rectangle = CastSDL_FRect(shape);
-    SDL_RenderFillRect(renderer, &rectangle);
+    if (texture == nullptr)
+    {
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
+        SDL_RenderFillRect(renderer, &rectangle);
+        return;
+    }
+    SDL_RenderTexture(renderer, texture, nullptr, &rectangle);
+}
+
+auto Renderer::CreateTexture(SDL_Surface *surface) -> SDL_Texture *
+{
+    return SDL_CreateTextureFromSurface(renderer, surface);
 }
 
 void Renderer::Render()

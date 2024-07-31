@@ -4,6 +4,8 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Texture;
+struct SDL_Surface;
 
 namespace GameSystem
 {
@@ -16,7 +18,8 @@ class Renderer
 
     void Clear();
     void Render();
-    void Draw(const Box2D &shape);
+    auto CreateTexture(SDL_Surface* surface) -> SDL_Texture *;
+    void Draw(const Box2D &shape, SDL_Texture *Texture);
 
   private:
     SDL_Window *window;
