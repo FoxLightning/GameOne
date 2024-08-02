@@ -20,16 +20,19 @@ auto Collider::GetRectangle() -> const Box2D &
     return rectangle;
 }
 
-Entity::Entity(const Box2D &inRectangle, const double &inMaxSpeed, const std::shared_ptr<BaseController> &inController)
-    : Collider(inRectangle), maxSpeed(inMaxSpeed), waitingForDelete(false), powerPercent(1.), direction(0., 0.),
-      controller(inController)
+void Collider::SetRectangle(const Box2D &inRectangle)
+{
+    rectangle = inRectangle;
+}
+
+Entity::Entity() : maxSpeed(0.), waitingForDelete(false), powerPercent(0.), direction(0., 0.), controller(nullptr)
 {
 }
 
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::ship);
-    inRenderer->Draw(rectangle, texture);
+    inRenderer->Draw(GetRectangle(), texture);
 }
 
 void Entity::SetWaitForDelete()
@@ -39,8 +42,12 @@ void Entity::SetWaitForDelete()
 
 void Entity::Update(const double deltaTime)
 {
+    if (!controller)
+    {
+        return; // Add exception
+    }
     controller->ApplyCommands(this);
-    rectangle += direction * maxSpeed * powerPercent * deltaTime;
+    SetRectangle(GetRectangle() + direction * maxSpeed * powerPercent * deltaTime);
 }
 
 auto Entity::IsWaitingForDelete() const -> bool
@@ -53,6 +60,11 @@ auto Entity::GetController() -> std::shared_ptr<BaseController>
     return controller;
 }
 
+void Entity::SetController(const std::shared_ptr<BaseController> &inController)
+{
+    controller = inController;
+}
+
 void Entity::SetDirection(const Vector2D &inSpeed)
 {
     direction = Normalize(inSpeed);
@@ -61,6 +73,11 @@ void Entity::SetDirection(const Vector2D &inSpeed)
 void Entity::SetEnginePower(const double &inPowerPercent)
 {
     powerPercent = inPowerPercent;
+}
+
+void Entity::SetMaxSpeed(const double &inMaxSpeed)
+{
+    maxSpeed = inMaxSpeed;
 }
 
 }; // namespace GameBase

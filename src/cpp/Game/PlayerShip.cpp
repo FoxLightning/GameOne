@@ -7,11 +7,17 @@
 namespace Game
 {
 PlayerShip::PlayerShip()
-    : GameBase::Entity(Box2D(Vector2D(0, 0), Vector2D(50, 50)), 100., std::make_shared<Game::PlayerController>())
 {
-    if (auto controller = std::dynamic_pointer_cast<PlayerController>(GetController()))
+    auto playerController = std::make_shared<Game::PlayerController>();
+    playerController->SubscribeInput();
+    SetRectangle(Box2D(Vector2D(0., 0.), Vector2D(100., 100.)));
+    SetEnginePower(1.);
+    SetMaxSpeed(200.);
+
+    if (playerController)
     {
-        controller->SubscribeInput();
+        playerController->SubscribeInput();
+        SetController(playerController);
     }
 }
 

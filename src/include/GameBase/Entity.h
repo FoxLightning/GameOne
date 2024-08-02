@@ -11,34 +11,39 @@ namespace GameBase
 class Collider
 {
   public:
-    explicit Collider(const Box2D &inRectangle) : rectangle(inRectangle) {};
+    Collider() = default;
     virtual ~Collider() = default;
 
     virtual void CheckCollision(Collider *inCollider);
     auto GetRectangle() -> const Box2D &;
 
   protected:
-    Box2D rectangle; // NOLINT
+    void SetRectangle(const Box2D &inRectangle);
+
+  private:
+    Box2D rectangle;
 };
 
 class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, public Collider
 {
   public:
-    Entity(const Box2D &inRectangle, const double &inMaxSpeed, const std::shared_ptr<BaseController> &inController);
+    Entity();
     virtual ~Entity() = default;
 
-    virtual void CheckCollision(Collider *inCollider) override {};
-    virtual void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
+    void CheckCollision(Collider *inCollider) override {};
+    void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
+    void Update(double deltaTime) override;
 
-    virtual void Update(double deltaTime) override;
     virtual void SetDirection(const Vector2D &inSpeed);
     virtual void SetEnginePower(const double &inPowerPercent);
+    virtual void SetMaxSpeed(const double &inMaxSpeed);
 
     void SetWaitForDelete();
     auto IsWaitingForDelete() const -> bool;
 
   protected:
     auto GetController() -> std::shared_ptr<BaseController>;
+    void SetController(const std::shared_ptr<BaseController> &inController);
 
   private:
     bool waitingForDelete;
