@@ -24,8 +24,7 @@ class Collider
 class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, public Collider
 {
   public:
-    Entity(const Box2D &inRectangle, const double &inMaxSpeed,
-           const std::shared_ptr<BaseController> &inController);
+    Entity(const Box2D &inRectangle, const double &inMaxSpeed, const std::shared_ptr<BaseController> &inController);
     virtual ~Entity() = default;
 
     virtual void CheckCollision(Collider *inCollider) override {};
@@ -37,6 +36,9 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
 
     void SetWaitForDelete();
     auto IsWaitingForDelete() const -> bool;
+
+  protected:
+    auto GetController() -> std::shared_ptr<BaseController>;
 
   private:
     bool waitingForDelete;

@@ -48,6 +48,11 @@ auto Entity::IsWaitingForDelete() const -> bool
     return waitingForDelete;
 }
 
+auto Entity::GetController() -> std::shared_ptr<BaseController>
+{
+    return controller;
+}
+
 void Entity::SetDirection(const Vector2D &inSpeed)
 {
     direction = Normalize(inSpeed);
