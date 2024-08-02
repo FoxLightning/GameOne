@@ -21,14 +21,14 @@ class Collider
     void SetRectangle(const Box2D &inRectangle);
 
   private:
-    Box2D rectangle;
+    Box2D rectangle = Box2D(Vector2D(0., 0.), Vector2D(0., 0.));
 };
 
 class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, public Collider
 {
   public:
-    Entity();
-    virtual ~Entity() = default;
+    Entity() = default;
+    ~Entity() override = default;
 
     void CheckCollision(Collider *inCollider) override {};
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
@@ -39,18 +39,18 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
     virtual void SetMaxSpeed(const double &inMaxSpeed);
 
     void SetWaitForDelete();
-    auto IsWaitingForDelete() const -> bool;
+    [[nodiscard]] auto IsWaitingForDelete() const -> bool;
 
   protected:
     auto GetController() -> std::shared_ptr<BaseController>;
     void SetController(const std::shared_ptr<BaseController> &inController);
 
   private:
-    bool waitingForDelete;
+    bool waitingForDelete = false;
 
-    Vector2D direction;
-    double maxSpeed;
-    double powerPercent;
+    Vector2D direction = Vector2D(0., 0.);
+    double maxSpeed = 0.;
+    double powerPercent = 0.;
 
     std::shared_ptr<BaseController> controller;
 };

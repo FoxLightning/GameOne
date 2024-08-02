@@ -84,9 +84,9 @@ template <typename T>
 auto MoveBox(const bgm::box<bgm::d2::point_xy<T>> &box,
              const bgm::d2::point_xy<T> &point) -> bgm::box<bgm::d2::point_xy<T>>
 {
-    bgm::d2::point_xy<T> min_corner(box.min_corner() + point);
+    const bgm::d2::point_xy<T> min_corner(box.min_corner() + point);
 
-    bgm::d2::point_xy<T> max_corner(box.max_corner() + point);
+    const bgm::d2::point_xy<T> max_corner(box.max_corner() + point);
     return bgm::box<bgm::d2::point_xy<T>>(min_corner, max_corner);
 }
 

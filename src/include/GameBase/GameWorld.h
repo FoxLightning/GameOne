@@ -24,7 +24,7 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
 
   private:
     void CheckCollisions();
-    void UpdateChildren(const double deltaTime);
+    void UpdateChildren(double deltaTime);
 
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
 };

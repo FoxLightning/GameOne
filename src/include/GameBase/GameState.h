@@ -14,8 +14,8 @@ class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
   public:
     GameState();
 
-    virtual void Update(const double deltaTime) override;
-    virtual void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
+    void Update(double deltaTime) override;
+    void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
 
   private:
     std::shared_ptr<GameWorld> gameWorld;

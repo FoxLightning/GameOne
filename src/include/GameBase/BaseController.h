@@ -1,12 +1,12 @@
 #pragma once
 #include "GameSystem/AppInstance.h"
+#include "Types.h"
 #include <memory>
 #include <set>
-#include "Types.h"
 
 namespace GameSystem
 {
-enum class ActionType : unsigned;
+enum class ActionType : uint8_t;
 }
 
 namespace GameBase
@@ -24,7 +24,8 @@ class BaseController
     BaseController(BaseController &&other) = delete;
     auto operator=(BaseController &&other) -> BaseController & = delete;
 
-    void ApplyCommands(Entity* inEntity);
+    void ApplyCommands(Entity *inEntity);
+
   protected:
     void AddPendingAction(GameSystem::ActionType InActionType);
     void RemovePendingAction(GameSystem::ActionType InActionType);

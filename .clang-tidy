@@ -14,5 +14,6 @@ Checks: >
   -readability-identifier-length,
   -cppcoreguidelines-avoid-magic-numbers,
   -readability-magic-numbers,
+  -cppcoreguidelines-special-member-functions,
 WarningsAsErrors: false
-HeaderFilterRegex: '^(?!(boost|SDL)).*'
+HeaderFilterRegex: '.*/GameOne/src/include/.*'

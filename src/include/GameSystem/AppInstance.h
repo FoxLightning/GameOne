@@ -18,7 +18,10 @@ class ResurceManager;
 class IUpdateble
 {
   public:
-    virtual void Update(const double deltaTime) = 0;
+    IUpdateble() = default;
+    virtual ~IUpdateble() = default;
+
+    virtual void Update(double deltaTime) = 0;
 };
 
 class AppInstance
@@ -36,7 +39,7 @@ class AppInstance
     static auto GetRender() -> std::shared_ptr<Renderer>;
     static auto GetResurceManager() -> std::shared_ptr<ResurceManager>;
 
-private:
+  private:
     static std::shared_ptr<GameBase::GameState> currentAppState;
 
     static std::shared_ptr<ConfigManager> configManagerInstance;

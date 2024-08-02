@@ -9,6 +9,7 @@ class Bullet : public GameBase::Entity
 {
   public:
     Bullet();
+    virtual ~Bullet();
 };
 
 }; // namespace Game

@@ -1,13 +1,13 @@
 #pragma once
-#include <list>
-#include <vector>
-#include <memory>
-#include "SDL3/SDL.h"
 #include "GameBase/BaseController.h"
+#include "SDL3/SDL.h"
+#include <list>
+#include <memory>
+#include <vector>
 
 namespace GameSystem
 {
-enum class ActionType : unsigned
+enum class ActionType : uint8_t
 {
     MainAction,
     AdvancedAction,
@@ -18,7 +18,7 @@ enum class ActionType : unsigned
     Escape
 };
 
-enum class EventType : unsigned
+enum class EventType : uint8_t
 {
     Start,
     Stop,
@@ -32,11 +32,6 @@ struct Mapping
 
 struct Subscription
 {
-    Subscription(const ActionType inActionType, const std::weak_ptr<GameBase::BaseController> &inOwner,
-                 const std::function<void(EventType)> &inCallback)
-        : actionType(inActionType), owner(inOwner), callback(inCallback)
-    {
-    }
     ActionType actionType;
     std::weak_ptr<GameBase::BaseController> owner;
     std::function<void(EventType)> callback;

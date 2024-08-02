@@ -10,15 +10,15 @@ struct SDL_Surface;
 namespace GameSystem
 {
 
-class Renderer
+class Renderer final
 {
   public:
     Renderer();
-    ~Renderer();
+    virtual ~Renderer();
 
     void Clear();
     void Render();
-    auto CreateTexture(SDL_Surface* surface) -> SDL_Texture *;
+    auto CreateTexture(SDL_Surface *surface) -> SDL_Texture *;
     void Draw(const Box2D &shape, SDL_Texture *Texture);
 
   private:
@@ -29,6 +29,7 @@ class Renderer
 class IRendereble
 {
   public:
+    virtual ~IRendereble() = default;
     virtual void Draw(std::shared_ptr<Renderer> inRenderer) = 0;
 };
 

@@ -27,10 +27,6 @@ void Collider::SetRectangle(const Box2D &inRectangle)
     rectangle = inRectangle;
 }
 
-Entity::Entity() : maxSpeed(0.), waitingForDelete(false), powerPercent(0.), direction(0., 0.), controller(nullptr)
-{
-}
-
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::ship);

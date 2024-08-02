@@ -10,8 +10,9 @@ namespace Game
 void PlayerController::SubscribeInput()
 {
     const std::array<GameSystem::Subscription, 4> subscriptionArr{
-        GameSystem::Subscription{GameSystem::ActionType::MoveUp, weak_from_this(),
-                                 [this](GameSystem::EventType inEventType) {
+        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveUp,
+                                 .owner = weak_from_this(),
+                                 .callback = [this](GameSystem::EventType inEventType) -> void {
                                      if (inEventType == GameSystem::EventType::Start)
                                      {
 
@@ -22,31 +23,36 @@ void PlayerController::SubscribeInput()
                                          this->RemovePendingAction(GameSystem::ActionType::MoveUp);
                                      }
                                  }},
-        GameSystem::Subscription{GameSystem::ActionType::MoveDown, weak_from_this(),
-                                 [this](GameSystem::EventType inEventType) {
-                                     if (inEventType == GameSystem::EventType::Start)
-                                     {
-                                         this->AddPendingAction(GameSystem::ActionType::MoveDown);
-                                     }
-                                     else
-                                     {
-                                         this->RemovePendingAction(GameSystem::ActionType::MoveDown);
-                                     }
-                                 }},
-        GameSystem::Subscription{GameSystem::ActionType::MoveLeft, weak_from_this(),
-                                 [this](GameSystem::EventType inEventType) {
-                                     if (inEventType == GameSystem::EventType::Start)
-                                     {
+        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveDown,
+                                 .owner = weak_from_this(),
+                                 .callback =
+                                     [this](GameSystem::EventType inEventType) {
+                                         if (inEventType == GameSystem::EventType::Start)
+                                         {
+                                             this->AddPendingAction(GameSystem::ActionType::MoveDown);
+                                         }
+                                         else
+                                         {
+                                             this->RemovePendingAction(GameSystem::ActionType::MoveDown);
+                                         }
+                                     }},
+        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveLeft,
+                                 .owner = weak_from_this(),
+                                 .callback =
+                                     [this](GameSystem::EventType inEventType) {
+                                         if (inEventType == GameSystem::EventType::Start)
+                                         {
 
-                                         this->AddPendingAction(GameSystem::ActionType::MoveLeft);
-                                     }
-                                     else
-                                     {
-                                         this->RemovePendingAction(GameSystem::ActionType::MoveLeft);
-                                     }
-                                 }},
-        GameSystem::Subscription{GameSystem::ActionType::MoveRight, weak_from_this(),
-                                 [this](GameSystem::EventType inEventType) {
+                                             this->AddPendingAction(GameSystem::ActionType::MoveLeft);
+                                         }
+                                         else
+                                         {
+                                             this->RemovePendingAction(GameSystem::ActionType::MoveLeft);
+                                         }
+                                     }},
+        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveRight,
+                                 .owner = weak_from_this(),
+                                 .callback = [this](GameSystem::EventType inEventType) {
                                      if (inEventType == GameSystem::EventType::Start)
                                      {
 
