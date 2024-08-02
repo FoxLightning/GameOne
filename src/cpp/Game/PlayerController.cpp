@@ -1,8 +1,8 @@
-#include "GameBase/PlayerController.h"
+#include "Game/PlayerController.h"
 #include "GameBase/BaseController.h"
 #include "GameSystem/InputManager.h"
 
-namespace GameBase
+namespace Game
 {
 
 void PlayerController::SubscribeInput()
@@ -57,9 +57,8 @@ void PlayerController::SubscribeInput()
                                  }}};
     for (const auto &subscription : subscriptionArr)
     {
-        std::cout << "subscribe" << std::endl;
         GameSystem::AppInstance::GetInputManager()->Subscribe(subscription);
     }
 }
 
-} // namespace GameBase
+} // namespace Game
