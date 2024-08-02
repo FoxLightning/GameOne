@@ -6,7 +6,7 @@
 
 namespace GameBase
 {
-void Collider::CheckCollision(Collider *inCollider)
+void Collider::CheckCollision(Collider *inCollider) // NOLINT recursive is intended here
 {
     assert(inCollider);
     if (AreIntersects(rectangle, inCollider->GetRectangle()))
@@ -20,10 +20,10 @@ auto Collider::GetRectangle() -> const Box2D &
     return rectangle;
 }
 
-Entity::Entity(const Box2D &inRectangle, const double &inMaxSpeed)
+Entity::Entity(const Box2D &inRectangle, const double &inMaxSpeed, const std::shared_ptr<BaseController> &inController)
+    : Collider(inRectangle), maxSpeed(inMaxSpeed), waitingForDelete(false), powerPercent(1.), direction(0., 0.),
+      controller(inController)
 {
-    rectangle = inRectangle;
-    maxSpeed = inMaxSpeed;
 }
 
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
@@ -39,6 +39,7 @@ void Entity::SetWaitForDelete()
 
 void Entity::Update(const double deltaTime)
 {
+    controller->ApplyCommands(this);
     rectangle += direction * maxSpeed * powerPercent * deltaTime;
 }
 

@@ -19,6 +19,5 @@ class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
 
   private:
     std::shared_ptr<GameWorld> gameWorld;
-    std::shared_ptr<BaseController> playerController;
 };
 }; // namespace GameBase

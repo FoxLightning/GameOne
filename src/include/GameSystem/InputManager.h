@@ -46,7 +46,7 @@ class InputManager
 {
   public:
     InputManager();
-    void Subscribe(const Subscription &inputCastomer);
+    void Subscribe(const Subscription &inSubscripiton);
     void Unsubscribe(const std::weak_ptr<void> &owner);
 
     void ProcessInput();

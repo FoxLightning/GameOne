@@ -45,7 +45,7 @@ void InputManager::ProcessInput()
             {
                 continue;
             }
-            EventType eventType;
+            EventType eventType = EventType::Stop;
             if (event.type == SDL_EVENT_KEY_DOWN)
             {
                 eventType = EventType::Start;
@@ -59,7 +59,7 @@ void InputManager::ProcessInput()
                 continue;
             }
 
-            for (auto subscription : subscriptionList)
+            for (auto& subscription : subscriptionList)
             {
                 if (subscription.actionType != mapping.actionType)
                 {

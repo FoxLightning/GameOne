@@ -6,22 +6,30 @@
 
 namespace GameSystem
 {
-    enum class ActionType : unsigned;
+enum class ActionType : unsigned;
 }
 
 namespace GameBase
 {
 class Entity;
 
-class BaseController : public GameSystem::IUpdateble, public std::enable_shared_from_this<BaseController>
+class BaseController
 {
   public:
-    BaseController(std::weak_ptr<Entity> inEntity);
-    virtual void Update(const double deltaTime) override;
-    void SubscribeInput();
+    BaseController() = default;
+    virtual ~BaseController() = default;
+
+    BaseController(const BaseController &other) = delete;
+    auto operator=(const BaseController &other) -> BaseController & = delete;
+    BaseController(BaseController &&other) = delete;
+    auto operator=(BaseController &&other) -> BaseController & = delete;
+
+    void ApplyCommands(Entity* inEntity);
+  protected:
+    void AddPendingAction(GameSystem::ActionType InActionType);
+    void RemovePendingAction(GameSystem::ActionType InActionType);
 
   private:
-    std::weak_ptr<Entity> entity;
     std::set<GameSystem::ActionType> pendingActions;
 };
 
