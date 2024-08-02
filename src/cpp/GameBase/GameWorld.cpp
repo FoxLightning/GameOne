@@ -1,14 +1,10 @@
 #include "GameBase/GameWorld.h"
 #include "GameBase/Entity.h"
-#include "Types.h"
+#include "GameSystem/Renderer.h"
 #include <memory>
 
 namespace GameBase
 {
-
-GameWorld::GameWorld()
-{
-}
 
 void GameWorld::Update(const double deltaTime)
 {
@@ -18,7 +14,7 @@ void GameWorld::Update(const double deltaTime)
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    for (auto entity : entitiesHolder)
+    for (auto &entity : entitiesHolder)
     {
         entity->Draw(inRenderer);
     }
@@ -26,14 +22,14 @@ void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 
 void GameWorld::CheckCollisions()
 {
-    for (auto leftEntity : entitiesHolder)
+    for (auto &leftEntity : entitiesHolder)
     {
         auto *leftCollider = dynamic_cast<Collider *>(leftEntity.get());
         if (!leftCollider)
         {
             continue;
         }
-        for (auto rightEntity : entitiesHolder)
+        for (auto &rightEntity : entitiesHolder)
         {
             auto *rightCollider = dynamic_cast<Collider *>(rightEntity.get());
             if (!rightCollider)

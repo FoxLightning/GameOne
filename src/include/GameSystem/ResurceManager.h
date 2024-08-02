@@ -19,11 +19,11 @@ class ResurceManager final
     ResurceManager();
     ~ResurceManager();
 
-    auto GetTexture(const std::string &texturePath) -> SDL_Texture *;
+    auto GetTexture(const char *texturePath) -> SDL_Texture *;
 
   private:
-    auto LoadTexture(const std::string &texturePath) -> TextureData;
-    std::map<std::string, TextureData> textureHolder;
+    static auto LoadTexture(const char *texturePath) -> TextureData;
+    std::map<const char *const, TextureData> textureHolder;
 };
 
 }; // namespace GameSystem

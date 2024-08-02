@@ -1,13 +1,15 @@
 #include "Game/PlayerController.h"
 #include "GameBase/BaseController.h"
+#include "GameSystem/AppInstance.h"
 #include "GameSystem/InputManager.h"
+#include <array>
 
 namespace Game
 {
 
 void PlayerController::SubscribeInput()
 {
-    std::array<GameSystem::Subscription, 4> subscriptionArr{
+    const std::array<GameSystem::Subscription, 4> subscriptionArr{
         GameSystem::Subscription{GameSystem::ActionType::MoveUp, weak_from_this(),
                                  [this](GameSystem::EventType inEventType) {
                                      if (inEventType == GameSystem::EventType::Start)

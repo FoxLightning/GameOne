@@ -1,9 +1,8 @@
 #pragma once
-#include <string>
 
 namespace Const
 {
-extern const std::string ship;
-extern const std::string enemy;
-extern const std::string missle;
-}
+extern const char *const ship;
+extern const char *const enemy;
+extern const char *const missle;
+} // namespace Const

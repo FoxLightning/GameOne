@@ -1,23 +1,26 @@
 #include "GameSystem/InputManager.h"
 #include "GameSystem/AppInstance.h"
-#include "SDL3/SDL.h"
+#include "SDL3/SDL_events.h"
+#include "SDL3/SDL_scancode.h"
 #include <cassert>
 #include <iostream>
+#include <memory>
+#include <vector>
 
 namespace GameSystem
 {
 
 InputManager::InputManager()
 {
-    // TODO get it from config
+    // TODO get it from config NOLINT
     mappingList = std::vector<Mapping>{
-        {SDL_SCANCODE_A, ActionType::MoveLeft},
-        {SDL_SCANCODE_D, ActionType::MoveRight},
-        {SDL_SCANCODE_W, ActionType::MoveUp},
-        {SDL_SCANCODE_S, ActionType::MoveDown},
-        {SDL_SCANCODE_SPACE, ActionType::MainAction},
-        {SDL_SCANCODE_F, ActionType::MainAction},
-        {SDL_SCANCODE_ESCAPE, ActionType::Escape},
+        {.keycode = SDL_SCANCODE_A, .actionType = ActionType::MoveLeft},
+        {.keycode = SDL_SCANCODE_D, .actionType = ActionType::MoveRight},
+        {.keycode = SDL_SCANCODE_W, .actionType = ActionType::MoveUp},
+        {.keycode = SDL_SCANCODE_S, .actionType = ActionType::MoveDown},
+        {.keycode = SDL_SCANCODE_SPACE, .actionType = ActionType::MainAction},
+        {.keycode = SDL_SCANCODE_F, .actionType = ActionType::MainAction},
+        {.keycode = SDL_SCANCODE_ESCAPE, .actionType = ActionType::Escape},
     };
 }
 
@@ -59,7 +62,7 @@ void InputManager::ProcessInput()
                 continue;
             }
 
-            for (auto& subscription : subscriptionList)
+            for (auto &subscription : subscriptionList)
             {
                 if (subscription.actionType != mapping.actionType)
                 {

@@ -11,9 +11,10 @@ namespace GameBase
 class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
   public:
-    GameWorld();
-    virtual void Update(const double deltaTime) override;
-    virtual void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
+    GameWorld() = default;
+
+    void Update(double deltaTime) override;
+    void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
 
     template <typename T, typename... Args>
     void AddEntity(Args... args)

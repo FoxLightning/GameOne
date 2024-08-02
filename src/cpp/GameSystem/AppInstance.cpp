@@ -1,18 +1,14 @@
 
 #include "GameSystem/AppInstance.h"
-
 #include "GameBase/GameState.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/InputManager.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
-
-#include "SDL3/SDL.h"
 #include <cassert>
 #include <chrono>
-#include <iostream>
 #include <memory>
-#include <thread>
+#include <ratio>
 
 namespace GameSystem
 {
@@ -32,7 +28,7 @@ AppInstance::AppInstance()
     resurceManagerInstance = std::make_shared<ResurceManager>();
 }
 
-void AppInstance::Start()
+void AppInstance::Start() // NOLINT
 {
     assert(!isRunning);
     isRunning = true;
@@ -50,7 +46,7 @@ void AppInstance::Start()
         if (frameTime >= frameDelay)
         {
             lastFrameTime = now;
-            double deltaTime =
+            const double deltaTime =
                 static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(frameTime).count()) / .1E7;
             currentAppState->Update(deltaTime);
         }

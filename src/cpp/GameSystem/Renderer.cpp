@@ -1,25 +1,33 @@
 #include "GameSystem/Renderer.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
-#include <SDL3/SDL.h>
+#include "Types.h"
+#include "SDL3/SDL_error.h"
+#include "SDL3/SDL_init.h"
+#include "SDL3/SDL_rect.h"
+#include "SDL3/SDL_render.h"
+#include "SDL3/SDL_surface.h"
+#include "SDL3/SDL_video.h"
+#include <iostream>
+#include <memory>
 
 namespace GameSystem
 {
 
-// TODO add exceptions
 Renderer::Renderer()
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL_Init Error: " << SDL_GetError() << "\n";
         return;
     }
 
-    const Vector2L Resolution = AppInstance::GetConfigManager()->windowResolution;
+    const std::shared_ptr<ConfigManager> configManager = AppInstance::GetConfigManager();
+    const auto Resolution = configManager->windowResolution;
     window = SDL_CreateWindow("SDL Game Loop Example", Resolution.x(), Resolution.y(), 0);
     if (window == nullptr)
     {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << "\n";
         SDL_Quit();
         return;
     }
@@ -27,7 +35,7 @@ Renderer::Renderer()
     renderer = SDL_CreateRenderer(window, nullptr);
     if (renderer == nullptr)
     {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << "\n";
         SDL_DestroyWindow(window);
         SDL_Quit();
         return;
@@ -49,7 +57,7 @@ void Renderer::Clear()
 
 void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
 {
-    SDL_FRect rectangle = CastSDL_FRect(shape);
+    const SDL_FRect rectangle = CastSDL_FRect(shape);
     if (texture == nullptr)
     {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
