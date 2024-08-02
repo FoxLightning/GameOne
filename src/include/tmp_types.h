@@ -91,6 +91,13 @@ auto MoveBox(const bgm::box<bgm::d2::point_xy<T>> &box,
 }
 
 template <typename T>
+auto operator+(const bgm::box<bgm::d2::point_xy<T>> &box,
+               const bgm::d2::point_xy<T> &point) -> bgm::box<bgm::d2::point_xy<T>>
+{
+    return MoveBox(box, point);
+}
+
+template <typename T>
 auto operator+=(bgm::box<bgm::d2::point_xy<T>> &box,
                 const bgm::d2::point_xy<T> &point) -> bgm::box<bgm::d2::point_xy<T>>
 {
