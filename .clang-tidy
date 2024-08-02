@@ -9,5 +9,7 @@ Checks: >
   bugprone-*,
   google-*,
   cert-*,
+  -eadability-implicit-bool-conversion
+  -readability-identifier-length
 WarningsAsErrors: false
 HeaderFilterRegex: '^(?!(boost|SDL)).*'
