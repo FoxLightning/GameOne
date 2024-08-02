@@ -1,8 +1,7 @@
 #pragma once
 
-#include "SDL3/SDL.h"
-#include "boost/geometry.hpp"
-#include "boost/geometry/geometries/point.hpp"
+#include "SDL3/SDL_rect.h"
+#include "boost/geometry.hpp" // NOLINT
 #include <cstdint>
 
 namespace bg = boost::geometry;
