@@ -9,9 +9,8 @@ class PlayerShip final : public GameBase::Entity
 {
   public:
     PlayerShip();
-    void CheckCollision(Collider *inCollider) override;
+    void CheckCollision(GameBase::Collider *inCollider) override;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
-
     void Update(double deltaTime) override;
 
     void PullTrigger(bool isPoolingTrigger);

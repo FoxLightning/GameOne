@@ -1,5 +1,6 @@
 #include "Game/Bullet.h"
 #include "Constants.h"
+#include "Game/Enemy.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Renderer.h"
@@ -35,6 +36,16 @@ void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
         return;
     }
     GameBase::Entity::Draw(inRenderer);
+}
+
+void Bullet::CheckCollision(GameBase::Collider *inCollider)
+{
+    inCollider->CheckCollision(this);
+}
+
+void Bullet::CheckCollision(Enemy * /*inCollider*/)
+{
+    SetWaitForDelete();
 }
 
 }; // namespace Game

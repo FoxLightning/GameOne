@@ -1,10 +1,10 @@
 #pragma once
-#include "GameBase/Entity.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Renderer.h"
 
 namespace GameBase
 {
+class Entity;
 
 class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
@@ -25,6 +25,7 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
     void UpdateChildren(double deltaTime);
     void RemoveStaleObjects();
     void AddPendingObjects();
+    static auto CheckIntersections(const std::shared_ptr<Entity> &left, const std::shared_ptr<Entity> &right) -> bool;
 
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
     std::vector<std::shared_ptr<Entity>> entitiesToAdd;

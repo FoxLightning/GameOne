@@ -1,6 +1,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/Renderer.h"
+#include "Types.h"
 #include <algorithm>
 #include <memory>
 
@@ -25,21 +26,14 @@ void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 
 void GameWorld::CheckCollisions()
 {
-    for (auto &leftEntity : entitiesHolder)
+    for (auto &left : entitiesHolder)
     {
-        auto *leftCollider = dynamic_cast<Collider *>(leftEntity.get());
-        if (!leftCollider)
+        for (auto &right : entitiesHolder)
         {
-            continue;
-        }
-        for (auto &rightEntity : entitiesHolder)
-        {
-            auto *rightCollider = dynamic_cast<Collider *>(rightEntity.get());
-            if (!rightCollider)
+            if (CheckIntersections(left, right))
             {
-                continue;
+                left->CheckCollision(right.get());
             }
-            leftCollider->CheckCollision(rightCollider);
         }
     }
 }
@@ -62,6 +56,15 @@ void GameWorld::RemoveStaleObjects()
         return true;
     });
     entitiesHolder.erase(range.begin(), range.end());
+}
+
+auto GameWorld::CheckIntersections(const std::shared_ptr<Entity> &left, const std::shared_ptr<Entity> &right) -> bool
+{
+    if (left && right && left.get() != right.get())
+    {
+        return AreIntersects(left->GetRectangle(), right->GetRectangle());
+    }
+    return false;
 }
 
 void GameWorld::AddPendingObjects()

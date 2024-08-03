@@ -6,7 +6,7 @@ namespace Game
 {
 class PlayerShip;
 
-class PlayerController : public GameBase::BaseController, public std::enable_shared_from_this<PlayerController>
+class PlayerController final : public GameBase::BaseController, public std::enable_shared_from_this<PlayerController>
 {
   public:
     PlayerController() = default;

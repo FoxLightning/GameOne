@@ -7,14 +7,6 @@
 
 namespace GameBase
 {
-void Collider::CheckCollision(Collider *inCollider) // NOLINT recursive is intended here
-{
-    assert(inCollider);
-    if (AreIntersects(rectangle, inCollider->GetRectangle()))
-    {
-        inCollider->CheckCollision(this);
-    }
-}
 
 auto Collider::GetRectangle() const -> const Box2D &
 {

@@ -38,8 +38,9 @@ void PlayerShip::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
     GameBase::Entity::Draw(inRenderer);
 }
 
-void PlayerShip::CheckCollision(Collider *inCollider)
+void PlayerShip::CheckCollision(GameBase::Collider *inCollider)
 {
+    inCollider->CheckCollision(this);
 }
 
 void PlayerShip::Update(double deltaTime)

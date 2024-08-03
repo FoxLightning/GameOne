@@ -5,6 +5,12 @@
 #include "Types.h"
 #include <memory>
 
+namespace Game
+{
+class Bullet;
+class Enemy;
+} // namespace Game
+
 namespace GameBase
 {
 
@@ -14,7 +20,10 @@ class Collider
     Collider() = default;
     virtual ~Collider() = default;
 
-    virtual void CheckCollision(Collider *inCollider);
+    virtual void CheckCollision(Collider *inCollider) = 0;
+    virtual void CheckCollision(Game::Bullet *inCollider) {};
+    virtual void CheckCollision(Game::Enemy *inCollider) {};
+    virtual void CheckCollision(Game::PlayerShip *inCollider) {};
     [[nodiscard]] auto GetRectangle() const -> const Box2D &;
 
   protected:
@@ -34,7 +43,6 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
     Entity() = default;
     ~Entity() override = default;
 
-    void CheckCollision(Collider *inCollider) override {};
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
     void Update(double deltaTime) override;
 
