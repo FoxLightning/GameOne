@@ -17,7 +17,7 @@ void Collider::CheckCollision(Collider *inCollider) // NOLINT recursive is inten
     }
 }
 
-auto Collider::GetRectangle() -> const Box2D &
+auto Collider::GetRectangle() const -> const Box2D &
 {
     return rectangle;
 }
@@ -40,12 +40,17 @@ void Entity::SetWaitForDelete()
 
 void Entity::Update(const double deltaTime)
 {
-    if (!controller)
+    if (controller)
     {
-        return; // Add exception
+        controller->ApplyCommands(this);
     }
-    controller->ApplyCommands(this);
     SetRectangle(GetRectangle() + direction * maxSpeed * powerPercent * deltaTime);
+}
+
+auto Entity::GetPosition() const -> Vector2D
+{
+    const Box2D &rectangle = GetRectangle();
+    return rectangle.min_corner() + (rectangle.max_corner() - rectangle.min_corner()) / 2.;
 }
 
 auto Entity::IsWaitingForDelete() const -> bool

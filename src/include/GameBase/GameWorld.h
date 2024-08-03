@@ -17,14 +17,16 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
     template <typename T, typename... Args>
     void AddEntity(Args... args)
     {
-        entitiesHolder.push_back(std::make_shared<T>(args...));
+        entitiesToAdd.push_back(std::make_shared<T>(args...));
     }
 
   private:
     void CheckCollisions();
     void UpdateChildren(double deltaTime);
     void RemoveStaleObjects();
+    void AddPendingObjects();
 
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
+    std::vector<std::shared_ptr<Entity>> entitiesToAdd;
 };
 }; // namespace GameBase

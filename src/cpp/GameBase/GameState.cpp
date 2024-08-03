@@ -13,6 +13,11 @@ GameState::GameState()
     gameWorld->AddEntity<Game::PlayerShip>();
 };
 
+auto GameState::GetGameWorld() -> std::shared_ptr<GameWorld>
+{
+    return gameWorld;
+}
+
 void GameState::Update(const double deltaTime)
 {
     gameWorld->Update(deltaTime);

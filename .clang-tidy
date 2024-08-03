@@ -15,5 +15,6 @@ Checks: >
   -cppcoreguidelines-avoid-magic-numbers,
   -readability-magic-numbers,
   -cppcoreguidelines-special-member-functions,
+  -bugprone-easily-swappable-parameters,
 WarningsAsErrors: false
 HeaderFilterRegex: '.*/GameOne/src/include/.*'

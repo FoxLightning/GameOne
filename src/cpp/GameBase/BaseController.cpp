@@ -1,11 +1,22 @@
 #include "GameBase/BaseController.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/InputManager.h"
+#include <set>
 
 namespace GameBase
 {
 
-void BaseController::ApplyCommands(Entity *inEntity)
+void BaseController::AddPendingAction(GameSystem::ActionType inActionType)
+{
+    pendingActions.emplace(inActionType);
+}
+
+void BaseController::RemovePendingAction(GameSystem::ActionType InActionType)
+{
+    pendingActions.erase(InActionType);
+}
+
+void BaseController::ApplyMovementCommands(Entity *inEntity)
 {
     double x = 0;
     double y = 0;
@@ -28,14 +39,9 @@ void BaseController::ApplyCommands(Entity *inEntity)
     inEntity->SetDirection(Vector2D(x, y));
 }
 
-void BaseController::AddPendingAction(GameSystem::ActionType inActionType)
+auto BaseController::GetPendingActions() const -> std::set<GameSystem::ActionType>
 {
-    pendingActions.emplace(inActionType);
-}
-
-void BaseController::RemovePendingAction(GameSystem::ActionType InActionType)
-{
-    pendingActions.erase(InActionType);
+    return pendingActions;
 }
 
 }; // namespace GameBase

@@ -1,6 +1,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/Renderer.h"
+#include <algorithm>
 #include <memory>
 
 namespace GameBase
@@ -11,6 +12,7 @@ void GameWorld::Update(const double deltaTime)
     RemoveStaleObjects();
     CheckCollisions();
     UpdateChildren(deltaTime);
+    AddPendingObjects();
 }
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
@@ -52,14 +54,20 @@ void GameWorld::UpdateChildren(const double deltaTime)
 
 void GameWorld::RemoveStaleObjects()
 {
-    auto newEnd = std::remove_if(entitiesHolder.begin(), entitiesHolder.end(), [](const auto &A) -> bool {
+    auto range = std::ranges::remove_if(entitiesHolder, [](const auto &A) -> bool {
         if (A)
         {
             return A->IsWaitingForDelete();
         }
         return true;
     });
-    entitiesHolder.erase(newEnd, entitiesHolder.end());
+    entitiesHolder.erase(range.begin(), range.end());
+}
+
+void GameWorld::AddPendingObjects()
+{
+    entitiesHolder.insert(entitiesHolder.end(), entitiesToAdd.begin(), entitiesToAdd.end());
+    entitiesToAdd.clear();
 }
 
 } // namespace GameBase

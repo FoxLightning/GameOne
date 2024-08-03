@@ -15,7 +15,7 @@ class Collider
     virtual ~Collider() = default;
 
     virtual void CheckCollision(Collider *inCollider);
-    auto GetRectangle() -> const Box2D &;
+    [[nodiscard]] auto GetRectangle() const -> const Box2D &;
 
   protected:
     void SetRectangle(const Box2D &inRectangle);
@@ -39,6 +39,8 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
     virtual void SetMaxSpeed(const double &inMaxSpeed);
 
     void SetWaitForDelete();
+
+    [[nodiscard]] auto GetPosition() const -> Vector2D;
     [[nodiscard]] auto IsWaitingForDelete() const -> bool;
 
   protected:

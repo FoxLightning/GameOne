@@ -12,6 +12,8 @@ class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
   public:
     GameState();
 
+    auto GetGameWorld() -> std::shared_ptr<GameWorld>;
+
     void Update(double deltaTime) override;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
 

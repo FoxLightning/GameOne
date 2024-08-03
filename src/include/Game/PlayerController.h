@@ -4,11 +4,15 @@
 
 namespace Game
 {
+class PlayerShip;
 
 class PlayerController : public GameBase::BaseController, public std::enable_shared_from_this<PlayerController>
 {
   public:
     PlayerController() = default;
+
+    void ApplyCommands(GameBase::Entity *inEntity) override;
+    void ApplyCommands(PlayerShip *inEntity) override;
 
     void SubscribeInput();
 };
