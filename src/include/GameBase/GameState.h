@@ -1,10 +1,8 @@
 #pragma once
-#include "GameBase/BaseController.h"
-#include "GameBase/Entity.h"
 #include "GameBase/GameWorld.h"
-#include "Types.h"
+#include "GameSystem/AppInstance.h"
+#include "GameSystem/Renderer.h"
 #include <memory>
-#include <vector>
 
 namespace GameBase
 {

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameBase/BaseController.h"
+#include <memory>
 
 namespace Game
 {

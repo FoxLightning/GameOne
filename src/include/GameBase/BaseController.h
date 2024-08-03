@@ -1,7 +1,4 @@
 #pragma once
-#include "GameSystem/AppInstance.h"
-#include "Types.h"
-#include <memory>
 #include <set>
 
 namespace GameSystem

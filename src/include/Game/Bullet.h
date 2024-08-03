@@ -8,8 +8,8 @@ namespace Game
 class Bullet : public GameBase::Entity
 {
   public:
-    Bullet();
-    virtual ~Bullet();
+    Bullet() = default;
+    virtual ~Bullet() = default;
 };
 
 }; // namespace Game

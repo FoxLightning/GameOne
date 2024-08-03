@@ -20,4 +20,8 @@ PlayerShip::PlayerShip()
     }
 }
 
+void PlayerShip::CheckCollision(Collider *inCollider)
+{
+}
+
 }; // namespace Game

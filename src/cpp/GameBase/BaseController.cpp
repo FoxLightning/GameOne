@@ -1,11 +1,11 @@
 #include "GameBase/BaseController.h"
-#include "GameSystem/InputManager.h"
 #include "GameBase/Entity.h"
+#include "GameSystem/InputManager.h"
 
 namespace GameBase
 {
 
-void BaseController::ApplyCommands(Entity* inEntity)
+void BaseController::ApplyCommands(Entity *inEntity)
 {
     double x = 0;
     double y = 0;

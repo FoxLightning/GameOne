@@ -1,9 +1,7 @@
 #pragma once
-#include "Game/PlayerShip.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Renderer.h"
-#include "Types.h"
 
 namespace GameBase
 {

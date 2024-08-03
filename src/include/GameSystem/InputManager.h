@@ -1,6 +1,7 @@
 #pragma once
 #include "GameBase/BaseController.h"
-#include "SDL3/SDL.h"
+#include "SDL3/SDL_scancode.h"
+#include <functional>
 #include <list>
 #include <memory>
 #include <vector>
