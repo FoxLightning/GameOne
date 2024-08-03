@@ -110,3 +110,11 @@ auto CastSDL_FRect(const bgm::box<bgm::d2::point_xy<T>> &box) -> SDL_FRect
                      static_cast<float>(box.max_corner().x() - box.min_corner().x()),
                      static_cast<float>(box.max_corner().y() - box.min_corner().y())};
 }
+
+struct LinearColor
+{
+    uint8_t r = 0x00;
+    uint8_t g = 0x00;
+    uint8_t b = 0x00;
+    uint8_t a = 0x00;
+};

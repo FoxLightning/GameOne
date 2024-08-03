@@ -29,8 +29,12 @@ void Bullet::Update(double deltaTime)
 
 void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::missle);
-    inRenderer->Draw(GetRectangle(), texture);
+    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::missle))
+    {
+        inRenderer->Draw(GetRectangle(), texture);
+        return;
+    }
+    GameBase::Entity::Draw(inRenderer);
 }
 
 }; // namespace Game

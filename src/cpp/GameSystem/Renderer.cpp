@@ -55,6 +55,13 @@ void Renderer::Clear()
     SDL_RenderClear(renderer);
 }
 
+void Renderer::Draw(const Box2D &shape, const LinearColor &color)
+{
+    const SDL_FRect rectangle = CastSDL_FRect(shape);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(renderer, &rectangle);
+}
+
 void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
 {
     const SDL_FRect rectangle = CastSDL_FRect(shape);

@@ -1,4 +1,5 @@
 #include "Game/PlayerShip.h"
+#include "Constants.h"
 #include "Game/Bullet.h"
 #include "Game/PlayerController.h"
 #include "GameBase/Entity.h"
@@ -25,6 +26,16 @@ PlayerShip::PlayerShip()
         playerController->SubscribeInput();
         SetController(playerController);
     }
+}
+
+void PlayerShip::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
+{
+    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::ship))
+    {
+        inRenderer->Draw(GetRectangle(), texture);
+        return;
+    }
+    GameBase::Entity::Draw(inRenderer);
 }
 
 void PlayerShip::CheckCollision(Collider *inCollider)

@@ -19,7 +19,8 @@ class Renderer final
     void Clear();
     void Render();
     auto CreateTexture(SDL_Surface *surface) -> SDL_Texture *;
-    void Draw(const Box2D &shape, SDL_Texture *Texture);
+    void Draw(const Box2D &shape, SDL_Texture *texture);
+    void Draw(const Box2D &shape, const LinearColor &color);
 
   private:
     SDL_Window *window;
