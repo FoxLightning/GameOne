@@ -8,6 +8,7 @@ namespace GameBase
 
 void GameWorld::Update(const double deltaTime)
 {
+    RemoveStaleObjects();
     CheckCollisions();
     UpdateChildren(deltaTime);
 }
@@ -47,6 +48,18 @@ void GameWorld::UpdateChildren(const double deltaTime)
     {
         child->Update(deltaTime);
     }
+}
+
+void GameWorld::RemoveStaleObjects()
+{
+    auto newEnd = std::remove_if(entitiesHolder.begin(), entitiesHolder.end(), [](const auto &A) -> bool {
+        if (A)
+        {
+            return A->IsWaitingForDelete();
+        }
+        return true;
+    });
+    entitiesHolder.erase(newEnd, entitiesHolder.end());
 }
 
 } // namespace GameBase

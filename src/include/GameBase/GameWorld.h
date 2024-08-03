@@ -23,6 +23,7 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
   private:
     void CheckCollisions();
     void UpdateChildren(double deltaTime);
+    void RemoveStaleObjects();
 
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
 };
