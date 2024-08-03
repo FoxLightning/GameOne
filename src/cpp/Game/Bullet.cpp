@@ -13,7 +13,6 @@ Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
 {
     SetSize(Vector2D(40., 40.));
     SetPosition(start);
-    SetEnginePower(1.);
     SetMaxSpeed(400.);
     SetDirection(direction);
 }

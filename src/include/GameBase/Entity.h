@@ -56,7 +56,7 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
 
     Vector2D direction = Vector2D(0., 0.);
     double maxSpeed = 0.;
-    double powerPercent = 0.;
+    double powerPercent = 1.;
 
     std::shared_ptr<BaseController> controller;
 };
