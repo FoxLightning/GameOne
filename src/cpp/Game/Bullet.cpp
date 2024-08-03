@@ -21,7 +21,7 @@ Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
 void Bullet::Update(double deltaTime)
 {
     lifeTime -= deltaTime;
-    if (lifeTime < 0)
+    if (lifeTime < 0.)
     {
         SetWaitForDelete();
     }

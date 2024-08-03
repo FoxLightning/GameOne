@@ -18,23 +18,23 @@ void BaseController::RemovePendingAction(GameSystem::ActionType InActionType)
 
 void BaseController::ApplyMovementCommands(Entity *inEntity)
 {
-    double x = 0;
-    double y = 0;
+    double x = 0.;
+    double y = 0.;
     if (pendingActions.contains(GameSystem::ActionType::MoveDown))
     {
-        y += 1;
+        y += 1.;
     }
     if (pendingActions.contains(GameSystem::ActionType::MoveUp))
     {
-        y -= 1;
+        y -= 1.;
     }
     if (pendingActions.contains(GameSystem::ActionType::MoveRight))
     {
-        x += 1;
+        x += 1.;
     }
     if (pendingActions.contains(GameSystem::ActionType::MoveLeft))
     {
-        x -= 1;
+        x -= 1.;
     }
     inEntity->SetDirection(Vector2D(x, y));
 }
