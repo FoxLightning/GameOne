@@ -12,9 +12,12 @@ namespace Game
 {
 PlayerShip::PlayerShip()
 {
+    const Vector2D desiredSize = Vector2D(128., 128);
+    const Vector2D startPosition = Vector2D(1280. / 2., 720. - (desiredSize.y() / 2.));
     auto playerController = std::make_shared<Game::PlayerController>();
     playerController->SubscribeInput();
-    SetRectangle(Box2D(Vector2D(0., 0.), Vector2D(100., 100.)));
+    SetPosition(startPosition);
+    SetSize(Vector2D(128., 128));
     SetEnginePower(1.);
     SetMaxSpeed(200.);
 

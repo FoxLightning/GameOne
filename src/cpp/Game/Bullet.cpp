@@ -11,8 +11,8 @@ namespace Game
 
 Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
 {
-    auto size = Vector2D(40., 40.);
-    SetRectangle(Box2D(start - size / 2., start + size / 2.));
+    SetSize(Vector2D(40., 40.));
+    SetPosition(start);
     SetEnginePower(1.);
     SetMaxSpeed(400.);
     SetDirection(direction);

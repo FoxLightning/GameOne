@@ -18,9 +18,13 @@ class Collider
     [[nodiscard]] auto GetRectangle() const -> const Box2D &;
 
   protected:
-    void SetRectangle(const Box2D &inRectangle);
+    void SetSize(Vector2D inSize);
+    void SetPosition(Vector2D inPosition);
+    void SetPivot(Vector2D inPivot, bool updateRectangle = false);
+    void Move(Vector2D delta);
 
   private:
+    Vector2D pivot = Vector2D(0.5, 0.5);
     Box2D rectangle = Box2D(Vector2D(0., 0.), Vector2D(0., 0.));
 };
 
