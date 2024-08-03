@@ -1,2 +1,3 @@
 # GameOne
-Very simple game with clean architecture. Using cmake, sdl3, boost
+Very simple game. 
+Using CMake, SDL3, boost, clang-format, clang-tidy
