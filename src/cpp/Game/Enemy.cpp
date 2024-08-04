@@ -14,7 +14,7 @@ Enemy::Enemy(Vector2D position, double speed)
     SetPosition(position);
     SetSize(Vector2D(128., 128.));
     SetMaxSpeed(speed);
-    SetDirection(Vector2D(0, 1));
+    SetDirection(Vector2D(0., 1.));
 }
 
 void Enemy::Update(double deltaTime)

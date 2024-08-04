@@ -1,11 +1,12 @@
 #pragma once
-#include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Renderer.h"
 #include <memory>
 
 namespace GameBase
 {
+class GameWorld;
+class Scenario;
 
 class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
@@ -19,5 +20,6 @@ class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
 
   private:
     std::shared_ptr<GameWorld> gameWorld;
+    std::shared_ptr<Scenario> currentScenario;
 };
 }; // namespace GameBase

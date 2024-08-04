@@ -19,7 +19,7 @@ PlayerShip::PlayerShip()
     playerController->SubscribeInput();
     SetPosition(startPosition);
     SetSize(Vector2D(128., 128));
-    SetMaxSpeed(200.);
+    SetMaxSpeed(500.);
 
     if (playerController)
     {
