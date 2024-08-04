@@ -3,10 +3,16 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/ConfigManager.h"
 #include "Types.h"
 #include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdlib>
+#include <iostream>
+#include <memory>
 #include <random>
+#include <vector>
 
 namespace GameBase
 {
@@ -23,13 +29,13 @@ void Scenario::Update(double deltaTime)
 
 void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
 {
-    std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
+    const std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
     if (!currentState)
     {
         std::cerr << "current game state is not valid\n";
         return;
     }
-    std::shared_ptr<GameWorld> gameWorld = currentState->GetGameWorld();
+    const std::shared_ptr<GameWorld> gameWorld = currentState->GetGameWorld();
     if (!gameWorld)
     {
         std::cerr << "current game world is not valid\n";
@@ -41,65 +47,93 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
         gameWorld->AddEntity<Game::Enemy>(position, 100.);
     }
 }
-
-auto Scenario::GetSpawnPositions(uint8_t positionsNum) -> std::vector<Vector2D>
+namespace
+{
+auto GetRandomPosInRange(double minPos, double maxPos)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(minPos, maxPos);
+    return dis(gen);
+}
 
+auto SearchLeft(std::vector<Vector2D>::iterator blockedItr, std::vector<Vector2D>::iterator start,
+                double width) -> double
+{
+    double desiredPos = 0;
+    do
+    {
+        desiredPos = blockedItr->x() - width;
+        blockedItr--;
+    } while (blockedItr >= start && std::abs(blockedItr->x() - desiredPos) < width);
+    return desiredPos;
+}
+
+auto SearchRight(std::vector<Vector2D>::iterator blockedItr, std::vector<Vector2D>::iterator end,
+                 double width) -> double
+{
+    double desiredPos = 0;
+    do
+    {
+        desiredPos = blockedItr->x() + width;
+        blockedItr++;
+    } while (blockedItr < end && std::abs(blockedItr->x() - desiredPos) < width);
+    return desiredPos;
+}
+
+auto IsInRange(double test, double min, double max) -> bool
+{
+    return test > min && test < max;
+}
+
+auto FindFreePosition(std::vector<Vector2D> blockedPositions, double minPos, double maxPos, double enemyWidth) -> double
+{
+    std::ranges::sort(blockedPositions,
+                      [](const Vector2D &left, const Vector2D right) { return left.x() < right.x(); });
+
+    double desiredPos = GetRandomPosInRange(minPos, maxPos);
+    for (auto blockedItr = blockedPositions.begin(); blockedItr < blockedPositions.end(); blockedItr++)
+    {
+        if (std::abs(blockedItr->x() - desiredPos) > enemyWidth)
+        {
+            continue;
+        }
+
+        desiredPos = SearchLeft(blockedItr, blockedPositions.begin(), enemyWidth);
+        if (IsInRange(desiredPos, minPos, maxPos))
+        {
+            return desiredPos;
+        }
+
+        desiredPos = SearchRight(blockedItr, blockedPositions.end(), enemyWidth);
+        if (IsInRange(desiredPos, minPos, maxPos))
+        {
+            return desiredPos;
+        }
+        std::cerr << "No free space to spawn enemy.\n";
+        break;
+    }
+
+    return desiredPos;
+}
+} // namespace
+auto Scenario::GetSpawnPositions(int64_t positionsNum) -> std::vector<Vector2D>
+{
     const double enemyWidth = 128.;
     const double enemyXPivot = 0.5;
     const double enemyYPivot = 0.5;
     const double yPos = -128. * enemyYPivot;
 
-    Vector2I fieldSize = GameSystem::AppInstance::GetConfigManager()->windowResolution;
+    const std::shared_ptr<GameSystem::ConfigManager> configManager = GameSystem::AppInstance::GetConfigManager();
+    const Vector2I fieldSize = configManager->windowResolution;
     const double minPos = enemyWidth * enemyXPivot;
     const double maxPos = fieldSize.x() - (enemyWidth * enemyXPivot);
-    std::uniform_real_distribution<> dis(minPos, maxPos);
 
     std::vector<Vector2D> outList;
-    for (uint8_t i = 0; i < positionsNum; ++i)
+    for (int64_t i = 0; i < positionsNum; ++i)
     {
-        double desiredPos = dis(gen);
-        bool needLeftCheck = false;
-        for (auto el : outList)
-        {
-            if (std::abs(el.x() - desiredPos) < enemyWidth)
-            {
-                assert(!needLeftCheck);
-                if (el.x() + enemyWidth < maxPos)
-                {
-                    desiredPos = el.x() + enemyWidth;
-                }
-                else
-                {
-                    needLeftCheck = true;
-                }
-            }
-        }
-        if (needLeftCheck)
-        {
-            for (auto itr = outList.end() - 1; itr >= outList.begin(); itr--)
-            {
-                if (std::abs(itr->x() - desiredPos) < enemyWidth)
-                {
-                    if (desiredPos > minPos)
-                    {
-                        desiredPos = itr->x() - enemyWidth;
-                    }
-                    else
-                    {
-                        assert(false);
-                    }
-                }
-            }
-        }
-        outList.emplace_back(desiredPos, yPos);
-        std::ranges::sort(outList, [](const Vector2D &left, const Vector2D right) { return left.x() < right.x(); });
-    }
-    for (auto a : outList)
-    {
-        std::cout << a.x() << std::endl;
+        const double xPos = FindFreePosition(outList, minPos, maxPos, enemyWidth);
+        outList.emplace_back(xPos, yPos);
     }
     return outList;
 }

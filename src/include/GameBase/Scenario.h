@@ -2,6 +2,7 @@
 
 #include "GameSystem/AppInstance.h"
 #include "Types.h"
+#include <cstdint>
 
 namespace GameBase
 {
@@ -15,7 +16,7 @@ class Scenario : public GameSystem::IUpdateble
 
   private:
     static void SpawnEnemies(const std::vector<Vector2D> &positions);
-    static auto GetSpawnPositions(uint8_t positionsNum) -> std::vector<Vector2D>;
+    static auto GetSpawnPositions(int64_t positionsNum) -> std::vector<Vector2D>;
 
     double timeFromLastSpawn = 0.;
     double timeToSpawn = 3.;
