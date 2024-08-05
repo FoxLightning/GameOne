@@ -14,6 +14,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     SDL3_image::SDL3_image
     SDL3_ttf::SDL3_ttf
     Boost::geometry
+    Boost::property_tree
 )
 # clang-tidy setup
 find_program(CLANG_TIDY_EXE NAMES "clang-tidy")

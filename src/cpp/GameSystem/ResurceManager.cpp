@@ -20,7 +20,7 @@ ResurceManager::ResurceManager()
         return;
     }
 
-    for (const char *const texturePath : {Const::ship, Const::enemy, Const::missle})
+    for (const char *const texturePath : {Const::Textures::ship, Const::Textures::enemy, Const::Textures::missle})
     {
         textureHolder[texturePath] = LoadTexture(texturePath);
     }

@@ -13,9 +13,6 @@ using Vector2I = bgm::d2::point_xy<int32_t>;
 using Vector2L = bgm::d2::point_xy<int64_t>;
 using Box2D = bgm::box<bgm::d2::point_xy<double>>;
 
-#define AreIntersects bg::intersects
-#define Distance bg::distance
-
 template <typename T>
 auto operator+(const bgm::d2::point_xy<T> &left, const bgm::d2::point_xy<T> &right) -> bgm::d2::point_xy<T>
 {
@@ -71,7 +68,7 @@ auto operator/(T scalar, const bgm::d2::point_xy<T> &point) -> bgm::d2::point_xy
 template <typename T>
 auto Normalize(const T &point) -> T
 {
-    auto dst = Distance(Vector2D(), point);
+    auto dst = bg::distance(Vector2D(), point);
     if (dst > 0)
     {
         return point / dst;

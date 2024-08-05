@@ -12,9 +12,9 @@ namespace Game
 
 Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
 {
-    SetSize(Vector2D(40., 40.));
+    SetSize(Vector2D(Const::System::Geometry::bulletSize, Const::System::Geometry::bulletSize));
     SetPosition(start);
-    SetMaxSpeed(400.);
+    SetMaxSpeed(Const::Gameplay::bulletSpeed);
     SetDirection(direction);
 }
 
@@ -30,7 +30,7 @@ void Bullet::Update(double deltaTime)
 
 void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::missle))
+    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::missle))
     {
         inRenderer->Draw(GetRectangle(), texture);
         return;

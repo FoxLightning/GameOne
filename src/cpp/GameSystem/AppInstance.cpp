@@ -33,7 +33,8 @@ void AppInstance::Start() // NOLINT
     assert(!isRunning);
     isRunning = true;
 
-    const auto duration_double = std::chrono::duration<double, std::milli>(1000. / configManagerInstance->frameRate);
+    const auto duration_double =
+        std::chrono::duration<double, std::milli>(1000. / configManagerInstance->GetConfiguration().frameRate);
     const auto frameDelay = std::chrono::duration_cast<std::chrono::milliseconds>(duration_double);
     auto lastFrameTime = std::chrono::high_resolution_clock::now();
     currentAppState = std::make_shared<GameBase::GameState>();

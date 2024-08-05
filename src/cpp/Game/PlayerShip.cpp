@@ -6,6 +6,7 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/ConfigManager.h"
 #include "Types.h"
 #include <memory>
 
@@ -13,13 +14,16 @@ namespace Game
 {
 PlayerShip::PlayerShip()
 {
-    const Vector2D desiredSize = Vector2D(128., 128);
-    const Vector2D startPosition = Vector2D(1280. / 2., 720. - (desiredSize.y() / 2.));
+    const Vector2D desiredSize = Vector2D(Const::System::Geometry::playerSize, Const::System::Geometry::playerSize);
+    auto configManager = GameSystem::AppInstance::GetConfigManager();
+    auto resolution = configManager->GetConfiguration().windowResolution;
+    const Vector2D startPosition = Vector2D(static_cast<double>(resolution.x()) / 2.,
+                                            static_cast<double>(resolution.y()) - (desiredSize.y() / 2.));
     auto playerController = std::make_shared<Game::PlayerController>();
     playerController->SubscribeInput();
     SetPosition(startPosition);
-    SetSize(Vector2D(128., 128));
-    SetMaxSpeed(500.);
+    SetSize(desiredSize);
+    SetMaxSpeed(Const::Gameplay::playerMaxSpeed);
 
     if (playerController)
     {
@@ -30,7 +34,7 @@ PlayerShip::PlayerShip()
 
 void PlayerShip::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::ship))
+    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::ship))
     {
         inRenderer->Draw(GetRectangle(), texture);
         return;

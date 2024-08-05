@@ -1,4 +1,5 @@
 #include "GameSystem/Renderer.h"
+#include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
 #include "Types.h"
@@ -23,7 +24,7 @@ Renderer::Renderer()
     }
 
     const std::shared_ptr<ConfigManager> configManager = AppInstance::GetConfigManager();
-    const auto Resolution = configManager->windowResolution;
+    const auto Resolution = configManager->GetConfiguration().windowResolution;
     window = SDL_CreateWindow("SDL Game Loop Example", Resolution.x(), Resolution.y(), 0);
     if (window == nullptr)
     {
@@ -51,7 +52,7 @@ Renderer::~Renderer()
 
 void Renderer::Clear()
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, Const::Color::chenelFull);
     SDL_RenderClear(renderer);
 }
 
@@ -67,7 +68,7 @@ void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
     const SDL_FRect rectangle = CastSDL_FRect(shape);
     if (texture == nullptr)
     {
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
+        SDL_SetRenderDrawColor(renderer, Const::Color::chenelFull, 0, 0, Const::Color::chenelFull);
         SDL_RenderFillRect(renderer, &rectangle);
         return;
     }

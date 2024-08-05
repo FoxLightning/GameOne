@@ -1,7 +1,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/Renderer.h"
-#include "Types.h"
+#include "boost/geometry/algorithms/detail/intersects/interface.hpp"
 #include <algorithm>
 #include <memory>
 
@@ -62,7 +62,7 @@ auto GameWorld::CheckIntersections(const std::shared_ptr<Entity> &left, const st
 {
     if (left && right && left.get() != right.get())
     {
-        return AreIntersects(left->GetRectangle(), right->GetRectangle());
+        return boost::geometry::intersects(left->GetRectangle(), right->GetRectangle());
     }
     return false;
 }

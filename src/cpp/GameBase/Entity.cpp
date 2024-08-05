@@ -1,4 +1,5 @@
 #include "GameBase/Entity.h"
+#include "Constants.h"
 #include "GameBase/BaseController.h"
 #include "GameSystem/AppInstance.h"
 #include "Types.h"
@@ -67,7 +68,10 @@ void Collider::Move(Vector2D delta)
 
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    inRenderer->Draw(GetRectangle(), LinearColor{.r = 0xFF, .g = 0x00, .b = 0xFF, .a = 0xFF});
+    inRenderer->Draw(GetRectangle(), LinearColor{.r = Const::Color::chenelFull,
+                                                 .g = 0x00,
+                                                 .b = Const::Color::chenelFull,
+                                                 .a = Const::Color::chenelFull});
 }
 
 void Entity::SetWaitForDelete()

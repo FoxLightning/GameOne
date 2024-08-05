@@ -1,4 +1,5 @@
 #pragma once
+#include "Constants.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/Renderer.h"
 #include <memory>
@@ -19,7 +20,7 @@ class PlayerShip final : public GameBase::Entity
     void SpawnMissle();
 
     bool triggerPulled = false;
-    double reloadTime = 0.2;
+    double reloadTime = Const::Gameplay::playerReloadTime;
     double timeFromLastShot = 0;
 };
 

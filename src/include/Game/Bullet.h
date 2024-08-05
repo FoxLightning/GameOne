@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Constants.h"
 #include "GameBase/Entity.h"
 
 namespace Game
@@ -17,7 +18,7 @@ class Bullet final : public GameBase::Entity
     void CheckCollision(Enemy *inCollider) override;
 
   private:
-    double lifeTime = 10.;
+    double lifeTime = Const::System::bulletLifeTime;
 };
 
 }; // namespace Game

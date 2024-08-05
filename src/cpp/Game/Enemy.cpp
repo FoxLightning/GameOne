@@ -12,7 +12,7 @@ namespace Game
 Enemy::Enemy(Vector2D position, double speed)
 {
     SetPosition(position);
-    SetSize(Vector2D(128., 128.));
+    SetSize(Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize));
     SetMaxSpeed(speed);
     SetDirection(Vector2D(0., 1.));
 }
@@ -24,7 +24,7 @@ void Enemy::Update(double deltaTime)
 
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::enemy))
+    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemy))
     {
         inRenderer->Draw(GetRectangle(), texture);
         return;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Constants.h"
 #include "Types.h"
 
 namespace GameSystem
@@ -7,9 +8,19 @@ namespace GameSystem
 // get this data from config NOLINT
 class ConfigManager
 {
+    struct Configuration;
+
   public:
-    ConfigManager() = default;
-    Vector2I windowResolution = {1280L, 720L}; // NOLINT
-    double frameRate = 30.;                    // NOLINT
+    ConfigManager();
+
+    auto GetConfiguration() -> Configuration;
+
+  private:
+    struct Configuration
+    {
+        Vector2I windowResolution{Const::Configuration::Defaults::resolutionWidth,
+                                  Const::Configuration::Defaults::resolutionHeight};
+        double frameRate{Const::Configuration::Defaults::frameRate};
+    } configuration;
 };
 }; // namespace GameSystem

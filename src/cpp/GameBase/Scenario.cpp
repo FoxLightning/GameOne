@@ -125,7 +125,7 @@ auto Scenario::GetSpawnPositions(int64_t positionsNum) -> std::vector<Vector2D>
     const double yPos = -128. * enemyYPivot;
 
     const std::shared_ptr<GameSystem::ConfigManager> configManager = GameSystem::AppInstance::GetConfigManager();
-    const Vector2I fieldSize = configManager->windowResolution;
+    const Vector2I fieldSize = configManager->GetConfiguration().windowResolution;
     const double minPos = enemyWidth * enemyXPivot;
     const double maxPos = fieldSize.x() - (enemyWidth * enemyXPivot);
 

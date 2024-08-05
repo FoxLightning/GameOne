@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "Types.h"
 #include <cstdint>
@@ -19,8 +20,8 @@ class Scenario : public GameSystem::IUpdateble
     static auto GetSpawnPositions(int64_t positionsNum) -> std::vector<Vector2D>;
 
     double timeFromLastSpawn = 0.;
-    double timeToSpawn = 3.;
-    uint8_t spawnNumber = 5;
+    double timeToSpawn = Const::Gameplay::timeToSpawnEnemy;
+    uint8_t spawnNumber = Const::Gameplay::waveNumber;
 };
 
 } // namespace GameBase
