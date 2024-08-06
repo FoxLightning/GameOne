@@ -1,4 +1,5 @@
 #include "GameBase/Scenario.h"
+#include "Constants.h"
 #include "Game/Enemy.h"
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
@@ -44,7 +45,7 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
 
     for (const Vector2D &position : positions)
     {
-        gameWorld->AddEntity<Game::Enemy>(position, 100.);
+        gameWorld->AddEntity<Game::Enemy>(position, Const::Gameplay::enemySpeed);
     }
 }
 namespace

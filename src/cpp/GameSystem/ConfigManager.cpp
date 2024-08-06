@@ -1,7 +1,11 @@
 #include "GameSystem/ConfigManager.h"
 #include "Constants.h"
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
+#include "boost/property_tree/json_parser.hpp"
+#include "boost/property_tree/json_parser/error.hpp"
+#include "boost/property_tree/ptree.hpp"
+#include "boost/property_tree/ptree_fwd.hpp"
+#include <cstdint>
+#include <iostream>
 
 namespace GameSystem
 {
@@ -15,22 +19,22 @@ ConfigManager::ConfigManager()
     }
     catch (const boost::property_tree::json_parser::json_parser_error &e)
     {
-        std::cerr << "Error reading JSON file: " << e.what() << std::endl;
+        std::cerr << "Error reading JSON file: " << e.what() << "\n";
         return;
     }
 
     try
     {
         configuration.frameRate = settingsTree.get<double>(Const::Configuration::Fields::frameRate);
-        boost::property_tree::ptree resolution = settingsTree.get_child(Const::Configuration::Fields::resolution);
-        auto height = resolution.get<int32_t>(Const::Configuration::Fields::resolutionHeight);
-        auto width = resolution.get<int32_t>(Const::Configuration::Fields::resolutionWidth);
+        const boost::property_tree::ptree resolution = settingsTree.get_child(Const::Configuration::Fields::resolution);
+        const auto height = resolution.get<int32_t>(Const::Configuration::Fields::resolutionHeight);
+        const auto width = resolution.get<int32_t>(Const::Configuration::Fields::resolutionWidth);
         configuration.windowResolution.x(width);
         configuration.windowResolution.y(height);
     }
     catch (const boost::property_tree::ptree_error &e)
     {
-        std::cerr << "Error accessing data in JSON: " << e.what() << std::endl;
+        std::cerr << "Error accessing data in JSON: " << e.what() << "\n";
     }
 }
 auto ConfigManager::GetConfiguration() -> Configuration

@@ -1,18 +1,21 @@
 #pragma once
+#include "Types.h"
 #include <cstdint>
 
 namespace Const
 {
 namespace Color
 {
-extern const uint8_t chenelFull;
-}
+extern const LinearColor Black;
+extern const LinearColor Red;
+extern const LinearColor Green;
+extern const LinearColor Blue;
+} // namespace Color
 namespace System
 {
 extern const double bulletLifeTime;
 namespace Geometry
 {
-extern const double center;
 extern const double enemySize;
 extern const double playerSize;
 extern const double bulletSize;
@@ -22,6 +25,7 @@ namespace Gameplay
 {
 extern const double playerMaxSpeed;
 extern const double bulletSpeed;
+extern const double enemySpeed;
 extern const double playerReloadTime;
 extern const double timeToSpawnEnemy;
 extern const int64_t waveNumber;

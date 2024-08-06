@@ -68,10 +68,7 @@ void Collider::Move(Vector2D delta)
 
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    inRenderer->Draw(GetRectangle(), LinearColor{.r = Const::Color::chenelFull,
-                                                 .g = 0x00,
-                                                 .b = Const::Color::chenelFull,
-                                                 .a = Const::Color::chenelFull});
+    inRenderer->Draw(GetRectangle(), Const::Color::Green);
 }
 
 void Entity::SetWaitForDelete()

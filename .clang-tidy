@@ -15,8 +15,10 @@ Checks: >
   -cppcoreguidelines-special-member-functions,
   -bugprone-easily-swappable-parameters,
   -cppcoreguidelines-avoid-do-while,
-CheckOptions:
-- key: readability-magic-numbers.IgnoredValues
-  value: '0, 1, 2, 0.5'
+  -readability-magic-numbers,
+  -clang-analyzer-optin.cplusplus.UninitializedObject
 WarningsAsErrors: false
 HeaderFilterRegex: '.*/GameOne/src/include/.*'
+CheckOptions:
+- key: cppcoreguidelines-avoid-magic-numbers.IgnoredFloatingPointValues
+  value: 0.5;1;2

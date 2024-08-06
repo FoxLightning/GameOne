@@ -1,12 +1,16 @@
 #include "Constants.h"
+#include "Types.h"
 #include <cstdint>
 
 namespace Const
 {
 namespace Color
 {
-const uint8_t chenelFull = 0xFF;
-}
+const LinearColor Black = {.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
+const LinearColor Red = {.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
+const LinearColor Green = {.r = 0x00, .g = 0xFF, .b = 0x00, .a = 0xFF};
+const LinearColor Blue = {.r = 0x00, .g = 0x00, .b = 0xFF, .a = 0xFF};
+} // namespace Color
 namespace System
 {
 const double bulletLifeTime = 10.;
@@ -22,6 +26,7 @@ namespace Gameplay
 {
 const double playerMaxSpeed = 400.;
 const double bulletSpeed = 800.;
+const double enemySpeed = 100.;
 const double playerReloadTime = 0.2;
 const double timeToSpawnEnemy = 3.;
 const int64_t waveNumber = 3;

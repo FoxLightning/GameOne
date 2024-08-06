@@ -52,7 +52,8 @@ Renderer::~Renderer()
 
 void Renderer::Clear()
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, Const::Color::chenelFull);
+    SDL_SetRenderDrawColor(renderer, Const::Color::Black.r, Const::Color::Black.g, Const::Color::Black.b,
+                           Const::Color::Black.a);
     SDL_RenderClear(renderer);
 }
 
@@ -68,7 +69,8 @@ void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
     const SDL_FRect rectangle = CastSDL_FRect(shape);
     if (texture == nullptr)
     {
-        SDL_SetRenderDrawColor(renderer, Const::Color::chenelFull, 0, 0, Const::Color::chenelFull);
+        SDL_SetRenderDrawColor(renderer, Const::Color::Red.r, Const::Color::Red.g, Const::Color::Red.b,
+                               Const::Color::Red.a);
         SDL_RenderFillRect(renderer, &rectangle);
         return;
     }

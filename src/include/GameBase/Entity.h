@@ -34,7 +34,7 @@ class Collider
     void Move(Vector2D delta);
 
   private:
-    Vector2D pivot = Vector2D(Const::System::Geometry::center, Const::System::Geometry::center);
+    Vector2D pivot = Vector2D(0.5, 0.5);
     Box2D rectangle = Box2D(Vector2D(0., 0.), Vector2D(0., 0.));
 };
 
