@@ -5,6 +5,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
+#include "GameSystem/Exceptions.h"
 #include "Types.h"
 #include <algorithm>
 #include <cassert>
@@ -33,14 +34,12 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
     const std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
     if (!currentState)
     {
-        std::cerr << "current game state is not valid\n";
-        return;
+        throw GameSystem::CriticalException("current game state is not valid");
     }
     const std::shared_ptr<GameWorld> gameWorld = currentState->GetGameWorld();
     if (!gameWorld)
     {
-        std::cerr << "current game world is not valid\n";
-        return;
+        throw GameSystem::CriticalException("current game world is not valid");
     }
 
     for (const Vector2D &position : positions)

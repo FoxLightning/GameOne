@@ -20,6 +20,7 @@ ConfigManager::ConfigManager()
     catch (const boost::property_tree::json_parser::json_parser_error &e)
     {
         std::cerr << "Error reading JSON file: " << e.what() << "\n";
+        std::cerr << "Default settings applyed.\n";
         return;
     }
 
@@ -34,7 +35,12 @@ ConfigManager::ConfigManager()
     }
     catch (const boost::property_tree::ptree_error &e)
     {
+        configuration.frameRate = Const::Configuration::Defaults::frameRate;
+        configuration.windowResolution.x(Const::Configuration::Defaults::resolutionWidth);
+        configuration.windowResolution.y(Const::Configuration::Defaults::resolutionHeight);
+
         std::cerr << "Error accessing data in JSON: " << e.what() << "\n";
+        std::cerr << "Default settings applyed.\n";
     }
 }
 auto ConfigManager::GetConfiguration() -> Configuration

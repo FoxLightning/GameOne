@@ -3,8 +3,10 @@
 #include "Game/PlayerShip.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
 #include "Types.h"
+#include <iostream>
 #include <memory>
 
 namespace Game
@@ -24,12 +26,16 @@ void Enemy::Update(double deltaTime)
 
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemy))
+    try
     {
+        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemy);
         inRenderer->Draw(GetRectangle(), texture);
-        return;
     }
-    GameBase::Entity::Draw(inRenderer);
+    catch (GameSystem::InvalidDataException &exception)
+    {
+        std::cerr << exception.what() << "\n";
+        GameBase::Entity::Draw(inRenderer);
+    }
 }
 
 void Enemy::CheckCollision(GameBase::Collider *inCollider)

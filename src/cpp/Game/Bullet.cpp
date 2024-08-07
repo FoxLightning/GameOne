@@ -3,8 +3,10 @@
 #include "Game/Enemy.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
 #include "Types.h"
+#include <iostream>
 #include <memory>
 
 namespace Game
@@ -30,12 +32,16 @@ void Bullet::Update(double deltaTime)
 
 void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::missle))
+    try
     {
+        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::missle);
         inRenderer->Draw(GetRectangle(), texture);
-        return;
     }
-    GameBase::Entity::Draw(inRenderer);
+    catch (GameSystem::InvalidDataException &exception)
+    {
+        std::cerr << exception.what() << "\n";
+        GameBase::Entity::Draw(inRenderer);
+    }
 }
 
 void Bullet::CheckCollision(GameBase::Collider *inCollider)

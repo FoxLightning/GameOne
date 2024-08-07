@@ -7,7 +7,9 @@
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
+#include "GameSystem/Exceptions.h"
 #include "Types.h"
+#include <iostream>
 #include <memory>
 
 namespace Game
@@ -34,12 +36,16 @@ PlayerShip::PlayerShip()
 
 void PlayerShip::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    if (auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::ship))
+    try
     {
+        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemy);
         inRenderer->Draw(GetRectangle(), texture);
-        return;
     }
-    GameBase::Entity::Draw(inRenderer);
+    catch (GameSystem::InvalidDataException &exception)
+    {
+        std::cerr << exception.what() << "\n";
+        GameBase::Entity::Draw(inRenderer);
+    }
 }
 
 void PlayerShip::CheckCollision(GameBase::Collider *inCollider)

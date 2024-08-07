@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
+#include "GameSystem/Exceptions.h"
 #include "Types.h"
 #include "SDL3/SDL_error.h"
 #include "SDL3/SDL_init.h"
@@ -9,7 +10,7 @@
 #include "SDL3/SDL_render.h"
 #include "SDL3/SDL_surface.h"
 #include "SDL3/SDL_video.h"
-#include <iostream>
+#include <format>
 #include <memory>
 
 namespace GameSystem
@@ -19,8 +20,7 @@ Renderer::Renderer()
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << "\n";
-        return;
+        throw GameSystem::CriticalException(std::format("SDL_Init Error: {}", SDL_GetError()));
     }
 
     const std::shared_ptr<ConfigManager> configManager = AppInstance::GetConfigManager();
@@ -28,18 +28,13 @@ Renderer::Renderer()
     window = SDL_CreateWindow("SDL Game Loop Example", Resolution.x(), Resolution.y(), 0);
     if (window == nullptr)
     {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << "\n";
-        SDL_Quit();
-        return;
+        throw GameSystem::CriticalException(std::format("SDL_CreateWindow Error: {}", SDL_GetError()));
     }
 
     renderer = SDL_CreateRenderer(window, nullptr);
     if (renderer == nullptr)
     {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << "\n";
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return;
+        throw GameSystem::CriticalException(std::format("SDL_CreateRenderer Error: {}", SDL_GetError()));
     }
 }
 

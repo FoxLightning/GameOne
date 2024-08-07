@@ -1,12 +1,14 @@
 #include "GameSystem/ResurceManager.h"
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
 #include "SDL3/SDL_error.h"
 #include "SDL3/SDL_render.h"
 #include "SDL3/SDL_surface.h"
 #include "SDL3_image/SDL_image.h"
 #include <cstdlib>
+#include <format>
 #include <iostream>
 #include <memory>
 
@@ -16,13 +18,19 @@ ResurceManager::ResurceManager()
 {
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
-        std::cerr << "SDL_image could not initialize! IMG_Error: " << IMG_GetError() << "\n";
-        return;
+        throw CriticalException(std::format("SDL_image could not initialize! IMG_Error: {}", IMG_GetError()));
     }
 
     for (const char *const texturePath : {Const::Textures::ship, Const::Textures::enemy, Const::Textures::missle})
     {
-        textureHolder[texturePath] = LoadTexture(texturePath);
+        try
+        {
+            textureHolder[texturePath] = LoadTexture(texturePath);
+        }
+        catch (InvalidDataException &exception)
+        {
+            std::cerr << exception.what() << "\n";
+        }
     }
 }
 
@@ -30,8 +38,7 @@ auto ResurceManager::GetTexture(const char *const texturePath) -> SDL_Texture *
 {
     if (textureHolder.find(texturePath) == textureHolder.end())
     {
-        std::cerr << "Texture: \"" << texturePath << "\" not loaded" << "\n";
-        exit(1);
+        throw InvalidDataException("Texture not loaded.", texturePath);
     }
     return textureHolder[texturePath].texture;
 }
@@ -42,14 +49,15 @@ auto ResurceManager::LoadTexture(const char *const texturePath) -> TextureData
     SDL_Surface *surface = IMG_Load(texturePath);
     if (surface == nullptr)
     {
-        std::cerr << "Unable to load image " << texturePath << "! SDL_image Error: " << IMG_GetError() << "\n";
+        throw InvalidDataException(std::format("Unable to load image. SDL_Error: {}.", SDL_GetError()), texturePath);
     }
     const std::shared_ptr<Renderer> Renderer = GameSystem::AppInstance::GetRender();
     texture = Renderer->CreateTexture(surface);
     if (texture == nullptr)
     {
-        std::cerr << "Unable to create texture from " << texturePath << "! SDL_Error: " << SDL_GetError() << "\n";
         SDL_DestroySurface(surface);
+        throw InvalidDataException(std::format("Unable to create texture. SDL_Error: {}.", SDL_GetError()),
+                                   texturePath);
     }
 
     return TextureData{.texture = texture, .surface = surface};
