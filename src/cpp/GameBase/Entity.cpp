@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "GameBase/BaseController.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/BaseAnimation.h"
 #include "Types.h"
 #include <cassert>
 #include <memory>
@@ -78,6 +79,15 @@ void Entity::SetWaitForDelete()
 
 void Entity::Update(const double deltaTime)
 {
+    if (animation && animation->IsAnimationFinished())
+    {
+        animation.reset();
+    }
+    if (animation)
+    {
+        animation->Update(deltaTime);
+    }
+
     if (controller)
     {
         controller->ApplyCommands(this);
@@ -101,9 +111,19 @@ auto Entity::GetController() -> std::shared_ptr<BaseController>
     return controller;
 }
 
+auto Entity::GetCurrentAnimation() -> const std::shared_ptr<GameSystem::BaseAnimation> &
+{
+    return animation;
+}
+
 void Entity::SetController(const std::shared_ptr<BaseController> &inController)
 {
     controller = inController;
+}
+
+void Entity::PlayAnimation(const std::shared_ptr<GameSystem::BaseAnimation> &inAnimation)
+{
+    animation = inAnimation;
 }
 
 void Entity::SetDirection(const Vector2D &inSpeed)

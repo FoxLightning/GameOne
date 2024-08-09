@@ -1,7 +1,7 @@
 #pragma once
-#include "Constants.h"
 #include "GameBase/BaseController.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Renderer.h"
 #include "Types.h"
 #include <memory>
@@ -58,9 +58,13 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
 
   protected:
     auto GetController() -> std::shared_ptr<BaseController>;
+    auto GetCurrentAnimation() -> const std::shared_ptr<GameSystem::BaseAnimation> &;
+
     void SetController(const std::shared_ptr<BaseController> &inController);
+    void PlayAnimation(const std::shared_ptr<GameSystem::BaseAnimation> &inAnimation);
 
   private:
+    std::shared_ptr<GameSystem::BaseAnimation> animation;
     bool waitingForDelete = false;
 
     Vector2D direction = Vector2D(0., 0.);

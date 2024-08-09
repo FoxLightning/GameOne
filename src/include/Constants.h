@@ -14,6 +14,8 @@ extern const LinearColor Blue;
 namespace System
 {
 extern const double bulletLifeTime;
+extern const double animationFrameTime;
+extern const int64_t enemyDamageFrames;
 namespace Geometry
 {
 extern const double enemySize;
@@ -29,6 +31,8 @@ extern const double enemySpeed;
 extern const double playerReloadTime;
 extern const double timeToSpawnEnemy;
 extern const int64_t waveNumber;
+extern const double bulletDamage;
+extern const double enemyHP;
 } // namespace Gameplay
 namespace Configuration
 {
@@ -51,6 +55,7 @@ namespace Textures
 {
 extern const char *const ship;
 extern const char *const enemy;
+extern const char *const enemyAnimation;
 extern const char *const missle;
 } // namespace Textures
 } // namespace Const

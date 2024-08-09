@@ -10,6 +10,7 @@
 #include "SDL3/SDL_render.h"
 #include "SDL3/SDL_surface.h"
 #include "SDL3/SDL_video.h"
+#include <cassert>
 #include <format>
 #include <memory>
 
@@ -59,16 +60,27 @@ void Renderer::Draw(const Box2D &shape, const LinearColor &color)
     SDL_RenderFillRect(renderer, &rectangle);
 }
 
+void Renderer::Draw(const RenderAnimation &inAnimation)
+{
+    assert(inAnimation.texture);
+
+    const float xPos = static_cast<float>(inAnimation.currentFrame % inAnimation.tiles.x()) *
+                       static_cast<float>(inAnimation.tileSize.x());
+    const float yPos = static_cast<float>(inAnimation.currentFrame / inAnimation.tiles.y()) * // NOLINT
+                       static_cast<float>(inAnimation.tileSize.y());
+    const SDL_FRect srcRect{.x = xPos,
+                            .y = yPos,
+                            .w = static_cast<float>(inAnimation.tileSize.x()),
+                            .h = static_cast<float>(inAnimation.tileSize.y())};
+
+    const SDL_FRect rectangle = CastSDL_FRect(*inAnimation.shape);
+    SDL_RenderTexture(renderer, inAnimation.texture, &srcRect, &rectangle);
+}
+
 void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
 {
+    assert(texture);
     const SDL_FRect rectangle = CastSDL_FRect(shape);
-    if (texture == nullptr)
-    {
-        SDL_SetRenderDrawColor(renderer, Const::Color::Red.r, Const::Color::Red.g, Const::Color::Red.b,
-                               Const::Color::Red.a);
-        SDL_RenderFillRect(renderer, &rectangle);
-        return;
-    }
     SDL_RenderTexture(renderer, texture, nullptr, &rectangle);
 }
 

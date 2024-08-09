@@ -21,7 +21,8 @@ ResurceManager::ResurceManager()
         throw CriticalException(std::format("SDL_image could not initialize! IMG_Error: {}", IMG_GetError()));
     }
 
-    for (const char *const texturePath : {Const::Textures::ship, Const::Textures::enemy, Const::Textures::missle})
+    for (const char *const texturePath :
+         {Const::Textures::ship, Const::Textures::enemy, Const::Textures::missle, Const::Textures::enemyAnimation})
     {
         try
         {

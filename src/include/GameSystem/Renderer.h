@@ -1,4 +1,5 @@
 #pragma once
+#include "GameSystem/BaseAnimation.h"
 #include "Types.h"
 #include <memory>
 
@@ -9,6 +10,7 @@ struct SDL_Surface;
 
 namespace GameSystem
 {
+struct RenderAnimation;
 
 class Renderer final
 {
@@ -20,6 +22,7 @@ class Renderer final
     void Render();
     auto CreateTexture(SDL_Surface *surface) -> SDL_Texture *;
     void Draw(const Box2D &shape, SDL_Texture *texture);
+    void Draw(const RenderAnimation &inAnimation);
     void Draw(const Box2D &shape, const LinearColor &color);
 
   private:

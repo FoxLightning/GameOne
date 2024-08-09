@@ -17,5 +17,8 @@ class Enemy final : public GameBase::Entity
     void CheckCollision(GameBase::Collider *inCollider) override;
     void CheckCollision(Bullet *inCollider) override;
     void CheckCollision(PlayerShip *inCollider) override;
+
+  private:
+    double HP = Const::Gameplay::enemyHP;
 };
 } // namespace Game

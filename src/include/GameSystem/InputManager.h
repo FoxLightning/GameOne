@@ -1,5 +1,5 @@
 #pragma once
-#include "GameBase/BaseController.h"
+#include "Game/PlayerController.h"
 #include "SDL3/SDL_scancode.h"
 #include <functional>
 #include <list>
@@ -34,7 +34,7 @@ struct Mapping
 struct Subscription
 {
     ActionType actionType;
-    std::weak_ptr<GameBase::BaseController> owner;
+    std::weak_ptr<Game::PlayerController> owner;
     std::function<void(EventType)> callback;
 };
 

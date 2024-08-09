@@ -44,6 +44,11 @@ void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
     }
 }
 
+auto Bullet::GetDamage() const -> double
+{
+    return bulletDamage;
+}
+
 void Bullet::CheckCollision(GameBase::Collider *inCollider)
 {
     inCollider->CheckCollision(this);

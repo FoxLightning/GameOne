@@ -38,7 +38,7 @@ void PlayerShip::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     try
     {
-        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemy);
+        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::ship);
         inRenderer->Draw(GetRectangle(), texture);
     }
     catch (GameSystem::InvalidDataException &exception)

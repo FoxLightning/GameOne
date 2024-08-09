@@ -14,6 +14,8 @@ const LinearColor Blue = {.r = 0x00, .g = 0x00, .b = 0xFF, .a = 0xFF};
 namespace System
 {
 const double bulletLifeTime = 10.;
+const double animationFrameTime = 1. / 15.;
+const int64_t enemyDamageFrames = 4;
 namespace Geometry
 {
 const double center = 0.5;
@@ -30,6 +32,8 @@ const double enemySpeed = 100.;
 const double playerReloadTime = 0.2;
 const double timeToSpawnEnemy = 3.;
 const int64_t waveNumber = 3;
+const double bulletDamage = 1.;
+const double enemyHP = 4.;
 } // namespace Gameplay
 namespace Configuration
 {
@@ -52,6 +56,7 @@ namespace Textures
 {
 const char *const ship = "resurces/textures/Ship_1_A_Small.png";
 const char *const enemy = "resurces/textures/Enemy_1_A_Small.png";
+const char *const enemyAnimation = "resurces/textures/enemy_animation.png";
 const char *const missle = "resurces/textures/Missile_A_Small.png";
 } // namespace Textures
 } // namespace Const
