@@ -1,12 +1,13 @@
 #pragma once
-
-#include "Game/Bullet.h"
-#include "Game/PlayerShip.h"
+#include "Constants.h"
 #include "GameBase/Entity.h"
 #include "Types.h"
 
 namespace Game
 {
+class PlayerShip;
+class Bullet;
+
 class Enemy final : public GameBase::Entity
 {
   public:

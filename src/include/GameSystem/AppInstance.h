@@ -1,5 +1,4 @@
 #pragma once
-
 #include "GameSystem/ResurceManager.h"
 #include <memory>
 

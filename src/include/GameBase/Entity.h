@@ -1,7 +1,5 @@
 #pragma once
-#include "GameBase/BaseController.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Renderer.h"
 #include "Types.h"
 #include <memory>
@@ -10,10 +8,18 @@ namespace Game
 {
 class Bullet;
 class Enemy;
+class Explosion;
+class PlayerShip;
 } // namespace Game
+
+namespace GameSystem
+{
+class BaseAnimation;
+}
 
 namespace GameBase
 {
+class BaseController;
 
 class Collider
 {
@@ -24,6 +30,7 @@ class Collider
     virtual void CheckCollision(Collider *inCollider) = 0;
     virtual void CheckCollision(Game::Bullet *inCollider) {};
     virtual void CheckCollision(Game::Enemy *inCollider) {};
+    virtual void CheckCollision(Game::Explosion *inCollider) {};
     virtual void CheckCollision(Game::PlayerShip *inCollider) {};
     [[nodiscard]] auto GetRectangle() const -> const Box2D &;
 
@@ -58,7 +65,9 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
 
   protected:
     auto GetController() -> std::shared_ptr<BaseController>;
-    auto GetCurrentAnimation() -> const std::shared_ptr<GameSystem::BaseAnimation> &;
+    [[nodiscard]] auto GetCurrentAnimation() const -> const std::shared_ptr<GameSystem::BaseAnimation> &;
+    [[nodiscard]] auto GetMaxSpeed() const -> double;
+    [[nodiscard]] auto GetDirection() const -> Vector2D;
 
     void SetController(const std::shared_ptr<BaseController> &inController);
     void PlayAnimation(const std::shared_ptr<GameSystem::BaseAnimation> &inAnimation);

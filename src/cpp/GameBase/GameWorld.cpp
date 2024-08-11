@@ -3,6 +3,7 @@
 #include "GameSystem/Renderer.h"
 #include "boost/geometry/algorithms/detail/intersects/interface.hpp"
 #include <algorithm>
+#include <cassert>
 #include <memory>
 
 namespace GameBase
@@ -20,6 +21,7 @@ void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     for (auto &entity : entitiesHolder)
     {
+        assert(entity);
         entity->Draw(inRenderer);
     }
 }

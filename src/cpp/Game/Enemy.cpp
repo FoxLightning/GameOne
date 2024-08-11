@@ -1,7 +1,11 @@
 #include "Game/Enemy.h"
 #include "Constants.h"
+#include "Game/Bullet.h"
+#include "Game/Explosion.h"
 #include "Game/PlayerShip.h"
 #include "GameBase/Entity.h"
+#include "GameBase/GameState.h"
+#include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Exceptions.h"
@@ -52,16 +56,25 @@ void Enemy::CheckCollision(GameBase::Collider *inCollider)
 void Enemy::CheckCollision(Bullet *inCollider)
 {
     HP -= inCollider->GetDamage();
-    auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyAnimation);
-
-    PlayAnimation(std::make_shared<GameSystem::BaseAnimation>(
-        Const::System::animationFrameTime, Const::System::enemyDamageFrames,
-        Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize), Vector2L(2, 2),
-        &GetRectangle(), texture));
 
     if (HP <= 0.)
     {
+        auto *texture =
+            GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyExplosionAnimation);
+        const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
+        currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
+            GetPosition(), GetDirection(), GetMaxSpeed(), Const::System::explosionAnimationFrameTime,
+            Const::System::enemyExplosionFrames, Vector2D(Const::System::explosionSize, Const::System::explosionSize),
+            Vector2L(2, 2), texture);
         SetWaitForDelete();
+    }
+    else
+    {
+        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyAnimation);
+        PlayAnimation(std::make_shared<GameSystem::BaseAnimation>(
+            Const::System::animationFrameTime, Const::System::enemyDamageFrames,
+            Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize), Vector2L(2, 2),
+            &GetRectangle(), texture));
     }
 }
 

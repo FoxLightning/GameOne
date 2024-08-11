@@ -1,5 +1,4 @@
 #pragma once
-#include "GameSystem/BaseAnimation.h"
 #include "Types.h"
 #include <memory>
 

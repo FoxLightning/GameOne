@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "Types.h"

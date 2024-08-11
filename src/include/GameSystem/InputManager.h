@@ -1,10 +1,14 @@
 #pragma once
-#include "Game/PlayerController.h"
 #include "SDL3/SDL_scancode.h"
 #include <functional>
 #include <list>
 #include <memory>
 #include <vector>
+
+namespace Game
+{
+class PlayerController;
+}
 
 namespace GameSystem
 {

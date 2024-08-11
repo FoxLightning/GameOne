@@ -16,6 +16,9 @@ namespace System
 extern const double bulletLifeTime;
 extern const double animationFrameTime;
 extern const int64_t enemyDamageFrames;
+extern const double explosionSize;
+extern const double explosionAnimationFrameTime;
+extern const int64_t enemyExplosionFrames;
 namespace Geometry
 {
 extern const double enemySize;
@@ -56,6 +59,7 @@ namespace Textures
 extern const char *const ship;
 extern const char *const enemy;
 extern const char *const enemyAnimation;
+extern const char *const enemyExplosionAnimation;
 extern const char *const missle;
 } // namespace Textures
 } // namespace Const

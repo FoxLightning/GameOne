@@ -1,5 +1,4 @@
 #pragma once
-
 #include "SDL3/SDL_rect.h"
 #include "boost/geometry.hpp" // NOLINT
 #include <cstdint>

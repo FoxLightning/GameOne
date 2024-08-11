@@ -19,7 +19,7 @@ BaseAnimation::BaseAnimation(double inFrameTime, int64_t inFrameAmount, Vector2D
 void BaseAnimation::Update(double deltaTime)
 {
     assert(!isFinished);
-    if (renderAnimation.currentFrame)
+    if (renderAnimation.currentFrame >= frameAmount)
     {
         if (onAnimationFinished)
         {

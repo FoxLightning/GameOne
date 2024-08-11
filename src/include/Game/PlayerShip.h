@@ -1,8 +1,12 @@
 #pragma once
 #include "Constants.h"
 #include "GameBase/Entity.h"
-#include "GameSystem/Renderer.h"
 #include <memory>
+
+namespace GameSystem
+{
+class Renderer;
+}
 
 namespace Game
 {

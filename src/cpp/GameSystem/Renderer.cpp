@@ -1,6 +1,7 @@
 #include "GameSystem/Renderer.h"
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/BaseAnimation.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
 #include "Types.h"

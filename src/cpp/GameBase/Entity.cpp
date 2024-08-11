@@ -83,7 +83,7 @@ void Entity::Update(const double deltaTime)
     {
         animation.reset();
     }
-    if (animation)
+    else if (animation)
     {
         animation->Update(deltaTime);
     }
@@ -111,9 +111,18 @@ auto Entity::GetController() -> std::shared_ptr<BaseController>
     return controller;
 }
 
-auto Entity::GetCurrentAnimation() -> const std::shared_ptr<GameSystem::BaseAnimation> &
+auto Entity::GetCurrentAnimation() const -> const std::shared_ptr<GameSystem::BaseAnimation> &
 {
     return animation;
+}
+
+auto Entity::GetMaxSpeed() const -> double
+{
+    return maxSpeed;
+}
+auto Entity::GetDirection() const -> Vector2D
+{
+    return direction;
 }
 
 void Entity::SetController(const std::shared_ptr<BaseController> &inController)
