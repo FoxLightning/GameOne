@@ -1,5 +1,4 @@
 #include "Game/Explosion.h"
-#include "Constants.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Renderer.h"
@@ -11,10 +10,10 @@
 
 namespace Game
 {
-Explosion::Explosion(Vector2D position, Vector2D direction, double speed, double inFrameTime, int64_t inFrameAmount,
-                     Vector2D tileSize, Vector2L tiles, SDL_Texture *texture)
+Explosion::Explosion(Vector2D position, Vector2D direction, Vector2D size, double speed, double inFrameTime,
+                     int64_t inFrameAmount, Vector2D tileSize, Vector2L tiles, SDL_Texture *texture)
 {
-    SetSize(Vector2D(Const::System::explosionSize, Const::System::explosionSize));
+    SetSize(size);
     SetPosition(position);
     SetMaxSpeed(speed);
     SetDirection(direction);

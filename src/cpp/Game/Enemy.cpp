@@ -63,9 +63,9 @@ void Enemy::CheckCollision(Bullet *inCollider)
             GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyExplosionAnimation);
         const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
         currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
-            GetPosition(), GetDirection(), GetMaxSpeed(), Const::System::explosionAnimationFrameTime,
-            Const::System::enemyExplosionFrames, Vector2D(Const::System::explosionSize, Const::System::explosionSize),
-            Vector2L(2, 2), texture);
+            GetPosition(), GetDirection(), Vector2D(Const::System::explosionSize, Const::System::explosionSize),
+            GetMaxSpeed(), Const::System::explosionAnimationFrameTime, Const::System::enemyExplosionFrames,
+            Vector2D(Const::System::explosionSize, Const::System::explosionSize), Vector2L(2, 2), texture);
         SetWaitForDelete();
     }
     else

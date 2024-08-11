@@ -1,7 +1,10 @@
 #include "Game/Bullet.h"
 #include "Constants.h"
 #include "Game/Enemy.h"
+#include "Game/Explosion.h"
 #include "GameBase/Entity.h"
+#include "GameBase/GameState.h"
+#include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
@@ -56,6 +59,13 @@ void Bullet::CheckCollision(GameBase::Collider *inCollider)
 
 void Bullet::CheckCollision(Enemy * /*inCollider*/)
 {
+    auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::bulletExplosionAnimation);
+    const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
+    currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
+        GetPosition(), Vector2D(0., 0.),
+        Vector2D(Const::System::bulletExplosionSize, Const::System::bulletExplosionSize), 0.,
+        Const::System::explosionAnimationFrameTime, Const::System::enemyExplosionFrames,
+        Vector2D(Const::System::bulletExplosionSize, Const::System::bulletExplosionSize), Vector2L(2, 2), texture);
     SetWaitForDelete();
 }
 
