@@ -5,6 +5,7 @@
 #include "GameSystem/InputManager.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
+#include "GameSystem/SoundManager.h"
 #include <cassert>
 #include <chrono>
 #include <memory>
@@ -18,6 +19,7 @@ std::shared_ptr<ConfigManager> AppInstance::configManagerInstance;
 std::shared_ptr<Renderer> AppInstance::rendererInstance;
 std::shared_ptr<InputManager> AppInstance::inputManagerInstance;
 std::shared_ptr<ResurceManager> AppInstance::resurceManagerInstance;
+std::shared_ptr<SoundManager> AppInstance::soundManagerInstance;
 bool AppInstance::isRunning;
 
 AppInstance::AppInstance()
@@ -26,6 +28,7 @@ AppInstance::AppInstance()
     rendererInstance = std::make_shared<Renderer>();
     inputManagerInstance = std::make_shared<InputManager>();
     resurceManagerInstance = std::make_shared<ResurceManager>();
+    soundManagerInstance = std::make_shared<SoundManager>();
 }
 
 void AppInstance::Start() // NOLINT
@@ -90,6 +93,12 @@ auto AppInstance::GetConfigManager() -> std::shared_ptr<ConfigManager>
 {
     assert(configManagerInstance);
     return configManagerInstance;
+}
+
+auto AppInstance::GetSoundManager() -> std::shared_ptr<SoundManager>
+{
+    assert(configManagerInstance);
+    return soundManagerInstance;
 }
 
 } // namespace GameSystem

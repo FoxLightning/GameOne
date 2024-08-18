@@ -55,6 +55,12 @@ extern const int32_t resolutionHeight;
 extern const double frameRate;
 } // namespace Defaults
 } // namespace Configuration
+namespace Sound
+{
+extern const char *const shipRocketLounch;
+extern const char *const enemyHit;
+extern const char *const enemyExplosion;
+} // namespace Sound
 namespace Textures
 {
 extern const char *const ship;

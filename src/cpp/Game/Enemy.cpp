@@ -10,6 +10,8 @@
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
+#include "GameSystem/ResurceManager.h"
+#include "GameSystem/SoundManager.h"
 #include "Types.h"
 #include <iostream>
 #include <memory>
@@ -67,6 +69,8 @@ void Enemy::CheckCollision(Bullet *inCollider)
             GetMaxSpeed(), Const::System::explosionAnimationFrameTime, Const::System::enemyExplosionFrames,
             Vector2D(Const::System::explosionSize, Const::System::explosionSize), Vector2L(2, 2), texture);
         SetWaitForDelete();
+        PlayHitSound();
+        PlayExplosionSound();
     }
     else
     {
@@ -75,6 +79,36 @@ void Enemy::CheckCollision(Bullet *inCollider)
             Const::System::animationFrameTime, Const::System::enemyDamageFrames,
             Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize), Vector2L(2, 2),
             &GetRectangle(), texture));
+        PlayHitSound();
+    }
+}
+
+void Enemy::PlayExplosionSound()
+{
+    try
+    {
+        Mix_Chunk *enemyExplosionSound =
+            GameSystem::AppInstance::GetResurceManager()->GetAudio(Const::Sound::enemyExplosion);
+        GameSystem::SoundManager::playSound(enemyExplosionSound);
+    }
+    catch (GameSystem::InvalidDataException &e)
+    {
+        std::cerr << "Explosion sound is not played\n";
+        std::cerr << e.what();
+    }
+}
+
+void Enemy::PlayHitSound()
+{
+    try
+    {
+        Mix_Chunk *enemyExplosionSound = GameSystem::AppInstance::GetResurceManager()->GetAudio(Const::Sound::enemyHit);
+        GameSystem::SoundManager::playSound(enemyExplosionSound);
+    }
+    catch (GameSystem::InvalidDataException &e)
+    {
+        std::cerr << "Hit sound is not played\n";
+        std::cerr << e.what();
     }
 }
 

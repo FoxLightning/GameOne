@@ -1,5 +1,4 @@
 #pragma once
-#include "GameSystem/ResurceManager.h"
 #include <memory>
 
 namespace GameBase
@@ -13,6 +12,7 @@ class ConfigManager;
 class Renderer;
 class InputManager;
 class ResurceManager;
+class SoundManager;
 
 class IUpdateble
 {
@@ -37,6 +37,7 @@ class AppInstance
     static auto GetInputManager() -> std::shared_ptr<InputManager>;
     static auto GetRender() -> std::shared_ptr<Renderer>;
     static auto GetResurceManager() -> std::shared_ptr<ResurceManager>;
+    static auto GetSoundManager() -> std::shared_ptr<SoundManager>;
 
   private:
     static std::shared_ptr<GameBase::GameState> currentAppState;
@@ -45,6 +46,7 @@ class AppInstance
     static std::shared_ptr<Renderer> rendererInstance;
     static std::shared_ptr<InputManager> inputManagerInstance;
     static std::shared_ptr<ResurceManager> resurceManagerInstance;
+    static std::shared_ptr<SoundManager> soundManagerInstance;
 
     static bool isRunning;
 };

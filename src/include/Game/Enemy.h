@@ -20,6 +20,8 @@ class Enemy final : public GameBase::Entity
     void CheckCollision(PlayerShip *inCollider) override;
 
   private:
+    static void PlayExplosionSound();
+    static void PlayHitSound();
     double HP = Const::Gameplay::enemyHP;
 };
 } // namespace Game

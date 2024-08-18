@@ -10,6 +10,7 @@ project(GameOne VERSION 0.1)
 enable_language(OBJC)
 
 add_subdirectory(lib/SDL)
+add_subdirectory(lib/SDL_mixer)
 add_subdirectory(lib/SDL_image)
 add_subdirectory(lib/SDL_ttf)
 add_subdirectory(lib/boost)

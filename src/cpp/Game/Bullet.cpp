@@ -8,6 +8,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
+#include "GameSystem/ResurceManager.h"
 #include "Types.h"
 #include <iostream>
 #include <memory>
@@ -37,7 +38,8 @@ void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     try
     {
-        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::missle);
+        const std::shared_ptr<GameSystem::ResurceManager> resurceManager = GameSystem::AppInstance::GetResurceManager();
+        auto *texture = resurceManager->GetTexture(Const::Textures::missle);
         inRenderer->Draw(GetRectangle(), texture);
     }
     catch (GameSystem::InvalidDataException &exception)

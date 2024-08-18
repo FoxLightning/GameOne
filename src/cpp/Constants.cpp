@@ -56,6 +56,12 @@ const int32_t resolutionHeight = 720;
 const double frameRate = 120.;
 } // namespace Defaults
 } // namespace Configuration
+namespace Sound
+{
+const char *const shipRocketLounch = "resurces/sound/rocket_launch.wav";
+const char *const enemyHit = "resurces/sound/enemy_hit.wav";
+const char *const enemyExplosion = "resurces/sound/enemy_explosion.wav";
+} // namespace Sound
 namespace Textures
 {
 const char *const ship = "resurces/textures/Ship_1_A_Small.png";

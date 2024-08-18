@@ -8,6 +8,8 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
+#include "GameSystem/ResurceManager.h"
+#include "GameSystem/SoundManager.h"
 #include "Types.h"
 #include <iostream>
 #include <memory>
@@ -64,8 +66,19 @@ void PlayerShip::Update(double deltaTime)
     {
         timeFromLastShot = 0;
         triggerPulled = false;
-
         SpawnMissle();
+
+        try
+        {
+            const std::shared_ptr<GameSystem::ResurceManager> resurceManger =
+                GameSystem::AppInstance::GetResurceManager();
+            auto *shotShound = resurceManger->GetAudio(Const::Sound::shipRocketLounch);
+            GameSystem::SoundManager::playSound(shotShound);
+        }
+        catch (GameSystem::InvalidDataException &e)
+        {
+            std::cerr << e.what();
+        }
     }
 }
 
