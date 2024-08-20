@@ -8,6 +8,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
+#include "GameSystem/Image.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
 #include "Types.h"
@@ -29,24 +30,12 @@ PlayerShip::PlayerShip()
     SetSize(desiredSize);
     SetMaxSpeed(Const::Gameplay::playerMaxSpeed);
 
+    SetImage(
+        std::make_shared<GameSystem::Image>(Const::Textures::ship, startPosition, desiredSize, Vector2D(0.5, 0.5)));
     if (playerController)
     {
         playerController->SubscribeInput();
         SetController(playerController);
-    }
-}
-
-void PlayerShip::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
-{
-    try
-    {
-        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::ship);
-        inRenderer->Draw(GetRectangle(), texture);
-    }
-    catch (GameSystem::InvalidDataException &exception)
-    {
-        std::cerr << exception.what() << "\n";
-        GameBase::Entity::Draw(inRenderer);
     }
 }
 

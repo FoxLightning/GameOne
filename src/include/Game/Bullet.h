@@ -11,7 +11,6 @@ class Bullet final : public GameBase::Entity
     Bullet(const Vector2D &start, const Vector2D &direction);
     ~Bullet() override = default;
     void Update(double deltaTime) override;
-    void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
     [[nodiscard]] auto GetDamage() const -> double;
 
     void CheckCollision(GameBase::Collider *inCollider) override;

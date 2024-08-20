@@ -6,7 +6,8 @@
 namespace GameSystem
 {
 class Renderer;
-}
+class Image;
+} // namespace GameSystem
 
 namespace Game
 {
@@ -15,7 +16,6 @@ class PlayerShip final : public GameBase::Entity
   public:
     PlayerShip();
     void CheckCollision(GameBase::Collider *inCollider) override;
-    void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
     void Update(double deltaTime) override;
 
     void PullTrigger(bool isPoolingTrigger);

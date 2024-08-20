@@ -15,7 +15,8 @@ class PlayerShip;
 namespace GameSystem
 {
 class BaseAnimation;
-}
+class Image;
+} // namespace GameSystem
 
 namespace GameBase
 {
@@ -69,6 +70,7 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
     [[nodiscard]] auto GetMaxSpeed() const -> double;
     [[nodiscard]] auto GetDirection() const -> Vector2D;
 
+    void SetImage(const std::shared_ptr<GameSystem::Image> &inImage);
     void SetController(const std::shared_ptr<BaseController> &inController);
     void PlayAnimation(const std::shared_ptr<GameSystem::BaseAnimation> &inAnimation);
 
@@ -81,6 +83,7 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
     double powerPercent = 1.;
 
     std::shared_ptr<BaseController> controller;
+    std::shared_ptr<GameSystem::Image> image;
 };
 
 }; // namespace GameBase

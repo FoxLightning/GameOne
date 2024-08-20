@@ -3,8 +3,11 @@
 #include "GameBase/BaseController.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
+#include "GameSystem/Image.h"
 #include "Types.h"
 #include <cassert>
+#include <exception>
+#include <iostream>
 #include <memory>
 
 namespace GameBase
@@ -69,6 +72,15 @@ void Collider::Move(Vector2D delta)
 
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
+    try
+    {
+        image->Draw(inRenderer);
+        return;
+    }
+    catch (std::exception &e)
+    {
+        std::cerr << e.what() << "\n";
+    }
     inRenderer->Draw(GetRectangle(), Const::Color::Green);
 }
 
@@ -93,6 +105,10 @@ void Entity::Update(const double deltaTime)
         controller->ApplyCommands(this);
     }
     Move(direction * maxSpeed * powerPercent * deltaTime);
+    if (image)
+    {
+        image->SetPos(GetPosition());
+    }
 }
 
 auto Entity::GetPosition() const -> Vector2D
@@ -123,6 +139,11 @@ auto Entity::GetMaxSpeed() const -> double
 auto Entity::GetDirection() const -> Vector2D
 {
     return direction;
+}
+
+void Entity::SetImage(const std::shared_ptr<GameSystem::Image> &inImage)
+{
+    image = inImage;
 }
 
 void Entity::SetController(const std::shared_ptr<BaseController> &inController)

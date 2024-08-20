@@ -9,6 +9,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Exceptions.h"
+#include "GameSystem/Image.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
@@ -20,15 +21,12 @@ namespace Game
 {
 Enemy::Enemy(Vector2D position, double speed)
 {
+    const Vector2D &size = Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize);
     SetPosition(position);
-    SetSize(Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize));
+    SetSize(size);
     SetMaxSpeed(speed);
     SetDirection(Vector2D(0., 1.));
-}
-
-void Enemy::Update(double deltaTime)
-{
-    GameBase::Entity::Update(deltaTime);
+    SetImage(std::make_shared<GameSystem::Image>(Const::Textures::enemy, position, size, Vector2D(0.5, 0.5)));
 }
 
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
@@ -40,14 +38,12 @@ void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
             inRenderer->Draw(animation->GetRender());
             return;
         }
-        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemy);
-        inRenderer->Draw(GetRectangle(), texture);
     }
     catch (GameSystem::InvalidDataException &exception)
     {
         std::cerr << exception.what() << "\n";
-        GameBase::Entity::Draw(inRenderer);
     }
+    GameBase::Entity::Draw(inRenderer);
 }
 
 void Enemy::CheckCollision(GameBase::Collider *inCollider)

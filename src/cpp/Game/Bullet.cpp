@@ -6,11 +6,8 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/Exceptions.h"
-#include "GameSystem/Renderer.h"
-#include "GameSystem/ResurceManager.h"
+#include "GameSystem/Image.h"
 #include "Types.h"
-#include <iostream>
 #include <memory>
 
 namespace Game
@@ -18,10 +15,12 @@ namespace Game
 
 Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
 {
-    SetSize(Vector2D(Const::System::Geometry::bulletSize, Const::System::Geometry::bulletSize));
+    const Vector2D size{Const::System::Geometry::bulletSize, Const::System::Geometry::bulletSize};
+    SetSize(size);
     SetPosition(start);
     SetMaxSpeed(Const::Gameplay::bulletSpeed);
     SetDirection(direction);
+    SetImage(std::make_shared<GameSystem::Image>(Const::Textures::missle, start, size, Vector2D(0.5, 0.5)));
 }
 
 void Bullet::Update(double deltaTime)
@@ -32,21 +31,6 @@ void Bullet::Update(double deltaTime)
         SetWaitForDelete();
     }
     GameBase::Entity::Update(deltaTime);
-}
-
-void Bullet::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
-{
-    try
-    {
-        const std::shared_ptr<GameSystem::ResurceManager> resurceManager = GameSystem::AppInstance::GetResurceManager();
-        auto *texture = resurceManager->GetTexture(Const::Textures::missle);
-        inRenderer->Draw(GetRectangle(), texture);
-    }
-    catch (GameSystem::InvalidDataException &exception)
-    {
-        std::cerr << exception.what() << "\n";
-        GameBase::Entity::Draw(inRenderer);
-    }
 }
 
 auto Bullet::GetDamage() const -> double
