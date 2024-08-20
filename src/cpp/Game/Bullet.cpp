@@ -7,6 +7,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Image.h"
+#include "GameSystem/ResurceManager.h"
 #include "Types.h"
 #include <memory>
 
@@ -45,7 +46,8 @@ void Bullet::CheckCollision(GameBase::Collider *inCollider)
 
 void Bullet::CheckCollision(Enemy * /*inCollider*/)
 {
-    auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::bulletExplosionAnimation);
+    const std::shared_ptr<GameSystem::ResurceManager> &resurceManager = GameSystem::AppInstance::GetResurceManager();
+    auto *texture = resurceManager->GetTexture(Const::Textures::bulletExplosionAnimation);
     const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
     currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
         GetPosition(), Vector2D(0., 0.),
