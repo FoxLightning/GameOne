@@ -1,0 +1,11 @@
+{
+    "texturePath": "resurces/textures/Ship_1_A_Small.png",
+    "size": {
+        "x": 128,
+        "y": 128
+    },
+    "pivot": {
+        "x": 0.5,
+        "y": 0.5
+    }
+}
