@@ -8,6 +8,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Image.h"
 #include "GameSystem/ResurceManager.h"
+#include "GameSystem/Texture.h"
 #include "Types.h"
 #include <memory>
 
@@ -21,7 +22,7 @@ Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
     SetPosition(start);
     SetMaxSpeed(Const::Gameplay::bulletSpeed);
     SetDirection(direction);
-    SetImage(std::make_shared<GameSystem::Image>(Const::Textures::missle, start, size, Vector2D(0.5, 0.5)));
+    SetImage(std::make_shared<GameSystem::Image>("resurces/Asset/Image/BulletImage.json"));
 }
 
 void Bullet::Update(double deltaTime)
@@ -47,7 +48,11 @@ void Bullet::CheckCollision(GameBase::Collider *inCollider)
 void Bullet::CheckCollision(Enemy * /*inCollider*/)
 {
     const std::shared_ptr<GameSystem::ResurceManager> &resurceManager = GameSystem::AppInstance::GetResurceManager();
-    auto *texture = resurceManager->GetTexture(Const::Textures::bulletExplosionAnimation);
+    SDL_Texture *texture = nullptr;
+    if (auto tmp = resurceManager->GetTexture(Const::Textures::bulletExplosionAnimation).lock())
+    {
+        texture = tmp->GetTexture();
+    }
     const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
     currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
         GetPosition(), Vector2D(0., 0.),

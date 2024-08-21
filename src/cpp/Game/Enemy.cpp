@@ -13,6 +13,7 @@
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
+#include "GameSystem/Texture.h"
 #include "Types.h"
 #include <iostream>
 #include <memory>
@@ -26,7 +27,7 @@ Enemy::Enemy(Vector2D position, double speed)
     SetSize(size);
     SetMaxSpeed(speed);
     SetDirection(Vector2D(0., 1.));
-    SetImage(std::make_shared<GameSystem::Image>(Const::Textures::enemy, position, size, Vector2D(0.5, 0.5)));
+    SetImage(std::make_shared<GameSystem::Image>("resurces/Asset/Image/EnemyShipImage.json"));
 }
 
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
@@ -57,8 +58,13 @@ void Enemy::CheckCollision(Bullet *inCollider)
 
     if (HP <= 0.)
     {
-        auto *texture =
-            GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyExplosionAnimation);
+        SDL_Texture *texture = nullptr;
+        if (auto tmp = GameSystem::AppInstance::GetResurceManager()
+                           ->GetTexture(Const::Textures::enemyExplosionAnimation)
+                           .lock())
+        {
+            texture = tmp->GetTexture();
+        }
         const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
         currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
             GetPosition(), GetDirection(), Vector2D(Const::System::explosionSize, Const::System::explosionSize),
@@ -70,7 +76,11 @@ void Enemy::CheckCollision(Bullet *inCollider)
     }
     else
     {
-        auto *texture = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyAnimation);
+        SDL_Texture *texture = nullptr;
+        if (auto tmp = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyAnimation).lock())
+        {
+            texture = tmp->GetTexture();
+        }
         PlayAnimation(std::make_shared<GameSystem::BaseAnimation>(
             Const::System::animationFrameTime, Const::System::enemyDamageFrames,
             Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize), Vector2L(2, 2),

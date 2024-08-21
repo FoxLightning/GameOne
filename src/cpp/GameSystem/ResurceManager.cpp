@@ -2,12 +2,10 @@
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Exceptions.h"
-#include "GameSystem/Renderer.h"
+#include "GameSystem/Texture.h"
 #include "SDL3/SDL_audio.h"
 #include "SDL3/SDL_error.h"
 #include "SDL3/SDL_init.h"
-#include "SDL3/SDL_render.h"
-#include "SDL3/SDL_surface.h"
 #include "SDL3_image/SDL_image.h"
 #include "SDL3_mixer/SDL_mixer.h"
 #include <cstdlib>
@@ -40,13 +38,13 @@ ResurceManager::ResurceManager()
     LoadSounds();
 }
 
-auto ResurceManager::GetTexture(const char *const texturePath) -> SDL_Texture *
+auto ResurceManager::GetTexture(const std::string &path) -> std::weak_ptr<Texture>
 {
-    if (textureHolder.find(texturePath) == textureHolder.end())
+    if (textureHolder.contains(path))
     {
-        throw InvalidDataException("Texture not loaded.", texturePath);
+        return {textureHolder[path]};
     }
-    return textureHolder[texturePath].texture;
+    throw InvalidDataException("Texture not loaded.", path);
 }
 
 auto ResurceManager::GetAudio(const char *audioPath) -> Mix_Chunk *
@@ -56,26 +54,6 @@ auto ResurceManager::GetAudio(const char *audioPath) -> Mix_Chunk *
         throw InvalidDataException("Sound not loaded.", audioPath);
     }
     return soundHolder[audioPath];
-}
-
-auto ResurceManager::LoadTexture(const char *const texturePath) -> TextureData
-{
-    SDL_Texture *texture = nullptr;
-    SDL_Surface *surface = IMG_Load(texturePath);
-    if (surface == nullptr)
-    {
-        throw InvalidDataException(std::format("Unable to load image. SDL_Error: {}", SDL_GetError()), texturePath);
-    }
-    const std::shared_ptr<Renderer> Renderer = GameSystem::AppInstance::GetRender();
-    texture = Renderer->CreateTexture(surface);
-    if (texture == nullptr)
-    {
-        SDL_DestroySurface(surface);
-        throw InvalidDataException(std::format("Unable to create texture. SDL_Error: {}.", SDL_GetError()),
-                                   texturePath);
-    }
-
-    return TextureData{.texture = texture, .surface = surface};
 }
 
 auto ResurceManager::LoadAudio(const char *const audioPath) -> Mix_Chunk *
@@ -88,11 +66,6 @@ auto ResurceManager::LoadAudio(const char *const audioPath) -> Mix_Chunk *
     return sound;
 }
 
-ResurceManager::~ResurceManager()
-{
-    DestroyTextures();
-}
-
 void ResurceManager::LoadTextures()
 {
     for (const char *const texturePath :
@@ -101,7 +74,7 @@ void ResurceManager::LoadTextures()
     {
         try
         {
-            textureHolder[texturePath] = LoadTexture(texturePath);
+            textureHolder[texturePath] = std::make_shared<Texture>(texturePath);
         }
         catch (InvalidDataException &exception)
         {
@@ -123,14 +96,6 @@ void ResurceManager::LoadSounds()
         {
             std::cerr << exception.what() << "\n";
         }
-    }
-}
-
-void ResurceManager::DestroyTextures()
-{
-    for (const auto &item : textureHolder)
-    {
-        SDL_DestroySurface(item.second.surface);
     }
 }
 

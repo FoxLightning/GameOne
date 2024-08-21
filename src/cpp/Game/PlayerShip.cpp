@@ -11,6 +11,7 @@
 #include "GameSystem/Image.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
+#include "GameSystem/Texture.h"
 #include "Types.h"
 #include <iostream>
 #include <memory>
@@ -30,8 +31,7 @@ PlayerShip::PlayerShip()
     SetSize(desiredSize);
     SetMaxSpeed(Const::Gameplay::playerMaxSpeed);
 
-    SetImage(
-        std::make_shared<GameSystem::Image>(Const::Textures::ship, startPosition, desiredSize, Vector2D(0.5, 0.5)));
+    SetImage(std::make_shared<GameSystem::Image>("resurces/Asset/Image/PlayerShipImage.json"));
     if (playerController)
     {
         playerController->SubscribeInput();
