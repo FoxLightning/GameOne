@@ -62,6 +62,12 @@ const char *const shipRocketLounch = "resurces/sound/rocket_launch.wav";
 const char *const enemyHit = "resurces/sound/enemy_hit.wav";
 const char *const enemyExplosion = "resurces/sound/enemy_explosion.wav";
 } // namespace Sound
+namespace Prototypes::Image
+{
+const char *const ship = "resurces/Asset/Image/PlayerShipImage.json";
+const char *const enemy = "resurces/Asset/Image/EnemyShipImage.json";
+const char *const missle = "resurces/Asset/Image/BulletImage.json";
+} // namespace Prototypes::Image
 namespace Textures
 {
 const char *const ship = "resurces/textures/Ship_1_A_Small.png";

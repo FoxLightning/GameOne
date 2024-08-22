@@ -9,12 +9,13 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Exceptions.h"
-#include "GameSystem/Image.h"
+#include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
 #include "GameSystem/Texture.h"
 #include "Types.h"
+#include "SDL3/SDL_render.h"
 #include <iostream>
 #include <memory>
 
@@ -27,7 +28,9 @@ Enemy::Enemy(Vector2D position, double speed)
     SetSize(size);
     SetMaxSpeed(speed);
     SetDirection(Vector2D(0., 1.));
-    SetImage(std::make_shared<GameSystem::Image>("resurces/Asset/Image/EnemyShipImage.json"));
+
+    const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
+    SetImage(prototypeHolder->GetImage(Const::Prototypes::Image::enemy));
 }
 
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
@@ -59,11 +62,12 @@ void Enemy::CheckCollision(Bullet *inCollider)
     if (HP <= 0.)
     {
         SDL_Texture *texture = nullptr;
-        if (auto tmp = GameSystem::AppInstance::GetResurceManager()
-                           ->GetTexture(Const::Textures::enemyExplosionAnimation)
-                           .lock())
+        if (const std::shared_ptr<GameSystem::Texture> inTexture =
+                GameSystem::AppInstance::GetResurceManager()
+                    ->GetTexture(Const::Textures::enemyExplosionAnimation)
+                    .lock())
         {
-            texture = tmp->GetTexture();
+            texture = inTexture->GetTexture();
         }
         const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
         currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(

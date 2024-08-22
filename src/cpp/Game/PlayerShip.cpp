@@ -8,10 +8,9 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
-#include "GameSystem/Image.h"
+#include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
-#include "GameSystem/Texture.h"
 #include "Types.h"
 #include <iostream>
 #include <memory>
@@ -31,7 +30,8 @@ PlayerShip::PlayerShip()
     SetSize(desiredSize);
     SetMaxSpeed(Const::Gameplay::playerMaxSpeed);
 
-    SetImage(std::make_shared<GameSystem::Image>("resurces/Asset/Image/PlayerShipImage.json"));
+    const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
+    SetImage(prototypeHolder->GetImage(Const::Prototypes::Image::ship));
     if (playerController)
     {
         playerController->SubscribeInput();

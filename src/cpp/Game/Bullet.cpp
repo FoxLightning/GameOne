@@ -6,7 +6,7 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/Image.h"
+#include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/Texture.h"
 #include "Types.h"
@@ -22,7 +22,8 @@ Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
     SetPosition(start);
     SetMaxSpeed(Const::Gameplay::bulletSpeed);
     SetDirection(direction);
-    SetImage(std::make_shared<GameSystem::Image>("resurces/Asset/Image/BulletImage.json"));
+    const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
+    SetImage(prototypeHolder->GetImage(Const::Prototypes::Image::missle));
 }
 
 void Bullet::Update(double deltaTime)

@@ -61,6 +61,12 @@ extern const char *const shipRocketLounch;
 extern const char *const enemyHit;
 extern const char *const enemyExplosion;
 } // namespace Sound
+namespace Prototypes::Image
+{
+extern const char *const ship;
+extern const char *const enemy;
+extern const char *const missle;
+} // namespace Prototypes::Image
 namespace Textures
 {
 extern const char *const ship;

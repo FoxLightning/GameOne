@@ -24,7 +24,7 @@ class Texture
 
   private:
     std::string path;
-    SDL_Texture *texture;
-    SDL_Surface *surface;
+    SDL_Texture *texture = nullptr;
+    SDL_Surface *surface = nullptr;
 };
 } // namespace GameSystem

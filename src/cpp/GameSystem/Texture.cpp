@@ -2,13 +2,18 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/Renderer.h"
+#include "SDL3/SDL_error.h"
 #include "SDL3/SDL_render.h"
+#include "SDL3/SDL_surface.h"
 #include "SDL3_image/SDL_image.h"
 #include <format>
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace GameSystem
 {
-Texture::Texture(std::string inPath) : path(std::move(inPath)), texture(nullptr), surface(IMG_Load(path.c_str()))
+Texture::Texture(std::string inPath) : path(std::move(inPath)), surface(IMG_Load(path.c_str()))
 {
     if (surface == nullptr)
     {

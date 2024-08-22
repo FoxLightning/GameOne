@@ -1,4 +1,5 @@
 #pragma once
+#include "GameSystem/PrototypeHolder.h"
 #include <memory>
 
 namespace GameBase
@@ -38,6 +39,7 @@ class AppInstance
     static auto GetRender() -> std::shared_ptr<Renderer>;
     static auto GetResurceManager() -> std::shared_ptr<ResurceManager>;
     static auto GetSoundManager() -> std::shared_ptr<SoundManager>;
+    static auto GetPrototypeHolder() -> std::shared_ptr<PrototypeHolder>;
 
   private:
     static std::shared_ptr<GameBase::GameState> currentAppState;
@@ -47,6 +49,7 @@ class AppInstance
     static std::shared_ptr<InputManager> inputManagerInstance;
     static std::shared_ptr<ResurceManager> resurceManagerInstance;
     static std::shared_ptr<SoundManager> soundManagerInstance;
+    static std::shared_ptr<PrototypeHolder> prototypeHolderInstance;
 
     static bool isRunning;
 };

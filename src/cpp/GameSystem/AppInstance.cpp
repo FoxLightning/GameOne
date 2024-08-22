@@ -3,6 +3,7 @@
 #include "GameBase/GameState.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/InputManager.h"
+#include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
@@ -20,6 +21,7 @@ std::shared_ptr<Renderer> AppInstance::rendererInstance;
 std::shared_ptr<InputManager> AppInstance::inputManagerInstance;
 std::shared_ptr<ResurceManager> AppInstance::resurceManagerInstance;
 std::shared_ptr<SoundManager> AppInstance::soundManagerInstance;
+std::shared_ptr<PrototypeHolder> AppInstance::prototypeHolderInstance;
 bool AppInstance::isRunning;
 
 AppInstance::AppInstance()
@@ -29,6 +31,7 @@ AppInstance::AppInstance()
     inputManagerInstance = std::make_shared<InputManager>();
     resurceManagerInstance = std::make_shared<ResurceManager>();
     soundManagerInstance = std::make_shared<SoundManager>();
+    prototypeHolderInstance = std::make_shared<PrototypeHolder>();
 }
 
 void AppInstance::Start() // NOLINT
@@ -99,6 +102,12 @@ auto AppInstance::GetSoundManager() -> std::shared_ptr<SoundManager>
 {
     assert(configManagerInstance);
     return soundManagerInstance;
+}
+
+auto AppInstance::GetPrototypeHolder() -> std::shared_ptr<PrototypeHolder>
+{
+    assert(prototypeHolderInstance);
+    return prototypeHolderInstance;
 }
 
 } // namespace GameSystem

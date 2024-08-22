@@ -11,7 +11,11 @@ class Image : IRendereble
 {
   public:
     Image(std::shared_ptr<Texture> inTexture, Vector2D inPos, Vector2D inSize, Vector2D inPivot);
-    explicit Image(const char *assetPath);
+
+    Image(const Image &other) = default;
+    auto operator=(const Image &other) -> Image & = delete;
+
+    explicit Image(const std::string &name);
     void Draw(std::shared_ptr<Renderer> inRenderer) override;
 
     void SetPos(const Vector2D &inPos);

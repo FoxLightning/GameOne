@@ -12,6 +12,7 @@
 #include <format>
 #include <iostream>
 #include <memory>
+#include <string>
 
 namespace GameSystem
 {
