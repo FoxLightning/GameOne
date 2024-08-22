@@ -20,7 +20,8 @@ PrototypeHolder::PrototypeHolder()
 
 auto PrototypeHolder::GetImage(const std::string &name) -> std::shared_ptr<Image>
 {
-    return imagePrototypes[name];
+    assert(imagePrototypes.contains(name));
+    return std::make_shared<Image>(*imagePrototypes[name]);
 }
 
 } // namespace GameSystem

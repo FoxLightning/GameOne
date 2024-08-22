@@ -143,7 +143,7 @@ auto Entity::GetDirection() const -> Vector2D
 
 void Entity::SetImage(const std::shared_ptr<GameSystem::Image> &inImage)
 {
-    image = std::make_shared<GameSystem::Image>(*inImage);
+    image = inImage;
 }
 
 void Entity::SetController(const std::shared_ptr<BaseController> &inController)
