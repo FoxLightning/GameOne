@@ -1,6 +1,5 @@
 .cache
 .vscode
-resurces/*
 bin
 build
 lib
