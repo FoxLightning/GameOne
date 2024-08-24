@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 23)
 
 project(GameOne VERSION 0.1)
 
-# Black magic from one internet guy, need for run SDL3_image 
-# (Probably usefull only for MacOS)
+if (APPLE)
 enable_language(OBJC)
+endif()
 
 add_subdirectory(lib/SDL)
 add_subdirectory(lib/SDL_mixer)
