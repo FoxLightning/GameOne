@@ -3,30 +3,26 @@
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Renderer.h"
 #include "Types.h"
-#include "SDL3/SDL_render.h"
 #include <cassert>
-#include <cstdint>
 #include <memory>
 
 namespace Game
 {
-Explosion::Explosion(Vector2D position, Vector2D direction, Vector2D size, double speed, double inFrameTime,
-                     int64_t inFrameAmount, Vector2D tileSize, Vector2L tiles, SDL_Texture *texture)
+Explosion::Explosion(Vector2D position, Vector2D direction, double speed, const char *animationName)
 {
-    SetSize(size);
     SetPosition(position);
     SetMaxSpeed(speed);
     SetDirection(direction);
-    PlayAnimation(std::make_shared<GameSystem::BaseAnimation>(inFrameTime, inFrameAmount, tileSize, tiles,
-                                                              &GetRectangle(), texture));
-    GetCurrentAnimation()->BindOnAnimationFinished([this]() { SetWaitForDelete(); });
+    PlayAnimation(animationName);
+    const std::shared_ptr<GameSystem::BaseAnimation> &currentAnimation = GetCurrentAnimation();
+    currentAnimation->BindOnAnimationFinished([this]() { SetWaitForDelete(); });
 }
 
 void Explosion::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     auto currentAnimation = GetCurrentAnimation();
     assert(currentAnimation);
-    inRenderer->Draw(currentAnimation->GetRender());
+    currentAnimation->Draw(inRenderer);
 }
 
 void Explosion::CheckCollision(GameBase::Collider *inCollider)

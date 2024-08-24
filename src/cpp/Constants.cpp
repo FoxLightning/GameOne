@@ -62,19 +62,28 @@ const char *const shipRocketLounch = "resurces/sound/rocket_launch.wav";
 const char *const enemyHit = "resurces/sound/enemy_hit.wav";
 const char *const enemyExplosion = "resurces/sound/enemy_explosion.wav";
 } // namespace Sound
-namespace Prototypes::Image
+namespace Prototypes
+{
+namespace Image
 {
 const char *const ship = "resurces/Asset/Image/PlayerShipImage.json";
 const char *const enemy = "resurces/Asset/Image/EnemyShipImage.json";
 const char *const missle = "resurces/Asset/Image/BulletImage.json";
-} // namespace Prototypes::Image
+} // namespace Image
+namespace Animation
+{
+const char *const enemyDamageAnimation = "resurces/Asset/Animation/EnemyDamageAnimation.json";
+const char *const enemyExplosionAnimation = "resurces/Asset/Animation/EnemyExplosionAnimation.json";
+const char *const missleExplosionAnimation = "resurces/Asset/Animation/MissleExplosionAnimation.json";
+} // namespace Animation
+} // namespace Prototypes
 namespace Textures
 {
 const char *const ship = "resurces/textures/Ship_1_A_Small.png";
 const char *const enemy = "resurces/textures/Enemy_1_A_Small.png";
-const char *const enemyAnimation = "resurces/textures/enemy_animation.png";
-const char *const enemyExplosionAnimation = "resurces/textures/enemy_explosion.png";
-const char *const bulletExplosionAnimation = "resurces/textures/bullet_explosion.png";
+const char *const enemyAnimation = "resurces/textures/EnemyDamageAtlas.png";
+const char *const enemyExplosionAnimation = "resurces/textures/EnemyExplosionAtlas.png";
+const char *const bulletExplosionAnimation = "resurces/textures/BulletExplosionAtlas.png";
 const char *const missle = "resurces/textures/Missile_A_Small.png";
 } // namespace Textures
 } // namespace Const

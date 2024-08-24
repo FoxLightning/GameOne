@@ -10,6 +10,7 @@ Checks: >
   bugprone-*,
   google-*,
   cert-*,
+  -readability-suspicious-call-argument,
   -readability-implicit-bool-conversion,
   -readability-identifier-length,
   -cppcoreguidelines-special-member-functions,

@@ -10,6 +10,7 @@ struct SDL_Surface;
 namespace GameSystem
 {
 struct RenderAnimation;
+struct Texture;
 
 class Renderer final
 {
@@ -20,8 +21,8 @@ class Renderer final
     void Clear();
     void Render();
     auto CreateTexture(SDL_Surface *surface) -> SDL_Texture *;
-    void Draw(const Box2D &shape, SDL_Texture *texture);
-    void Draw(const RenderAnimation &inAnimation);
+    void Draw(const Box2D &shape, const std::shared_ptr<Texture> &texture);
+    void Draw(const Box2D &shape, const Box2D &atlasPos, const std::shared_ptr<Texture> &texture);
     void Draw(const Box2D &shape, const LinearColor &color);
 
   private:

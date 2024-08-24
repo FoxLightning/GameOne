@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 project(GameOne VERSION 0.1)
 
 if (APPLE)
-enable_language(OBJC)
+    enable_language(OBJC)
 endif()
 
 add_subdirectory(lib/SDL)

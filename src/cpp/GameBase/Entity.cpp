@@ -4,6 +4,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Image.h"
+#include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
 #include <cassert>
 #include <exception>
@@ -98,6 +99,7 @@ void Entity::Update(const double deltaTime)
     else if (animation)
     {
         animation->Update(deltaTime);
+        animation->SetPosition(GetPosition());
     }
 
     if (controller)
@@ -151,9 +153,10 @@ void Entity::SetController(const std::shared_ptr<BaseController> &inController)
     controller = inController;
 }
 
-void Entity::PlayAnimation(const std::shared_ptr<GameSystem::BaseAnimation> &inAnimation)
+void Entity::PlayAnimation(const char *animatiionName)
 {
-    animation = inAnimation;
+    const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
+    animation = prototypeHolder->GetAnimation(animatiionName);
 }
 
 void Entity::SetDirection(const Vector2D &inSpeed)

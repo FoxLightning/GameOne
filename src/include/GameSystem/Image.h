@@ -10,14 +10,12 @@ class Texture;
 class Image : IRendereble
 {
   public:
-    Image(std::shared_ptr<Texture> inTexture, Vector2D inPos, Vector2D inSize, Vector2D inPivot);
-
     Image(const Image &other) = default;
+    explicit Image(const std::string &name);
+
     auto operator=(const Image &other) -> Image & = delete;
 
-    explicit Image(const std::string &name);
     void Draw(std::shared_ptr<Renderer> inRenderer) override;
-
     void SetPos(const Vector2D &inPos);
     [[nodiscard]] auto GetPos() const -> const Vector2D &;
 

@@ -12,9 +12,9 @@ namespace GameBase
 void GameWorld::Update(const double deltaTime)
 {
     RemoveStaleObjects();
+    AddPendingObjects();
     CheckCollisions();
     UpdateChildren(deltaTime);
-    AddPendingObjects();
 }
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)

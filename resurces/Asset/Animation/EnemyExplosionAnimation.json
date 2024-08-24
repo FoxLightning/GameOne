@@ -1,0 +1,21 @@
+{
+    "atlas": "resurces/textures/EnemyExplosionAtlas.png",
+    "tileSize": {
+        "x": 256,
+        "y": 256
+    },
+    "frames": 4,
+    "tiles": {
+        "x": 2,
+        "y": 2
+    },
+    "fps": 15,
+    "size": {
+        "x": 300,
+        "y": 300
+    },
+    "pivot": {
+        "x": 0.5,
+        "y": 0.5
+    }
+}

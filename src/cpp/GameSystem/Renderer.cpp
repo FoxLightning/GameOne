@@ -4,6 +4,7 @@
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
+#include "GameSystem/Texture.h"
 #include "Types.h"
 #include "SDL3/SDL_error.h"
 #include "SDL3/SDL_init.h"
@@ -61,28 +62,19 @@ void Renderer::Draw(const Box2D &shape, const LinearColor &color)
     SDL_RenderFillRect(renderer, &rectangle);
 }
 
-void Renderer::Draw(const RenderAnimation &inAnimation)
+void Renderer::Draw(const Box2D &shape, const std::shared_ptr<Texture> &texture)
 {
-    assert(inAnimation.texture);
-
-    const float xPos = static_cast<float>(inAnimation.currentFrame % inAnimation.tiles.x()) *
-                       static_cast<float>(inAnimation.tileSize.x());
-    const float yPos = static_cast<float>(inAnimation.currentFrame / inAnimation.tiles.y()) * // NOLINT
-                       static_cast<float>(inAnimation.tileSize.y());
-    const SDL_FRect srcRect{.x = xPos,
-                            .y = yPos,
-                            .w = static_cast<float>(inAnimation.tileSize.x()),
-                            .h = static_cast<float>(inAnimation.tileSize.y())};
-
-    const SDL_FRect rectangle = CastSDL_FRect(*inAnimation.shape);
-    SDL_RenderTexture(renderer, inAnimation.texture, &srcRect, &rectangle);
+    assert(texture && texture->GetTexture());
+    const SDL_FRect rectangle = CastSDL_FRect(shape);
+    SDL_RenderTexture(renderer, texture->GetTexture(), nullptr, &rectangle);
 }
 
-void Renderer::Draw(const Box2D &shape, SDL_Texture *texture)
+void Renderer::Draw(const Box2D &shape, const Box2D &atlasPos, const std::shared_ptr<Texture> &texture)
 {
-    assert(texture);
-    const SDL_FRect rectangle = CastSDL_FRect(shape);
-    SDL_RenderTexture(renderer, texture, nullptr, &rectangle);
+    assert(texture && texture->GetTexture());
+    const SDL_FRect shapeRectangle = CastSDL_FRect(shape);
+    const SDL_FRect atlasPosRectangle = CastSDL_FRect(atlasPos);
+    SDL_RenderTexture(renderer, texture->GetTexture(), &atlasPosRectangle, &shapeRectangle);
 }
 
 auto Renderer::CreateTexture(SDL_Surface *surface) -> SDL_Texture *

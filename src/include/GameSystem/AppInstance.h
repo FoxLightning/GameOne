@@ -1,5 +1,4 @@
 #pragma once
-#include "GameSystem/PrototypeHolder.h"
 #include <memory>
 
 namespace GameBase
@@ -14,6 +13,7 @@ class Renderer;
 class InputManager;
 class ResurceManager;
 class SoundManager;
+class PrototypeHolder;
 
 class IUpdateble
 {

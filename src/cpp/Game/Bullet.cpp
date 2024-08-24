@@ -7,8 +7,6 @@
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/PrototypeHolder.h"
-#include "GameSystem/ResurceManager.h"
-#include "GameSystem/Texture.h"
 #include "Types.h"
 #include <memory>
 
@@ -48,18 +46,9 @@ void Bullet::CheckCollision(GameBase::Collider *inCollider)
 
 void Bullet::CheckCollision(Enemy * /*inCollider*/)
 {
-    const std::shared_ptr<GameSystem::ResurceManager> &resurceManager = GameSystem::AppInstance::GetResurceManager();
-    SDL_Texture *texture = nullptr;
-    if (auto tmp = resurceManager->GetTexture(Const::Textures::bulletExplosionAnimation).lock())
-    {
-        texture = tmp->GetTexture();
-    }
     const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
     currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
-        GetPosition(), Vector2D(0., 0.),
-        Vector2D(Const::System::bulletExplosionSize, Const::System::bulletExplosionSize), 0.,
-        Const::System::explosionAnimationFrameTime, Const::System::enemyExplosionFrames,
-        Vector2D(Const::System::bulletExplosionSize, Const::System::bulletExplosionSize), Vector2L(2, 2), texture);
+        GetPosition(), Vector2D(0., 0.), 0., Const::Prototypes::Animation::missleExplosionAnimation);
     SetWaitForDelete();
 }
 

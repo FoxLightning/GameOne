@@ -7,15 +7,12 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
-#include "GameSystem/Texture.h"
 #include "Types.h"
-#include "SDL3/SDL_render.h"
 #include <iostream>
 #include <memory>
 
@@ -39,7 +36,7 @@ void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
     {
         if (auto animation = GetCurrentAnimation())
         {
-            inRenderer->Draw(animation->GetRender());
+            animation->Draw(inRenderer);
             return;
         }
     }
@@ -61,34 +58,16 @@ void Enemy::CheckCollision(Bullet *inCollider)
 
     if (HP <= 0.)
     {
-        SDL_Texture *texture = nullptr;
-        if (const std::shared_ptr<GameSystem::Texture> inTexture =
-                GameSystem::AppInstance::GetResurceManager()
-                    ->GetTexture(Const::Textures::enemyExplosionAnimation)
-                    .lock())
-        {
-            texture = inTexture->GetTexture();
-        }
         const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
         currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
-            GetPosition(), GetDirection(), Vector2D(Const::System::explosionSize, Const::System::explosionSize),
-            GetMaxSpeed(), Const::System::explosionAnimationFrameTime, Const::System::enemyExplosionFrames,
-            Vector2D(Const::System::explosionSize, Const::System::explosionSize), Vector2L(2, 2), texture);
+            GetPosition(), GetDirection(), GetMaxSpeed(), Const::Prototypes::Animation::enemyExplosionAnimation);
         SetWaitForDelete();
         PlayHitSound();
         PlayExplosionSound();
     }
     else
     {
-        SDL_Texture *texture = nullptr;
-        if (auto tmp = GameSystem::AppInstance::GetResurceManager()->GetTexture(Const::Textures::enemyAnimation).lock())
-        {
-            texture = tmp->GetTexture();
-        }
-        PlayAnimation(std::make_shared<GameSystem::BaseAnimation>(
-            Const::System::animationFrameTime, Const::System::enemyDamageFrames,
-            Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize), Vector2L(2, 2),
-            &GetRectangle(), texture));
+        PlayAnimation(Const::Prototypes::Animation::enemyDamageAnimation);
         PlayHitSound();
     }
 }

@@ -72,7 +72,7 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
 
     void SetImage(const std::shared_ptr<GameSystem::Image> &inImage);
     void SetController(const std::shared_ptr<BaseController> &inController);
-    void PlayAnimation(const std::shared_ptr<GameSystem::BaseAnimation> &inAnimation);
+    void PlayAnimation(const char *animatiionName);
 
   private:
     std::shared_ptr<GameSystem::BaseAnimation> animation;

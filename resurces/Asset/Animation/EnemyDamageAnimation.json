@@ -1,0 +1,21 @@
+{
+    "atlas": "resurces/textures/EnemyDamageAtlas.png",
+    "tileSize": {
+        "x": 128,
+        "y": 128
+    },
+    "frames": 4,
+    "tiles": {
+        "x": 2,
+        "y": 2
+    },
+    "fps": 15,
+    "size": {
+        "x": 128,
+        "y": 128
+    },
+    "pivot": {
+        "x": 0.5,
+        "y": 0.5
+    }
+}

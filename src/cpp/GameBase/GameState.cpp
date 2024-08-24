@@ -22,8 +22,8 @@ auto GameState::GetGameWorld() -> std::shared_ptr<GameWorld>
 
 void GameState::Update(const double deltaTime)
 {
-    gameWorld->Update(deltaTime);
     currentScenario->Update(deltaTime);
+    gameWorld->Update(deltaTime);
 }
 
 void GameState::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
