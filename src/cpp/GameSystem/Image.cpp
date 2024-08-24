@@ -22,7 +22,7 @@ Image::Image(const std::string &name)
     boost::property_tree::read_json(name, imageAssetTree);
 
     const std::shared_ptr<ResurceManager> resurceManager = AppInstance::GetResurceManager();
-    texture = resurceManager->GetTexture(imageAssetTree.get<std::string>(textureField)).lock();
+    texture = resurceManager->GetTexture(imageAssetTree.get<std::string>(textureField));
 
     size.x(imageAssetTree.get_child(sizeField).get<double>("x"));
     size.y(imageAssetTree.get_child(sizeField).get<double>("y"));

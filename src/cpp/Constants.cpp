@@ -77,13 +77,4 @@ const char *const enemyExplosionAnimation = "resurces/Asset/Animation/EnemyExplo
 const char *const missleExplosionAnimation = "resurces/Asset/Animation/MissleExplosionAnimation.json";
 } // namespace Animation
 } // namespace Prototypes
-namespace Textures
-{
-const char *const ship = "resurces/textures/Ship_1_A_Small.png";
-const char *const enemy = "resurces/textures/Enemy_1_A_Small.png";
-const char *const enemyAnimation = "resurces/textures/EnemyDamageAtlas.png";
-const char *const enemyExplosionAnimation = "resurces/textures/EnemyExplosionAtlas.png";
-const char *const bulletExplosionAnimation = "resurces/textures/BulletExplosionAtlas.png";
-const char *const missle = "resurces/textures/Missile_A_Small.png";
-} // namespace Textures
 } // namespace Const

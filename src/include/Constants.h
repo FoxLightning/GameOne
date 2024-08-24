@@ -76,13 +76,4 @@ extern const char *const enemyExplosionAnimation;
 extern const char *const missleExplosionAnimation;
 } // namespace Animation
 } // namespace Prototypes
-namespace Textures
-{
-extern const char *const ship;
-extern const char *const enemy;
-extern const char *const enemyAnimation;
-extern const char *const enemyExplosionAnimation;
-extern const char *const bulletExplosionAnimation;
-extern const char *const missle;
-} // namespace Textures
 } // namespace Const

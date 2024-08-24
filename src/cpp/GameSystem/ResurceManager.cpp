@@ -35,17 +35,18 @@ ResurceManager::ResurceManager()
         throw GameSystem::CriticalException(std::format("SDL_CreateRenderer Error: {}", SDL_GetError()));
     }
 
-    LoadTextures();
     LoadSounds();
 }
 
-auto ResurceManager::GetTexture(const std::string &path) -> std::weak_ptr<Texture>
+auto ResurceManager::GetTexture(const std::string &path) -> std::shared_ptr<Texture>
 {
-    if (textureHolder.contains(path))
+    if (auto texture = textureHolder.find(path); texture != textureHolder.end() && !texture->second.expired())
     {
-        return {textureHolder[path]};
+        return texture->second.lock();
     }
-    throw InvalidDataException("Texture not loaded.", path);
+    auto textureToAdd = std::make_shared<Texture>(path);
+    textureHolder[path] = textureToAdd;
+    return textureToAdd;
 }
 
 auto ResurceManager::GetAudio(const char *audioPath) -> Mix_Chunk *
@@ -65,23 +66,6 @@ auto ResurceManager::LoadAudio(const char *const audioPath) -> Mix_Chunk *
         throw InvalidDataException("Sound not loaded", SDL_GetError());
     }
     return sound;
-}
-
-void ResurceManager::LoadTextures()
-{
-    for (const char *const texturePath :
-         {Const::Textures::ship, Const::Textures::enemy, Const::Textures::missle, Const::Textures::enemyAnimation,
-          Const::Textures::enemyExplosionAnimation, Const::Textures::bulletExplosionAnimation})
-    {
-        try
-        {
-            textureHolder[texturePath] = std::make_shared<Texture>(texturePath);
-        }
-        catch (InvalidDataException &exception)
-        {
-            std::cerr << exception.what() << "\n";
-        }
-    }
 }
 
 void ResurceManager::LoadSounds()

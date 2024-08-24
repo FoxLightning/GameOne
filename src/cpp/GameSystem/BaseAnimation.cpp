@@ -21,7 +21,7 @@ BaseAnimation::BaseAnimation(const std::string &name) : tileSize(), tiles()
     boost::property_tree::read_json(name, animaitonAssetTree);
 
     const std::shared_ptr<ResurceManager> &resurceManager = AppInstance::GetResurceManager();
-    atlas = resurceManager->GetTexture(animaitonAssetTree.get<std::string>("atlas")).lock();
+    atlas = resurceManager->GetTexture(animaitonAssetTree.get<std::string>("atlas"));
     tileSize.x(animaitonAssetTree.get_child("tileSize").get<double>("x"));
     tileSize.y(animaitonAssetTree.get_child("tileSize").get<double>("y"));
     frames = animaitonAssetTree.get<int64_t>("frames");
