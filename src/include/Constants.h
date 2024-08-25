@@ -67,6 +67,10 @@ extern const char *const missleExplosionAnimation;
 namespace World
 {
 extern const char *const background;
-}
+extern const char *const backgroundStars1;
+extern const char *const backgroundStars2;
+extern const char *const backgroundStars3;
+extern const char *const backgroundStars4;
+} // namespace World
 } // namespace Prototype
 } // namespace Const

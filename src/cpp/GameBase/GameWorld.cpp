@@ -13,12 +13,24 @@ namespace GameBase
 
 GameWorld::GameWorld()
 {
-    background = std::make_shared<Background>(Const::Prototype::World::background);
+    for (const auto &backgroundAsset : {
+             Const::Prototype::World::background,
+             Const::Prototype::World::backgroundStars1,
+             Const::Prototype::World::backgroundStars2,
+             Const::Prototype::World::backgroundStars3,
+             Const::Prototype::World::backgroundStars4,
+         })
+    {
+        backgroundList.push_back(std::make_shared<Background>(backgroundAsset));
+    }
 }
 
 void GameWorld::Update(const double deltaTime)
 {
-    background->Update(deltaTime);
+    for (const auto &back : backgroundList)
+    {
+        back->Update(deltaTime);
+    }
     RemoveStaleObjects();
     AddPendingObjects();
     CheckCollisions();
@@ -27,7 +39,10 @@ void GameWorld::Update(const double deltaTime)
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    background->Draw(inRenderer);
+    for (const auto &back : backgroundList)
+    {
+        back->Draw(inRenderer);
+    }
     for (auto &entity : entitiesHolder)
     {
         assert(entity);

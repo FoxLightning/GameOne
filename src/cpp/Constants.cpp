@@ -68,6 +68,10 @@ const char *const missleExplosionAnimation = "resurces/Asset/Animation/MissleExp
 namespace World
 {
 const char *const background = "resurces/Asset/World/BackgroundAsset.json";
-}
+const char *const backgroundStars1 = "resurces/Asset/World/BackgroundStars1Asset.json";
+const char *const backgroundStars2 = "resurces/Asset/World/BackgroundStars2Asset.json";
+const char *const backgroundStars3 = "resurces/Asset/World/BackgroundStars3Asset.json";
+const char *const backgroundStars4 = "resurces/Asset/World/BackgroundStars4Asset.json";
+} // namespace World
 } // namespace Prototype
 } // namespace Const
