@@ -59,6 +59,7 @@ extern const char *const playerShipEntity;
 } // namespace Entity
 namespace Animation
 {
+extern const char *const enemyIdleAnimation;
 extern const char *const enemyDamageAnimation;
 extern const char *const enemyExplosionAnimation;
 extern const char *const missleExplosionAnimation;

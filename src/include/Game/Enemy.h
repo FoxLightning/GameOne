@@ -15,6 +15,7 @@ class Enemy final : public GameBase::Entity
 
     Enemy(const Enemy &other) = default;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
+    void StartIdleAnimation();
 
     void CheckCollision(GameBase::Collider *inCollider) override;
     void CheckCollision(Bullet *inCollider) override;

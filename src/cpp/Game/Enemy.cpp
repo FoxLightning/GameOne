@@ -38,6 +38,12 @@ Enemy::Enemy(std::string inConfigName) : configName(std::move(inConfigName))
     SetImage(prototypeHolder->GetImage(enemyAssetTree.get<std::string>("image")));
 }
 
+void Enemy::StartIdleAnimation()
+{
+    PlayAnimation(Const::Prototype::Animation::enemyIdleAnimation);
+    GetCurrentAnimation()->BindOnAnimationFinished([this]() { StartIdleAnimation(); });
+}
+
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     try
@@ -76,6 +82,7 @@ void Enemy::CheckCollision(Bullet *inCollider)
     else
     {
         PlayAnimation(Const::Prototype::Animation::enemyDamageAnimation);
+        GetCurrentAnimation()->BindOnAnimationFinished([this]() { StartIdleAnimation(); });
         PlayHitSound();
     }
 }

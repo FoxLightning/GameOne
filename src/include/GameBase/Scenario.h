@@ -18,7 +18,7 @@ class Scenario : public GameSystem::IUpdateble
     static void SpawnEnemies(const std::vector<Vector2D> &positions);
     static auto GetSpawnPositions(int64_t positionsNum) -> std::vector<Vector2D>;
 
-    double timeFromLastSpawn = 0.;
+    double timeFromLastSpawn = Const::Gameplay::timeToSpawnEnemy;
     double timeToSpawn = Const::Gameplay::timeToSpawnEnemy;
     uint8_t spawnNumber = Const::Gameplay::waveNumber;
 };

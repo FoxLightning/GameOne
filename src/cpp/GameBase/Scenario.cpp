@@ -51,6 +51,7 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
     for (const Vector2D &position : positions)
     {
         std::shared_ptr<Game::Enemy> enemy = prototypeHolder->GetEnemy(Const::Prototype::Entity::enemyEntity);
+        enemy->StartIdleAnimation();
         enemy->SetPosition(position);
         gameWorld->AddEntity(enemy);
     }

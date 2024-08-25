@@ -61,6 +61,7 @@ const char *const playerShipEntity = "resurces/Asset/Entity/PlayerShipEntity.jso
 namespace Animation
 {
 const char *const enemyDamageAnimation = "resurces/Asset/Animation/EnemyDamageAnimation.json";
+const char *const enemyIdleAnimation = "resurces/Asset/Animation/EnemyIdleAnimation.json";
 const char *const enemyExplosionAnimation = "resurces/Asset/Animation/EnemyExplosionAnimation.json";
 const char *const missleExplosionAnimation = "resurces/Asset/Animation/MissleExplosionAnimation.json";
 } // namespace Animation

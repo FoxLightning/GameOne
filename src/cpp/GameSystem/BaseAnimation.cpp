@@ -37,6 +37,7 @@ BaseAnimation::BaseAnimation(const std::string &name) : tileSize(), tiles()
 void BaseAnimation::Update(double deltaTime)
 {
     assert(!isFinished);
+    currentTime += deltaTime;
     if (currentTime >= (frameTime * static_cast<double>(frames)))
     {
         isFinished = true;
@@ -46,7 +47,6 @@ void BaseAnimation::Update(double deltaTime)
         }
         return;
     }
-    currentTime += deltaTime;
 }
 
 void BaseAnimation::Draw(std::shared_ptr<Renderer> inRenderer)
