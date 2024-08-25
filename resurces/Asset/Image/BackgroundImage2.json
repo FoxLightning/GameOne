@@ -2,7 +2,7 @@
     "texturePath": "resurces/textures/Background2.png",
     "size": {
         "x": 1280,
-        "y": 2160
+        "y": 720
     },
     "pivot": {
         "x": 0.0,

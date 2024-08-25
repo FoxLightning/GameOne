@@ -2,6 +2,11 @@
     "speed": 50,
     "imageList": [
         "resurces/Asset/Image/BackgroundImage1.json",
-        "resurces/Asset/Image/BackgroundImage2.json"
+        "resurces/Asset/Image/BackgroundImage2.json",
+        "resurces/Asset/Image/BackgroundImage3.json",
+        "resurces/Asset/Image/BackgroundImage4.json",
+        "resurces/Asset/Image/BackgroundImage5.json",
+        "resurces/Asset/Image/BackgroundImage6.json",
+        "resurces/Asset/Image/BackgroundImage7.json"
     ]
 }
