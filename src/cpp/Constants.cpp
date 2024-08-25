@@ -65,5 +65,9 @@ const char *const enemyIdleAnimation = "resurces/Asset/Animation/EnemyIdleAnimat
 const char *const enemyExplosionAnimation = "resurces/Asset/Animation/EnemyExplosionAnimation.json";
 const char *const missleExplosionAnimation = "resurces/Asset/Animation/MissleExplosionAnimation.json";
 } // namespace Animation
+namespace World
+{
+const char *const background = "resurces/Asset/World/BackgroundAsset.json";
+}
 } // namespace Prototype
 } // namespace Const

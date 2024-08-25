@@ -18,6 +18,8 @@
 #include "boost/property_tree/ptree_fwd.hpp"
 #include <iostream>
 #include <memory>
+#include <string>
+#include <utility>
 
 namespace Game
 {
@@ -48,7 +50,7 @@ void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
     try
     {
-        if (auto animation = GetCurrentAnimation())
+        if (const std::shared_ptr<GameSystem::BaseAnimation> animation = GetCurrentAnimation())
         {
             animation->Draw(inRenderer);
             return;

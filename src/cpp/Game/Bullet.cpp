@@ -11,6 +11,8 @@
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/property_tree/ptree_fwd.hpp"
 #include <memory>
+#include <string>
+#include <utility>
 
 namespace Game
 {

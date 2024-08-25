@@ -7,8 +7,6 @@
 #include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
 #include <cassert>
-#include <exception>
-#include <iostream>
 #include <memory>
 
 namespace GameBase

@@ -1,15 +1,17 @@
 #pragma once
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Renderer.h"
+#include <memory>
 
 namespace GameBase
 {
 class Entity;
+class Background;
 
 class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
   public:
-    GameWorld() = default;
+    GameWorld();
 
     void Update(double deltaTime) override;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
@@ -29,6 +31,7 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
     void AddPendingObjects();
     static auto CheckIntersections(const std::shared_ptr<Entity> &left, const std::shared_ptr<Entity> &right) -> bool;
 
+    std::shared_ptr<Background> background;
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
     std::vector<std::shared_ptr<Entity>> entitiesToAdd;
 };

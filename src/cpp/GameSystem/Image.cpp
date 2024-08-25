@@ -30,6 +30,10 @@ Image::Image(std::string inName) : configName(std::move(inName))
 
     std::cout << std::format("Image prototype created from config: \"{}\".\n", configName);
 }
+auto Image::GetSize() const -> const Vector2D &
+{
+    return size;
+}
 
 void Image::SetPos(const Vector2D &inPos)
 {

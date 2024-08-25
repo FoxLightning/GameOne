@@ -33,7 +33,7 @@ void Scenario::Update(double deltaTime)
 void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
 {
     const std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
-    std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
+    const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
     if (!prototypeHolder)
     {
         throw GameSystem::CriticalException("prototype holder is not valid");
@@ -50,7 +50,7 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
 
     for (const Vector2D &position : positions)
     {
-        std::shared_ptr<Game::Enemy> enemy = prototypeHolder->GetEnemy(Const::Prototype::Entity::enemyEntity);
+        const std::shared_ptr<Game::Enemy> enemy = prototypeHolder->GetEnemy(Const::Prototype::Entity::enemyEntity);
         enemy->StartIdleAnimation();
         enemy->SetPosition(position);
         gameWorld->AddEntity(enemy);

@@ -16,6 +16,8 @@
 #include "boost/property_tree/ptree_fwd.hpp"
 #include <iostream>
 #include <memory>
+#include <string>
+#include <utility>
 
 namespace Game
 {
@@ -91,9 +93,10 @@ void PlayerShip::SpawnMissle()
     {
         if (const std::shared_ptr<GameBase::GameWorld> gameWorld = currentState->GetGameWorld())
         {
-            std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder =
+            const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder =
                 GameSystem::AppInstance::GetPrototypeHolder();
-            std::shared_ptr<Game::Bullet> bullet = prototypeHolder->GetBullet(Const::Prototype::Entity::missleEntity);
+            const std::shared_ptr<Game::Bullet> bullet =
+                prototypeHolder->GetBullet(Const::Prototype::Entity::missleEntity);
             bullet->SetPosition(GetPosition());
             gameWorld->AddEntity(bullet);
         }

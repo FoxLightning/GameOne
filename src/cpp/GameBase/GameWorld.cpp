@@ -1,4 +1,6 @@
 #include "GameBase/GameWorld.h"
+#include "Constants.h"
+#include "GameBase/Background.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/Renderer.h"
 #include "boost/geometry/algorithms/detail/intersects/interface.hpp"
@@ -9,8 +11,14 @@
 namespace GameBase
 {
 
+GameWorld::GameWorld()
+{
+    background = std::make_shared<Background>(Const::Prototype::World::background);
+}
+
 void GameWorld::Update(const double deltaTime)
 {
+    background->Update(deltaTime);
     RemoveStaleObjects();
     AddPendingObjects();
     CheckCollisions();
@@ -19,6 +27,7 @@ void GameWorld::Update(const double deltaTime)
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
+    background->Draw(inRenderer);
     for (auto &entity : entitiesHolder)
     {
         assert(entity);

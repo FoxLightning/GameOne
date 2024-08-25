@@ -18,6 +18,7 @@ class Image : IRendereble
 
     void Draw(std::shared_ptr<Renderer> inRenderer) override;
     void SetPos(const Vector2D &inPos);
+    [[nodiscard]] auto GetSize() const -> const Vector2D &;
     [[nodiscard]] auto GetPos() const -> const Vector2D &;
 
   private:

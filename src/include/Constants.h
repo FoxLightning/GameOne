@@ -64,5 +64,9 @@ extern const char *const enemyDamageAnimation;
 extern const char *const enemyExplosionAnimation;
 extern const char *const missleExplosionAnimation;
 } // namespace Animation
+namespace World
+{
+extern const char *const background;
+}
 } // namespace Prototype
 } // namespace Const
