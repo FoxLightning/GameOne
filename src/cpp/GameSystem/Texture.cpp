@@ -7,6 +7,7 @@
 #include "SDL3/SDL_surface.h"
 #include "SDL3_image/SDL_image.h"
 #include <format>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -26,10 +27,12 @@ Texture::Texture(std::string inPath) : path(std::move(inPath)), surface(IMG_Load
         SDL_DestroySurface(surface);
         throw InvalidDataException(std::format("Unable to create texture. SDL_Error: {}.", SDL_GetError()), path);
     }
+    std::cout << std::format("Texture created: \"{}\".\n", path);
 }
 
 Texture::~Texture()
 {
+    std::cout << std::format("Texture destroyed: \"{}\".\n", path);
     SDL_DestroyTexture(texture);
     SDL_DestroySurface(surface);
 }

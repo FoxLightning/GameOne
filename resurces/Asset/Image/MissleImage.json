@@ -1,8 +1,8 @@
 {
     "texturePath": "resurces/textures/Missile_A_Small.png",
     "size": {
-        "x": 64,
-        "y": 64
+        "x": 48,
+        "y": 48
     },
     "pivot": {
         "x": 0.5,

@@ -8,20 +8,27 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
+#include "boost/property_tree/json_parser.hpp"
+#include "boost/property_tree/ptree_fwd.hpp"
 #include <memory>
 
 namespace Game
 {
 
-Bullet::Bullet(const Vector2D &start, const Vector2D &direction)
+Bullet::Bullet(std::string inConfigName) : configName(std::move(inConfigName))
 {
-    const Vector2D size{Const::System::Geometry::bulletSize, Const::System::Geometry::bulletSize};
-    SetSize(size);
-    SetPosition(start);
-    SetMaxSpeed(Const::Gameplay::bulletSpeed);
-    SetDirection(direction);
+    boost::property_tree::ptree bulletAssetTree;
+    boost::property_tree::read_json(configName, bulletAssetTree);
+
+    SetSize({bulletAssetTree.get_child("collider").get_child("size").get<double>("x"),
+             bulletAssetTree.get_child("collider").get_child("size").get<double>("y")});
+    SetPivot({bulletAssetTree.get_child("collider").get_child("pivot").get<double>("x"),
+              bulletAssetTree.get_child("collider").get_child("pivot").get<double>("y")});
+    SetDirection(Vector2D(0., -1.));
+    SetMaxSpeed(bulletAssetTree.get<double>("speed"));
+    bulletDamage = bulletAssetTree.get<double>("damage");
     const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
-    SetImage(prototypeHolder->GetImage(Const::Prototypes::Image::missle));
+    SetImage(prototypeHolder->GetImage(bulletAssetTree.get<std::string>("image")));
 }
 
 void Bullet::Update(double deltaTime)
@@ -47,8 +54,8 @@ void Bullet::CheckCollision(GameBase::Collider *inCollider)
 void Bullet::CheckCollision(Enemy * /*inCollider*/)
 {
     const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
-    currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
-        GetPosition(), Vector2D(0., 0.), 0., Const::Prototypes::Animation::missleExplosionAnimation);
+    currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(GetPosition(), Vector2D(0., 0.), 0.,
+                                                                 Const::Prototype::Animation::missleExplosionAnimation);
     SetWaitForDelete();
 }
 

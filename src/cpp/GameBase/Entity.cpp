@@ -71,18 +71,34 @@ void Collider::Move(Vector2D delta)
     rectangle += delta;
 }
 
+Entity::Entity(const Entity &other)
+    : Collider(other), waitingForDelete(other.waitingForDelete), direction(other.direction), maxSpeed(other.maxSpeed),
+      powerPercent(other.powerPercent)
+{
+    if (other.animation)
+    {
+        animation = std::make_shared<GameSystem::BaseAnimation>(*other.animation);
+    }
+    if (other.image)
+    {
+        image = std::make_shared<GameSystem::Image>(*other.image);
+    }
+    if (other.controller)
+    {
+        controller = std::make_shared<BaseController>(*other.controller);
+    }
+}
+
 void Entity::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    try
+    if (image)
     {
         image->Draw(inRenderer);
-        return;
     }
-    catch (std::exception &e)
+    else
     {
-        std::cerr << e.what() << "\n";
+        inRenderer->Draw(GetRectangle(), Const::Color::Green);
     }
-    inRenderer->Draw(GetRectangle(), Const::Color::Green);
 }
 
 void Entity::SetWaitForDelete()

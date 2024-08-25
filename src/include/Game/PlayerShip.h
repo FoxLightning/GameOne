@@ -14,7 +14,7 @@ namespace Game
 class PlayerShip final : public GameBase::Entity
 {
   public:
-    PlayerShip();
+    explicit PlayerShip(std::string inConfigName);
     void CheckCollision(GameBase::Collider *inCollider) override;
     void Update(double deltaTime) override;
 
@@ -24,8 +24,10 @@ class PlayerShip final : public GameBase::Entity
     void SpawnMissle();
 
     bool triggerPulled = false;
-    double reloadTime = Const::Gameplay::playerReloadTime;
     double timeFromLastShot = 0;
+
+    double reloadTime = 0;
+    std::string configName;
 };
 
 }; // namespace Game

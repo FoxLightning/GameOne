@@ -34,10 +34,10 @@ class Collider
     virtual void CheckCollision(Game::Explosion *inCollider) {};
     virtual void CheckCollision(Game::PlayerShip *inCollider) {};
     [[nodiscard]] auto GetRectangle() const -> const Box2D &;
+    void SetPosition(Vector2D inPosition);
 
   protected:
     void SetSize(Vector2D inSize);
-    void SetPosition(Vector2D inPosition);
     void SetPivot(Vector2D inPivot, bool updateRectangle = false);
     void Move(Vector2D delta);
 
@@ -51,6 +51,7 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
   public:
     Entity() = default;
     ~Entity() override = default;
+    Entity(const Entity &other);
 
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
     void Update(double deltaTime) override;

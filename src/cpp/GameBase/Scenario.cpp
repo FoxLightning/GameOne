@@ -6,6 +6,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
+#include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
 #include <algorithm>
 #include <cassert>
@@ -32,6 +33,11 @@ void Scenario::Update(double deltaTime)
 void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
 {
     const std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
+    std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
+    if (!prototypeHolder)
+    {
+        throw GameSystem::CriticalException("prototype holder is not valid");
+    }
     if (!currentState)
     {
         throw GameSystem::CriticalException("current game state is not valid");
@@ -44,7 +50,9 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
 
     for (const Vector2D &position : positions)
     {
-        gameWorld->AddEntity<Game::Enemy>(position, Const::Gameplay::enemySpeed);
+        std::shared_ptr<Game::Enemy> enemy = prototypeHolder->GetEnemy(Const::Prototype::Entity::enemyEntity);
+        enemy->SetPosition(position);
+        gameWorld->AddEntity(enemy);
     }
 }
 namespace

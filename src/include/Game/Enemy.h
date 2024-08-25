@@ -11,7 +11,9 @@ class Bullet;
 class Enemy final : public GameBase::Entity
 {
   public:
-    Enemy(Vector2D position, double speed);
+    explicit Enemy(std::string inConfigName);
+
+    Enemy(const Enemy &other) = default;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
 
     void CheckCollision(GameBase::Collider *inCollider) override;
@@ -21,6 +23,8 @@ class Enemy final : public GameBase::Entity
   private:
     static void PlayExplosionSound();
     static void PlayHitSound();
-    double HP = Const::Gameplay::enemyHP;
+    double HP;
+
+    std::string configName;
 };
 } // namespace Game

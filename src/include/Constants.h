@@ -14,12 +14,6 @@ extern const LinearColor Blue;
 namespace System
 {
 extern const double bulletLifeTime;
-extern const double animationFrameTime;
-extern const int64_t enemyDamageFrames;
-extern const double explosionSize;
-extern const double bulletExplosionSize;
-extern const double explosionAnimationFrameTime;
-extern const int64_t enemyExplosionFrames;
 namespace Geometry
 {
 extern const double enemySize;
@@ -29,14 +23,8 @@ extern const double bulletSize;
 } // namespace System
 namespace Gameplay
 {
-extern const double playerMaxSpeed;
-extern const double bulletSpeed;
-extern const double enemySpeed;
-extern const double playerReloadTime;
 extern const double timeToSpawnEnemy;
 extern const int64_t waveNumber;
-extern const double bulletDamage;
-extern const double enemyHP;
 } // namespace Gameplay
 namespace Configuration
 {
@@ -61,19 +49,19 @@ extern const char *const shipRocketLounch;
 extern const char *const enemyHit;
 extern const char *const enemyExplosion;
 } // namespace Sound
-namespace Prototypes
+namespace Prototype
 {
-namespace Image
+namespace Entity
 {
-extern const char *const ship;
-extern const char *const enemy;
-extern const char *const missle;
-} // namespace Image
+extern const char *const enemyEntity;
+extern const char *const missleEntity;
+extern const char *const playerShipEntity;
+} // namespace Entity
 namespace Animation
 {
 extern const char *const enemyDamageAnimation;
 extern const char *const enemyExplosionAnimation;
 extern const char *const missleExplosionAnimation;
 } // namespace Animation
-} // namespace Prototypes
+} // namespace Prototype
 } // namespace Const

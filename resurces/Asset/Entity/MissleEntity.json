@@ -1,0 +1,15 @@
+{
+    "speed": 1000,
+    "damage": 1,
+    "collider": {
+        "size": {
+            "x": 32,
+            "y": 48
+        },
+        "pivot": {
+            "x": 0.5,
+            "y": 0.5
+        }
+    },
+    "image": "resurces/Asset/Image/MissleImage.json"
+}

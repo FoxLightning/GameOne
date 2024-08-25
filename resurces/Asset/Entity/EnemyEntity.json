@@ -1,0 +1,15 @@
+{
+    "speed": 100,
+    "hp": 3,
+    "collider": {
+        "size": {
+            "x": 128,
+            "y": 128
+        },
+        "pivot": {
+            "x": 0.5,
+            "y": 0.5
+        }
+    },
+    "image": "resurces/Asset/Image/EnemyShipImage.json"
+}

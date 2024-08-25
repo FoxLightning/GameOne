@@ -7,27 +7,35 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
 #include "Types.h"
+#include "boost/property_tree/json_parser.hpp"
+#include "boost/property_tree/ptree_fwd.hpp"
 #include <iostream>
 #include <memory>
 
 namespace Game
 {
-Enemy::Enemy(Vector2D position, double speed)
-{
-    const Vector2D &size = Vector2D(Const::System::Geometry::enemySize, Const::System::Geometry::enemySize);
-    SetPosition(position);
-    SetSize(size);
-    SetMaxSpeed(speed);
-    SetDirection(Vector2D(0., 1.));
 
+Enemy::Enemy(std::string inConfigName) : configName(std::move(inConfigName))
+{
+    boost::property_tree::ptree enemyAssetTree;
+    boost::property_tree::read_json(configName, enemyAssetTree);
+
+    SetSize({enemyAssetTree.get_child("collider").get_child("size").get<double>("x"),
+             enemyAssetTree.get_child("collider").get_child("size").get<double>("y")});
+    SetPivot({enemyAssetTree.get_child("collider").get_child("pivot").get<double>("x"),
+              enemyAssetTree.get_child("collider").get_child("pivot").get<double>("y")});
+    SetDirection(Vector2D(0., 1.));
+    SetMaxSpeed(enemyAssetTree.get<double>("speed"));
+    HP = enemyAssetTree.get<double>("hp");
     const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
-    SetImage(prototypeHolder->GetImage(Const::Prototypes::Image::enemy));
+    SetImage(prototypeHolder->GetImage(enemyAssetTree.get<std::string>("image")));
 }
 
 void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
@@ -60,14 +68,14 @@ void Enemy::CheckCollision(Bullet *inCollider)
     {
         const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
         currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
-            GetPosition(), GetDirection(), GetMaxSpeed(), Const::Prototypes::Animation::enemyExplosionAnimation);
+            GetPosition(), GetDirection(), GetMaxSpeed(), Const::Prototype::Animation::enemyExplosionAnimation);
         SetWaitForDelete();
         PlayHitSound();
         PlayExplosionSound();
     }
     else
     {
-        PlayAnimation(Const::Prototypes::Animation::enemyDamageAnimation);
+        PlayAnimation(Const::Prototype::Animation::enemyDamageAnimation);
         PlayHitSound();
     }
 }

@@ -2,6 +2,7 @@
 #include "GameSystem/Renderer.h"
 #include "Types.h"
 #include <memory>
+#include <string>
 
 namespace GameSystem
 {
@@ -11,7 +12,7 @@ class Image : IRendereble
 {
   public:
     Image(const Image &other) = default;
-    explicit Image(const std::string &name);
+    explicit Image(std::string name);
 
     auto operator=(const Image &other) -> Image & = delete;
 
@@ -24,5 +25,7 @@ class Image : IRendereble
     Vector2D pos{0., 0.};
     Vector2D size{0., 0.};
     Vector2D pivot{0.5, 0.5};
+
+    std::string configName;
 };
 } // namespace GameSystem

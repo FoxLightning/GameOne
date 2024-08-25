@@ -12,26 +12,35 @@
 #include "GameSystem/ResurceManager.h"
 #include "GameSystem/SoundManager.h"
 #include "Types.h"
+#include "boost/property_tree/json_parser.hpp"
+#include "boost/property_tree/ptree_fwd.hpp"
 #include <iostream>
 #include <memory>
 
 namespace Game
 {
-PlayerShip::PlayerShip()
+PlayerShip::PlayerShip(std::string inConfigName) : configName(std::move(inConfigName))
 {
-    const Vector2D desiredSize = Vector2D(Const::System::Geometry::playerSize, Const::System::Geometry::playerSize);
+    boost::property_tree::ptree playerShipAssetTree;
+    boost::property_tree::read_json(configName, playerShipAssetTree);
+
+    const Vector2D desiredSize = {playerShipAssetTree.get_child("collider").get_child("size").get<double>("x"),
+                                  playerShipAssetTree.get_child("collider").get_child("size").get<double>("y")};
+    SetSize(desiredSize);
+    SetPivot({playerShipAssetTree.get_child("collider").get_child("pivot").get<double>("x"),
+              playerShipAssetTree.get_child("collider").get_child("pivot").get<double>("y")});
+    SetMaxSpeed(playerShipAssetTree.get<double>("speed"));
+    reloadTime = 1. / playerShipAssetTree.get<double>("fireRate");
     auto configManager = GameSystem::AppInstance::GetConfigManager();
     auto resolution = configManager->GetConfiguration().windowResolution;
-    const Vector2D startPosition = Vector2D(static_cast<double>(resolution.x()) / 2.,
-                                            static_cast<double>(resolution.y()) - (desiredSize.y() / 2.));
-    auto playerController = std::make_shared<Game::PlayerController>();
-    playerController->SubscribeInput();
-    SetPosition(startPosition);
-    SetSize(desiredSize);
-    SetMaxSpeed(Const::Gameplay::playerMaxSpeed);
+    SetPosition(
+        {static_cast<double>(resolution.x()) / 2., static_cast<double>(resolution.y()) - (desiredSize.y() / 2.)});
 
     const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
-    SetImage(prototypeHolder->GetImage(Const::Prototypes::Image::ship));
+    SetImage(prototypeHolder->GetImage(playerShipAssetTree.get<std::string>("image")));
+
+    auto playerController = std::make_shared<Game::PlayerController>();
+    playerController->SubscribeInput();
     if (playerController)
     {
         playerController->SubscribeInput();
@@ -82,8 +91,11 @@ void PlayerShip::SpawnMissle()
     {
         if (const std::shared_ptr<GameBase::GameWorld> gameWorld = currentState->GetGameWorld())
         {
-            const Vector2D &position = GetPosition();
-            gameWorld->AddEntity<Game::Bullet>(position, Vector2D(0., -1.));
+            std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder =
+                GameSystem::AppInstance::GetPrototypeHolder();
+            std::shared_ptr<Game::Bullet> bullet = prototypeHolder->GetBullet(Const::Prototype::Entity::missleEntity);
+            bullet->SetPosition(GetPosition());
+            gameWorld->AddEntity(bullet);
         }
     }
 }

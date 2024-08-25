@@ -26,10 +26,9 @@ ConfigManager::ConfigManager()
 
     try
     {
-        configuration.frameRate = settingsTree.get<double>(Const::Configuration::Fields::frameRate);
-        const boost::property_tree::ptree resolution = settingsTree.get_child(Const::Configuration::Fields::resolution);
-        const auto height = resolution.get<int32_t>(Const::Configuration::Fields::resolutionHeight);
-        const auto width = resolution.get<int32_t>(Const::Configuration::Fields::resolutionWidth);
+        configuration.frameRate = settingsTree.get<double>("frameRate");
+        const auto height = settingsTree.get<int32_t>("resolution.y");
+        const auto width = settingsTree.get<int32_t>("resolution.x");
         configuration.windowResolution.x(width);
         configuration.windowResolution.y(height);
     }

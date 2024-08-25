@@ -8,7 +8,9 @@ namespace Game
 class Bullet final : public GameBase::Entity
 {
   public:
-    Bullet(const Vector2D &start, const Vector2D &direction);
+    explicit Bullet(std::string inConfigName);
+    Bullet(const Bullet &other) = default;
+
     ~Bullet() override = default;
     void Update(double deltaTime) override;
     [[nodiscard]] auto GetDamage() const -> double;
@@ -18,7 +20,9 @@ class Bullet final : public GameBase::Entity
 
   private:
     double lifeTime = Const::System::bulletLifeTime;
-    double bulletDamage = Const::Gameplay::bulletDamage;
+    double bulletDamage;
+
+    std::string configName;
 };
 
 }; // namespace Game

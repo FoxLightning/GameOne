@@ -26,6 +26,11 @@ void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
     }
 }
 
+void GameWorld::AddEntity(const std::shared_ptr<Entity> &inEntity)
+{
+    entitiesToAdd.push_back(inEntity);
+}
+
 void GameWorld::CheckCollisions()
 {
     for (auto &left : entitiesHolder)

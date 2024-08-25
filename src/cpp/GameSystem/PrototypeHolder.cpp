@@ -1,8 +1,8 @@
 #include "GameSystem/PrototypeHolder.h"
-#include "Constants.h"
+#include "Game/Bullet.h"
+#include "Game/Enemy.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Image.h"
-#include <array>
 #include <cassert>
 #include <map>
 #include <memory>
@@ -10,34 +10,44 @@
 
 namespace GameSystem
 {
-PrototypeHolder::PrototypeHolder()
+auto PrototypeHolder::GetEnemy(const std::string &configName) -> std::shared_ptr<Game::Enemy>
 {
-    const std::array<std::string, 3> imagesToLoad{Const::Prototypes::Image::enemy, Const::Prototypes::Image::ship,
-                                                  Const::Prototypes::Image::missle};
-    for (const auto &imageName : imagesToLoad)
+    if (auto enemyItr = enemyPrototypes.find(configName); enemyItr != enemyPrototypes.end())
     {
-        imagePrototypes.emplace(imageName, std::make_shared<Image>(imageName));
+        return std::make_shared<Game::Enemy>(*(enemyItr->second));
     }
-
-    const std::array<std::string, 3> animationsToLoad{Const::Prototypes::Animation::enemyDamageAnimation,
-                                                      Const::Prototypes::Animation::enemyExplosionAnimation,
-                                                      Const::Prototypes::Animation::missleExplosionAnimation};
-    for (const auto &animationName : animationsToLoad)
-    {
-        animationPrototypes.emplace(animationName, std::make_shared<BaseAnimation>(animationName));
-    }
+    enemyPrototypes.emplace(configName, std::make_shared<Game::Enemy>(configName));
+    return std::make_shared<Game::Enemy>(*enemyPrototypes[configName]);
 }
 
-auto PrototypeHolder::GetImage(const std::string &name) -> std::shared_ptr<Image>
+auto PrototypeHolder::GetBullet(const std::string &configName) -> std::shared_ptr<Game::Bullet>
 {
-    assert(imagePrototypes.contains(name));
-    return std::make_shared<Image>(*imagePrototypes[name]);
+    if (auto bulletItr = bulletPrototypes.find(configName); bulletItr != bulletPrototypes.end())
+    {
+        return std::make_shared<Game::Bullet>(*(bulletItr->second));
+    }
+    bulletPrototypes.emplace(configName, std::make_shared<Game::Bullet>(configName));
+    return std::make_shared<Game::Bullet>(*bulletPrototypes[configName]);
 }
 
-auto PrototypeHolder::GetAnimation(const std::string &name) -> std::shared_ptr<BaseAnimation>
+auto PrototypeHolder::GetImage(const std::string &configName) -> std::shared_ptr<Image>
 {
-    assert(animationPrototypes.contains(name));
-    return std::make_shared<BaseAnimation>(*animationPrototypes[name]);
+    if (auto imageItr = imagePrototypes.find(configName); imageItr != imagePrototypes.end())
+    {
+        return std::make_shared<Image>(*(imageItr->second));
+    }
+    imagePrototypes.emplace(configName, std::make_shared<Image>(configName));
+    return std::make_shared<Image>(*imagePrototypes[configName].get());
+}
+
+auto PrototypeHolder::GetAnimation(const std::string &configName) -> std::shared_ptr<BaseAnimation>
+{
+    if (auto animationItr = animationPrototypes.find(configName); animationItr != animationPrototypes.end())
+    {
+        return std::make_shared<BaseAnimation>(*(animationItr->second));
+    }
+    animationPrototypes.emplace(configName, std::make_shared<BaseAnimation>(configName));
+    return std::make_shared<BaseAnimation>(*animationPrototypes[configName]);
 }
 
 } // namespace GameSystem

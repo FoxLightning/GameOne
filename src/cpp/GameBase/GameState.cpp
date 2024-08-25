@@ -1,4 +1,5 @@
 #include "GameBase/GameState.h"
+#include "Constants.h"
 #include "Game/PlayerShip.h"
 #include "GameBase/GameWorld.h"
 #include "GameBase/Scenario.h"
@@ -11,7 +12,7 @@ namespace GameBase
 GameState::GameState()
 {
     gameWorld = std::make_shared<GameWorld>();
-    gameWorld->AddEntity<Game::PlayerShip>();
+    gameWorld->AddEntity(std::make_shared<Game::PlayerShip>(Const::Prototype::Entity::playerShipEntity));
     currentScenario = std::make_shared<Scenario>();
 };
 
