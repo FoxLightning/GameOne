@@ -1,6 +1,6 @@
 {
-    "speed": 100,
-    "hp": 3,
+    "speed": 125,
+    "hp": 5,
     "collider": {
         "size": {
             "x": 128,
