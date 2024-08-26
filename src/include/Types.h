@@ -86,6 +86,20 @@ auto MoveBox(const bgm::box<bgm::d2::point_xy<T>> &box,
 }
 
 template <typename T>
+auto ScaleBox(const bgm::box<bgm::d2::point_xy<T>> &box, const T &scale) -> bgm::box<bgm::d2::point_xy<T>>
+{
+    const bgm::d2::point_xy<T> min_corner(box.min_corner() * scale);
+    const bgm::d2::point_xy<T> max_corner(box.max_corner() * scale);
+    return bgm::box<bgm::d2::point_xy<T>>(min_corner, max_corner);
+}
+
+template <typename T>
+auto operator*(const bgm::box<bgm::d2::point_xy<T>> &box, const T &scale) -> bgm::box<bgm::d2::point_xy<T>>
+{
+    return ScaleBox(box, scale);
+}
+
+template <typename T>
 auto operator+(const bgm::box<bgm::d2::point_xy<T>> &box,
                const bgm::d2::point_xy<T> &point) -> bgm::box<bgm::d2::point_xy<T>>
 {
