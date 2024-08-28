@@ -19,39 +19,24 @@ GameWorld::GameWorld()
     boost::property_tree::ptree worldAssetTree;
     boost::property_tree::read_json(Const::AssetPaths::gameWorld, worldAssetTree);
     worldSize = Vector2D{worldAssetTree.get<double>("worldSize.x"), worldAssetTree.get<double>("worldSize.y")};
+    assert(worldSize.x() > worldSize.y());
     currentScenario = std::make_shared<Scenario>(worldSize);
-
-    for (const auto &backgroundAsset : {
-             Const::Prototype::World::background,
-             Const::Prototype::World::backgroundStars1,
-             Const::Prototype::World::backgroundStars2,
-             Const::Prototype::World::backgroundStars3,
-             Const::Prototype::World::backgroundStars4,
-         })
-    {
-        backgroundList.push_back(std::make_shared<Background>(backgroundAsset, worldSize));
-    }
+    background = std::make_shared<Background>(Const::Prototype::World::background, worldSize);
 }
 
 void GameWorld::Update(const double deltaTime)
 {
-    for (const auto &back : backgroundList)
-    {
-        back->Update(deltaTime);
-    }
+    background->Update(deltaTime);
+    currentScenario->Update(deltaTime);
     RemoveStaleObjects();
     AddPendingObjects();
     CheckCollisions();
     UpdateChildren(deltaTime);
-    currentScenario->Update(deltaTime);
 }
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    for (const auto &back : backgroundList)
-    {
-        back->Draw(inRenderer);
-    }
+    background->Draw(inRenderer);
     for (auto &entity : entitiesHolder)
     {
         assert(entity);

@@ -35,7 +35,7 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
     static auto CheckIntersections(const std::shared_ptr<Entity> &left, const std::shared_ptr<Entity> &right) -> bool;
 
     std::shared_ptr<Scenario> currentScenario;
-    std::vector<std::shared_ptr<Background>> backgroundList;
+    std::shared_ptr<Background> background;
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
     std::vector<std::shared_ptr<Entity>> entitiesToAdd;
 

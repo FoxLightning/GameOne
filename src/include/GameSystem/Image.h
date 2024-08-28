@@ -11,8 +11,9 @@ class Texture;
 class Image : IRendereble
 {
   public:
-    Image(const Image &other) = default;
+    Image(const std::string &inTexturePath, const Vector2D &inSize, const Vector2D &inPivot);
     explicit Image(std::string name);
+    Image(const Image &other) = default;
 
     auto operator=(const Image &other) -> Image & = delete;
 

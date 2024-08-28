@@ -1,12 +1,41 @@
-{
-    "speed": 10,
-    "imageList": [
-        "resurces/Asset/Image/BackgroundImage1.json",
-        "resurces/Asset/Image/BackgroundImage2.json",
-        "resurces/Asset/Image/BackgroundImage3.json",
-        "resurces/Asset/Image/BackgroundImage4.json",
-        "resurces/Asset/Image/BackgroundImage5.json",
-        "resurces/Asset/Image/BackgroundImage6.json",
-        "resurces/Asset/Image/BackgroundImage7.json"
-    ]
-}
+[
+    {
+        "speed": 10,
+        "textures": [
+            "resurces/textures/Background1.png",
+            "resurces/textures/Background2.png",
+            "resurces/textures/Background3.png",
+            "resurces/textures/Background4.png",
+            "resurces/textures/Background5.png",
+            "resurces/textures/Background6.png"
+        ]
+    },
+    {
+        "speed": 20,
+        "textures": [
+            "resurces/textures/StarsBackground1.png",
+            "resurces/textures/StarsBackground1.png"
+        ]
+    },
+    {
+        "speed": 30,
+        "textures": [
+            "resurces/textures/StarsBackground2.png",
+            "resurces/textures/StarsBackground2.png"
+        ]
+    },
+    {
+        "speed": 40,
+        "textures": [
+            "resurces/textures/StarsBackground3.png",
+            "resurces/textures/StarsBackground3.png"
+        ]
+    },
+    {
+        "speed": 50,
+        "textures": [
+            "resurces/textures/StarsBackground4.png",
+            "resurces/textures/StarsBackground4.png"
+        ]
+    }
+]

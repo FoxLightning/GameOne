@@ -15,6 +15,13 @@
 
 namespace GameSystem
 {
+Image::Image(const std::string &inTexturePath, const Vector2D &inSize, const Vector2D &inPivot)
+    : size(inSize), pivot(inPivot)
+{
+    const std::shared_ptr<ResurceManager> resurceManager = AppInstance::GetResurceManager();
+    texture = resurceManager->GetTexture(inTexturePath);
+}
+
 Image::Image(std::string inName) : configName(std::move(inName))
 {
     boost::property_tree::ptree imageAssetTree;
