@@ -13,7 +13,6 @@ GameState::GameState()
 {
     gameWorld = std::make_shared<GameWorld>();
     gameWorld->AddEntity(std::make_shared<Game::PlayerShip>(Const::Prototype::Entity::playerShipEntity));
-    currentScenario = std::make_shared<Scenario>();
 };
 
 auto GameState::GetGameWorld() -> std::shared_ptr<GameWorld>
@@ -23,7 +22,6 @@ auto GameState::GetGameWorld() -> std::shared_ptr<GameWorld>
 
 void GameState::Update(const double deltaTime)
 {
-    currentScenario->Update(deltaTime);
     gameWorld->Update(deltaTime);
 }
 

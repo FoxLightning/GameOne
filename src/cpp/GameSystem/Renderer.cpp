@@ -55,9 +55,19 @@ void Renderer::Clear()
     SDL_RenderClear(renderer);
 }
 
+void Renderer::SetViewPosition(const Vector2D &inPosition)
+{
+    viewPosition = inPosition;
+}
+
+void Renderer::SetViewScale(const double &inScale)
+{
+    viewScale = inScale;
+}
+
 void Renderer::Draw(const Box2D &shape, const LinearColor &color)
 {
-    const SDL_FRect rectangle = CastSDL_FRect(shape);
+    const SDL_FRect rectangle = CastSDL_FRect((shape - viewPosition) * viewScale);
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(renderer, &rectangle);
 }
@@ -65,14 +75,14 @@ void Renderer::Draw(const Box2D &shape, const LinearColor &color)
 void Renderer::Draw(const Box2D &shape, const std::shared_ptr<Texture> &texture)
 {
     assert(texture && texture->GetTexture());
-    const SDL_FRect rectangle = CastSDL_FRect(shape);
+    const SDL_FRect rectangle = CastSDL_FRect((shape - viewPosition) * viewScale);
     SDL_RenderTexture(renderer, texture->GetTexture(), nullptr, &rectangle);
 }
 
 void Renderer::Draw(const Box2D &shape, const Box2D &atlasPos, const std::shared_ptr<Texture> &texture)
 {
     assert(texture && texture->GetTexture());
-    const SDL_FRect shapeRectangle = CastSDL_FRect(shape);
+    const SDL_FRect shapeRectangle = CastSDL_FRect((shape - viewPosition) * viewScale);
     const SDL_FRect atlasPosRectangle = CastSDL_FRect(atlasPos);
     SDL_RenderTexture(renderer, texture->GetTexture(), &atlasPosRectangle, &shapeRectangle);
 }

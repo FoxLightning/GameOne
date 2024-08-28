@@ -24,10 +24,15 @@ class Renderer final
     void Draw(const Box2D &shape, const std::shared_ptr<Texture> &texture);
     void Draw(const Box2D &shape, const Box2D &atlasPos, const std::shared_ptr<Texture> &texture);
     void Draw(const Box2D &shape, const LinearColor &color);
+    void SetViewPosition(const Vector2D &inPosition);
+    void SetViewScale(const double &inScale);
 
   private:
     SDL_Window *window;
     SDL_Renderer *renderer;
+
+    Vector2D viewPosition{0., 0.};
+    double viewScale{1.};
 };
 
 class IRendereble

@@ -14,7 +14,7 @@ namespace GameBase
 class Background : GameSystem::IUpdateble, GameSystem::IRendereble
 {
   public:
-    explicit Background(const std::string &configName);
+    explicit Background(const std::string &configName, const Vector2D &size);
 
     void Update(double deltaTime) override;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
@@ -26,6 +26,7 @@ class Background : GameSystem::IUpdateble, GameSystem::IRendereble
     std::shared_ptr<GameSystem::Image> nextImage;
     std::vector<std::shared_ptr<GameSystem::Image>> imageList;
 
+    Vector2D size{0., 0.};
     uint32_t currentIndex = 0;
     double speed = 0;
     double currentPosition = 0;

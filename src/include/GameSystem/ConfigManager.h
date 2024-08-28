@@ -4,7 +4,6 @@
 
 namespace GameSystem
 {
-// get this data from config NOLINT
 class ConfigManager
 {
     struct Configuration;
@@ -17,9 +16,8 @@ class ConfigManager
   private:
     struct Configuration
     {
-        Vector2I windowResolution{Const::Configuration::Defaults::resolutionWidth,
-                                  Const::Configuration::Defaults::resolutionHeight};
-        double frameRate{Const::Configuration::Defaults::frameRate};
+        Vector2I windowResolution{0, 0};
+        double frameRate{0.};
     } configuration;
 };
 }; // namespace GameSystem

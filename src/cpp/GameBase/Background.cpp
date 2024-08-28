@@ -1,6 +1,6 @@
 #include "GameBase/Background.h"
+#include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/ConfigManager.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
 #include "boost/property_tree/json_parser.hpp"
@@ -37,12 +37,11 @@ void Background::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 
 auto Background::ShouldGenerateNewImage() -> bool
 {
-    const std::shared_ptr<GameSystem::ConfigManager> configManager = GameSystem::AppInstance::GetConfigManager();
-    const Vector2I &resolution = configManager->GetConfiguration().windowResolution;
-    return currentPosition > (curImage->GetSize().y() + resolution.y());
+    return currentPosition > (curImage->GetSize().y() + size.y());
 }
 
-Background::Background(const std::string &configName)
+Background::Background(const std::string &configName, const Vector2D &inSize)
+    : currentPosition(inSize.y()), size(inSize)
 {
     boost::property_tree::ptree backgroundAssetTree;
     boost::property_tree::read_json(configName, backgroundAssetTree);
@@ -57,9 +56,6 @@ Background::Background(const std::string &configName)
     curImage = imageList[currentIndex];
     nextImage = imageList[(currentIndex + 1) % imageList.size()];
 
-    const std::shared_ptr<GameSystem::ConfigManager> configManager = GameSystem::AppInstance::GetConfigManager();
-    const Vector2I &resolution = configManager->GetConfiguration().windowResolution;
-    currentPosition = resolution.y();
     curImage->SetPos({0, currentPosition});
     nextImage->SetPos({0, currentPosition - curImage->GetSize().y()});
 }

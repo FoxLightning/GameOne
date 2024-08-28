@@ -7,6 +7,7 @@ namespace GameBase
 {
 class Entity;
 class Background;
+class Scenario;
 
 class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
@@ -24,6 +25,8 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
         entitiesToAdd.push_back(std::make_shared<T>(args...));
     }
 
+    auto GetWorldSize() -> Vector2D;
+
   private:
     void CheckCollisions();
     void UpdateChildren(double deltaTime);
@@ -31,8 +34,11 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
     void AddPendingObjects();
     static auto CheckIntersections(const std::shared_ptr<Entity> &left, const std::shared_ptr<Entity> &right) -> bool;
 
+    std::shared_ptr<Scenario> currentScenario;
     std::vector<std::shared_ptr<Background>> backgroundList;
     std::vector<std::shared_ptr<Entity>> entitiesHolder;
     std::vector<std::shared_ptr<Entity>> entitiesToAdd;
+
+    Vector2D worldSize{0., 0.};
 };
 }; // namespace GameBase

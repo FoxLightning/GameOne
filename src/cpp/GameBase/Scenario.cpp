@@ -4,7 +4,6 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
@@ -20,17 +19,9 @@
 namespace GameBase
 {
 
-void Scenario::Update(double deltaTime)
+namespace
 {
-    timeFromLastSpawn += deltaTime;
-    if (timeFromLastSpawn > timeToSpawn)
-    {
-        timeFromLastSpawn = 0;
-        SpawnEnemies(GetSpawnPositions(spawnNumber));
-    }
-}
-
-void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
+void SpawnEnemies(const std::vector<Vector2D> &positions)
 {
     const std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
     const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
@@ -56,8 +47,6 @@ void Scenario::SpawnEnemies(const std::vector<Vector2D> &positions)
         gameWorld->AddEntity(enemy);
     }
 }
-namespace
-{
 auto GetRandomPosInRange(double minPos, double maxPos)
 {
     std::random_device rd;
@@ -126,15 +115,28 @@ auto FindFreePosition(std::vector<Vector2D> blockedPositions, double minPos, dou
     return desiredPos;
 }
 } // namespace
-auto Scenario::GetSpawnPositions(int64_t positionsNum) -> std::vector<Vector2D>
+
+Scenario::Scenario(const Vector2D &inFieldSize) : fieldSize(inFieldSize)
+{
+}
+
+void Scenario::Update(double deltaTime)
+{
+    timeFromLastSpawn += deltaTime;
+    if (timeFromLastSpawn > timeToSpawn)
+    {
+        timeFromLastSpawn = 0;
+        SpawnEnemies(GetSpawnPositions(spawnNumber));
+    }
+}
+
+auto Scenario::GetSpawnPositions(int64_t positionsNum) const -> std::vector<Vector2D>
 {
     const double enemyWidth = 128.;
     const double enemyXPivot = 0.5;
     const double enemyYPivot = 0.5;
     const double yPos = -128. * enemyYPivot;
 
-    const std::shared_ptr<GameSystem::ConfigManager> configManager = GameSystem::AppInstance::GetConfigManager();
-    const Vector2I fieldSize = configManager->GetConfiguration().windowResolution;
     const double minPos = enemyWidth * enemyXPivot;
     const double maxPos = fieldSize.x() - (enemyWidth * enemyXPivot);
 

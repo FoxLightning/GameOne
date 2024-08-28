@@ -6,7 +6,6 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
-#include "GameSystem/ConfigManager.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/ResurceManager.h"
@@ -33,10 +32,7 @@ PlayerShip::PlayerShip(std::string inConfigName) : configName(std::move(inConfig
               playerShipAssetTree.get_child("collider").get_child("pivot").get<double>("y")});
     SetMaxSpeed(playerShipAssetTree.get<double>("speed"));
     reloadTime = 1. / playerShipAssetTree.get<double>("fireRate");
-    auto configManager = GameSystem::AppInstance::GetConfigManager();
-    auto resolution = configManager->GetConfiguration().windowResolution;
-    SetPosition(
-        {static_cast<double>(resolution.x()) / 2., static_cast<double>(resolution.y()) - (desiredSize.y() / 2.)});
+    SetPosition({playerShipAssetTree.get<double>("startPos.x"), playerShipAssetTree.get<double>("startPos.y")});
 
     const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
     SetImage(prototypeHolder->GetImage(playerShipAssetTree.get<std::string>("image")));

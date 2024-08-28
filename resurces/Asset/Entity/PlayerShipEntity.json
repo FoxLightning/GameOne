@@ -1,6 +1,10 @@
 {
     "speed": 700,
     "fireRate": 10,
+    "startPos": {
+        "x": 640,
+        "y": 520
+    },
     "collider": {
         "size": {
             "x": 128,
