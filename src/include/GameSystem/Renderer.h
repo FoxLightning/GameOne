@@ -32,6 +32,7 @@ class Renderer final
     SDL_Renderer *renderer;
 
     Vector2D viewPosition{0., 0.};
+    Vector2D internalOffset{0., 0.};
     double viewScale{1.};
 };
 

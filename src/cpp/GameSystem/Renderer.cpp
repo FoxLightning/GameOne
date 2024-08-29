@@ -27,8 +27,23 @@ Renderer::Renderer()
     }
 
     const std::shared_ptr<ConfigManager> configManager = AppInstance::GetConfigManager();
-    const auto Resolution = configManager->GetConfiguration().windowResolution;
-    window = SDL_CreateWindow("SDL Game Loop Example", Resolution.x(), Resolution.y(), 0);
+    const auto resolution = configManager->GetConfiguration().windowResolution;
+    const auto defaultResolution = configManager->GetDefaultConfiguration().windowResolution;
+    if (static_cast<double>(resolution.x()) / static_cast<double>(resolution.y()) >
+        static_cast<double>(defaultResolution.x()) / static_cast<double>(defaultResolution.y()))
+    {
+        viewScale = static_cast<double>(resolution.y()) / static_cast<double>(defaultResolution.y());
+        internalOffset.x(
+            (static_cast<double>(resolution.x()) - (static_cast<double>(defaultResolution.x()) * viewScale)) / 2);
+    }
+    else
+    {
+        viewScale = static_cast<double>(resolution.x()) / static_cast<double>(defaultResolution.x());
+        internalOffset.y(
+            (static_cast<double>(resolution.y()) - (static_cast<double>(defaultResolution.y()) * viewScale)) / 2);
+    }
+
+    window = SDL_CreateWindow("SDL Game Loop Example", resolution.x(), resolution.y(), 0);
     if (window == nullptr)
     {
         throw GameSystem::CriticalException(std::format("SDL_CreateWindow Error: {}", SDL_GetError()));
@@ -67,7 +82,7 @@ void Renderer::SetViewScale(const double &inScale)
 
 void Renderer::Draw(const Box2D &shape, const LinearColor &color)
 {
-    const SDL_FRect rectangle = CastSDL_FRect((shape - viewPosition) * viewScale);
+    const SDL_FRect rectangle = CastSDL_FRect((shape - viewPosition) * viewScale + internalOffset);
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(renderer, &rectangle);
 }
@@ -75,14 +90,14 @@ void Renderer::Draw(const Box2D &shape, const LinearColor &color)
 void Renderer::Draw(const Box2D &shape, const std::shared_ptr<Texture> &texture)
 {
     assert(texture && texture->GetTexture());
-    const SDL_FRect rectangle = CastSDL_FRect((shape - viewPosition) * viewScale);
+    const SDL_FRect rectangle = CastSDL_FRect((shape - viewPosition) * viewScale + internalOffset);
     SDL_RenderTexture(renderer, texture->GetTexture(), nullptr, &rectangle);
 }
 
 void Renderer::Draw(const Box2D &shape, const Box2D &atlasPos, const std::shared_ptr<Texture> &texture)
 {
     assert(texture && texture->GetTexture());
-    const SDL_FRect shapeRectangle = CastSDL_FRect((shape - viewPosition) * viewScale);
+    const SDL_FRect shapeRectangle = CastSDL_FRect((shape - viewPosition) * viewScale + internalOffset);
     const SDL_FRect atlasPosRectangle = CastSDL_FRect(atlasPos);
     SDL_RenderTexture(renderer, texture->GetTexture(), &atlasPosRectangle, &shapeRectangle);
 }
