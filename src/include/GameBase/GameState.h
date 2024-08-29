@@ -3,6 +3,11 @@
 #include "GameSystem/Renderer.h"
 #include <memory>
 
+namespace GameSystem
+{
+class Image;
+};
+
 namespace GameBase
 {
 class GameWorld;
@@ -20,5 +25,6 @@ class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
 
   private:
     std::shared_ptr<GameWorld> gameWorld;
+    std::shared_ptr<GameSystem::Image> HUD;
 };
 }; // namespace GameBase

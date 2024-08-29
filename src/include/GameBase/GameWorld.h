@@ -40,5 +40,6 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
     std::vector<std::shared_ptr<Entity>> entitiesToAdd;
 
     Vector2D worldSize{0., 0.};
+    Vector2D worldScreenOffset{0., 0.};
 };
 }; // namespace GameBase

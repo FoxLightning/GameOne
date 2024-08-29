@@ -19,6 +19,8 @@ GameWorld::GameWorld()
     boost::property_tree::ptree worldAssetTree;
     boost::property_tree::read_json(Const::AssetPaths::gameWorld, worldAssetTree);
     worldSize = Vector2D{worldAssetTree.get<double>("worldSize.x"), worldAssetTree.get<double>("worldSize.y")};
+    worldScreenOffset =
+        Vector2D{worldAssetTree.get<double>("worldScreenOffset.x"), worldAssetTree.get<double>("worldScreenOffset.y")};
     assert(worldSize.x() > worldSize.y());
     currentScenario = std::make_shared<Scenario>(worldSize);
     background = std::make_shared<Background>(Const::Prototype::World::background, worldSize);
@@ -36,12 +38,14 @@ void GameWorld::Update(const double deltaTime)
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
+    inRenderer->SetViewPosition(worldScreenOffset * -1.);
     background->Draw(inRenderer);
     for (auto &entity : entitiesHolder)
     {
         assert(entity);
         entity->Draw(inRenderer);
     }
+    inRenderer->SetViewPosition(Vector2D(0., 0.));
 }
 
 void GameWorld::AddEntity(const std::shared_ptr<Entity> &inEntity)
