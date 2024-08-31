@@ -10,6 +10,6 @@ class Explosion final : public GameBase::Entity
     Explosion(Vector2D position, Vector2D direction, double speed, const char *animationName);
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
 
-    void CheckCollision(GameBase::Collider *inCollider) override;
+    void CheckCollision(GameSystem::Collider *inCollider) override;
 };
 } // namespace Game

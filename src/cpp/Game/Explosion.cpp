@@ -1,6 +1,7 @@
 #include "Game/Explosion.h"
 #include "GameBase/Entity.h"
 #include "GameSystem/BaseAnimation.h"
+#include "GameSystem/Collider.h"
 #include "GameSystem/Renderer.h"
 #include "Types.h"
 #include <cassert>
@@ -25,7 +26,7 @@ void Explosion::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
     currentAnimation->Draw(inRenderer);
 }
 
-void Explosion::CheckCollision(GameBase::Collider *inCollider)
+void Explosion::CheckCollision(GameSystem::Collider *inCollider)
 {
     inCollider->CheckCollision(this);
 }

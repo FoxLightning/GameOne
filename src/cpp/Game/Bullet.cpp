@@ -6,6 +6,7 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/Collider.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "Types.h"
 #include "boost/property_tree/json_parser.hpp"
@@ -48,7 +49,7 @@ auto Bullet::GetDamage() const -> double
     return bulletDamage;
 }
 
-void Bullet::CheckCollision(GameBase::Collider *inCollider)
+void Bullet::CheckCollision(GameSystem::Collider *inCollider)
 {
     inCollider->CheckCollision(this);
 }

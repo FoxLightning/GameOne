@@ -8,6 +8,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
+#include "GameSystem/Collider.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/Renderer.h"
@@ -63,7 +64,7 @@ void Enemy::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
     GameBase::Entity::Draw(inRenderer);
 }
 
-void Enemy::CheckCollision(GameBase::Collider *inCollider)
+void Enemy::CheckCollision(GameSystem::Collider *inCollider)
 {
     inCollider->CheckCollision(this);
 }

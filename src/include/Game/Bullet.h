@@ -15,7 +15,7 @@ class Bullet final : public GameBase::Entity
     void Update(double deltaTime) override;
     [[nodiscard]] auto GetDamage() const -> double;
 
-    void CheckCollision(GameBase::Collider *inCollider) override;
+    void CheckCollision(GameSystem::Collider *inCollider) override;
     void CheckCollision(Enemy *inCollider) override;
 
   private:

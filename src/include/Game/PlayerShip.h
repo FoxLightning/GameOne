@@ -15,7 +15,7 @@ class PlayerShip final : public GameBase::Entity
 {
   public:
     explicit PlayerShip(std::string inConfigName);
-    void CheckCollision(GameBase::Collider *inCollider) override;
+    void CheckCollision(GameSystem::Collider *inCollider) override;
     void Update(double deltaTime) override;
 
     void PullTrigger(bool isPoolingTrigger);

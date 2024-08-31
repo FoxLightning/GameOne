@@ -4,6 +4,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameBase/Scenario.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/Collider.h"
 #include "GameSystem/Image.h"
 #include "GameSystem/Renderer.h"
 #include "GameSystem/ResurceManager.h"

@@ -6,6 +6,7 @@
 #include "GameBase/GameState.h"
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/Collider.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/ResurceManager.h"
@@ -46,7 +47,7 @@ PlayerShip::PlayerShip(std::string inConfigName) : configName(std::move(inConfig
     }
 }
 
-void PlayerShip::CheckCollision(GameBase::Collider *inCollider)
+void PlayerShip::CheckCollision(GameSystem::Collider *inCollider)
 {
     inCollider->CheckCollision(this);
 }
