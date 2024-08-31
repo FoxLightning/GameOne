@@ -8,6 +8,21 @@ auto Collider::GetRectangle() const -> const Box2D &
     return rectangle;
 }
 
+auto Collider::GetPosition() const -> Vector2D
+{
+    return rectangle.min_corner() + (rectangle.max_corner() - rectangle.min_corner()) / 2.;
+}
+
+auto Collider::GetDesiredRectangle() const -> const Box2D &
+{
+    return desiredRectangle;
+}
+
+auto Collider::GetSpeedToApply() -> Vector2D
+{
+    return speedToApply;
+}
+
 void Collider::SetSize(Vector2D inSize)
 {
     const Vector2D curSize = rectangle.max_corner() - rectangle.min_corner();
@@ -32,8 +47,8 @@ void Collider::SetPosition(Vector2D inPosition)
     const double topPadding = curSize.y() * pivot.y();
     const double bottomPadding = curSize.y() - topPadding;
 
-    rectangle = Box2D(Vector2D(inPosition.x() - leftPadding, inPosition.y() - topPadding),
-                      Vector2D(inPosition.x() + RightPadding, inPosition.y() + bottomPadding));
+    desiredRectangle = Box2D(Vector2D(inPosition.x() - leftPadding, inPosition.y() - topPadding),
+                             Vector2D(inPosition.x() + RightPadding, inPosition.y() + bottomPadding));
 }
 
 void Collider::SetPivot(Vector2D inPivot, bool updateRectangle)
@@ -55,8 +70,14 @@ void Collider::SetPivot(Vector2D inPivot, bool updateRectangle)
     }
 }
 
-void Collider::Move(Vector2D delta)
+void Collider::TryMove(Vector2D delta)
 {
-    rectangle += delta;
+    speedToApply = delta;
+    desiredRectangle = rectangle + speedToApply;
+}
+
+void Collider::ApplyDesiredPosition()
+{
+    rectangle = desiredRectangle;
 }
 } // namespace GameSystem

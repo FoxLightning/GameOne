@@ -39,7 +39,6 @@ class Entity : public GameSystem::IUpdateble, public GameSystem::IRendereble, pu
 
     void SetWaitForDelete();
 
-    [[nodiscard]] auto GetPosition() const -> Vector2D;
     [[nodiscard]] auto IsWaitingForDelete() const -> bool;
 
   protected:

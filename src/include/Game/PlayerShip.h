@@ -1,7 +1,5 @@
 #pragma once
-#include "Constants.h"
 #include "GameBase/Entity.h"
-#include <memory>
 
 namespace GameSystem
 {

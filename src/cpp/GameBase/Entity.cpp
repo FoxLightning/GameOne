@@ -64,17 +64,11 @@ void Entity::Update(const double deltaTime)
     {
         controller->ApplyCommands(this);
     }
-    Move(direction * maxSpeed * powerPercent * deltaTime);
+    TryMove(direction * maxSpeed * powerPercent * deltaTime);
     if (image)
     {
         image->SetPos(GetPosition());
     }
-}
-
-auto Entity::GetPosition() const -> Vector2D
-{
-    const Box2D &rectangle = GetRectangle();
-    return rectangle.min_corner() + (rectangle.max_corner() - rectangle.min_corner()) / 2.;
 }
 
 auto Entity::IsWaitingForDelete() const -> bool

@@ -50,6 +50,38 @@ PlayerShip::PlayerShip(std::string inConfigName) : configName(std::move(inConfig
 void PlayerShip::CheckCollision(GameSystem::Collider *inCollider)
 {
     inCollider->CheckCollision(this);
+
+    double xPenitration = 0.;
+    double yPenitration = 0.;
+    Vector2D speedToApply = GetSpeedToApply();
+    Vector2D CollisionDirection = inCollider->GetPosition() - GetPosition();
+    if (CollisionDirection.x() > 0.)
+    {
+        xPenitration = GetDesiredRectangle().max_corner().x() - inCollider->GetDesiredRectangle().min_corner().x();
+    }
+    else
+    {
+        xPenitration = GetDesiredRectangle().min_corner().x() - inCollider->GetDesiredRectangle().max_corner().x();
+    }
+
+    if (CollisionDirection.y() > 0.)
+    {
+        yPenitration = GetDesiredRectangle().max_corner().y() - inCollider->GetDesiredRectangle().min_corner().y();
+    }
+    else
+    {
+        yPenitration = GetDesiredRectangle().min_corner().y() - inCollider->GetDesiredRectangle().max_corner().y();
+    }
+
+    if ((xPenitration * xPenitration) < (yPenitration * yPenitration))
+    {
+        speedToApply.x(speedToApply.x() - xPenitration);
+    }
+    else
+    {
+        speedToApply.y(speedToApply.y() - yPenitration);
+    }
+    TryMove(speedToApply);
 }
 
 void PlayerShip::Update(double deltaTime)

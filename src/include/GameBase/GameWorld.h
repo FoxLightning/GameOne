@@ -29,6 +29,7 @@ class GameWorld : public GameSystem::IUpdateble, public GameSystem::IRendereble
 
   private:
     void CheckCollisions();
+    void ApplyDesiredRectangles();
     void UpdateChildren(double deltaTime);
     void RemoveStaleObjects();
     void AddPendingObjects();

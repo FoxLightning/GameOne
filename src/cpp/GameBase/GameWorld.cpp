@@ -33,6 +33,7 @@ void GameWorld::Update(const double deltaTime)
     RemoveStaleObjects();
     AddPendingObjects();
     CheckCollisions();
+    ApplyDesiredRectangles();
     UpdateChildren(deltaTime);
 }
 
@@ -56,6 +57,14 @@ void GameWorld::AddEntity(const std::shared_ptr<Entity> &inEntity)
 auto GameWorld::GetWorldSize() -> Vector2D
 {
     return worldSize;
+}
+
+void GameWorld::ApplyDesiredRectangles()
+{
+    for (auto &child : entitiesHolder)
+    {
+        child->ApplyDesiredPosition();
+    }
 }
 
 void GameWorld::CheckCollisions()
@@ -96,7 +105,7 @@ auto GameWorld::CheckIntersections(const std::shared_ptr<Entity> &left, const st
 {
     if (left && right && left.get() != right.get())
     {
-        return boost::geometry::intersects(left->GetRectangle(), right->GetRectangle());
+        return boost::geometry::intersects(left->GetDesiredRectangle(), right->GetDesiredRectangle());
     }
     return false;
 }
