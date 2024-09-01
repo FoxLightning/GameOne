@@ -46,14 +46,14 @@ void GameWorld::Update(const double deltaTime)
 
 void GameWorld::Draw(std::shared_ptr<GameSystem::Renderer> inRenderer)
 {
-    inRenderer->SetViewPosition(worldScreenOffset * -1.);
+    inRenderer->SetViewPosition(worldScreenOffset);
     background->Draw(inRenderer);
     for (auto &entity : entitiesHolder)
     {
         assert(entity);
         entity->Draw(inRenderer);
     }
-    inRenderer->SetViewPosition(Vector2D(0., 0.));
+    inRenderer->PopViewPosition();
 }
 
 void GameWorld::AddEntity(const std::shared_ptr<Entity> &inEntity)

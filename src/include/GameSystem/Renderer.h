@@ -1,6 +1,7 @@
 #pragma once
 #include "Types.h"
 #include <memory>
+#include <stack>
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -25,14 +26,17 @@ class Renderer final
     void Draw(const Box2D &shape, const Box2D &atlasPos, const std::shared_ptr<Texture> &texture);
     void Draw(const Box2D &shape, const LinearColor &color);
     void SetViewPosition(const Vector2D &inPosition);
+    void PopViewPosition();
     void SetViewScale(const double &inScale);
 
   private:
+    auto GetViewPosition() -> Vector2D;
+
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    Vector2D viewPosition{0., 0.};
     Vector2D internalOffset{0., 0.};
+    std::vector<Vector2D> offsets;
     double viewScale{1.};
 };
 

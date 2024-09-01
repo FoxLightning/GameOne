@@ -17,7 +17,8 @@ Checks: >
   -bugprone-easily-swappable-parameters,
   -cppcoreguidelines-avoid-do-while,
   -readability-magic-numbers,
-  -clang-analyzer-optin.cplusplus.UninitializedObject
+  -clang-analyzer-optin.cplusplus.UninitializedObject,
+  -misc-confusable-identifiers
 WarningsAsErrors: false
 HeaderFilterRegex: '.*/GameOne/src/include/.*'
 CheckOptions:
