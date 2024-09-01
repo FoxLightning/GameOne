@@ -1,10 +1,6 @@
 #pragma once
-#include "GameSystem/Exceptions.h"
 #include "SDL3/SDL_scancode.h"
 #include <cassert>
-#include <functional>
-#include <list>
-#include <memory>
 #include <vector>
 
 namespace Game
@@ -35,6 +31,7 @@ const char *const EscapeName = "Escape";
 
 enum class EventType : uint8_t
 {
+    None,
     Start,
     Stop,
 };
@@ -45,27 +42,15 @@ struct Mapping
     ActionType actionType;
 };
 
-struct Subscription
-{
-    ActionType actionType;
-    std::weak_ptr<Game::PlayerController> owner;
-    std::function<void(EventType)> callback;
-};
-
 class InputManager
 {
   public:
     InputManager();
-    void Subscribe(const Subscription &inSubscripiton);
-    void Unsubscribe(const std::weak_ptr<void> &owner);
-
     void ProcessInput();
 
   private:
-    void RemoveExpiredSubscribers();
     static auto GetActionFromName(const std::string &name) -> ActionType;
 
     std::vector<Mapping> mappingList;
-    std::list<Subscription> subscriptionList;
 };
 }; // namespace GameSystem

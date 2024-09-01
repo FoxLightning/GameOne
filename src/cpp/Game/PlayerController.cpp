@@ -1,92 +1,37 @@
 #include "Game/PlayerController.h"
 #include "Game/PlayerShip.h"
 #include "GameBase/BaseController.h"
-#include "GameBase/Entity.h"
-#include "GameSystem/AppInstance.h"
+#include "GameSystem/EventManager.h"
 #include "GameSystem/InputManager.h"
-#include <array>
 
 namespace Game
 {
 
 void PlayerController::SubscribeInput()
 {
-    const std::array<GameSystem::Subscription, 5> subscriptionArr{
-        GameSystem::Subscription{.actionType = GameSystem::ActionType::MainAction,
-                                 .owner = weak_from_this(),
-                                 .callback = [this](GameSystem::EventType inEventType) -> void {
-                                     if (inEventType == GameSystem::EventType::Start)
-                                     {
-
-                                         this->AddPendingAction(GameSystem::ActionType::MainAction);
-                                     }
-                                     else
-                                     {
-                                         this->RemovePendingAction(GameSystem::ActionType::MainAction);
-                                     }
-                                 }},
-        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveUp,
-                                 .owner = weak_from_this(),
-                                 .callback = [this](GameSystem::EventType inEventType) -> void {
-                                     if (inEventType == GameSystem::EventType::Start)
-                                     {
-
-                                         this->AddPendingAction(GameSystem::ActionType::MoveUp);
-                                     }
-                                     else
-                                     {
-                                         this->RemovePendingAction(GameSystem::ActionType::MoveUp);
-                                     }
-                                 }},
-        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveDown,
-                                 .owner = weak_from_this(),
-                                 .callback =
-                                     [this](GameSystem::EventType inEventType) {
-                                         if (inEventType == GameSystem::EventType::Start)
-                                         {
-                                             this->AddPendingAction(GameSystem::ActionType::MoveDown);
-                                         }
-                                         else
-                                         {
-                                             this->RemovePendingAction(GameSystem::ActionType::MoveDown);
-                                         }
-                                     }},
-        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveLeft,
-                                 .owner = weak_from_this(),
-                                 .callback =
-                                     [this](GameSystem::EventType inEventType) {
-                                         if (inEventType == GameSystem::EventType::Start)
-                                         {
-
-                                             this->AddPendingAction(GameSystem::ActionType::MoveLeft);
-                                         }
-                                         else
-                                         {
-                                             this->RemovePendingAction(GameSystem::ActionType::MoveLeft);
-                                         }
-                                     }},
-        GameSystem::Subscription{.actionType = GameSystem::ActionType::MoveRight,
-                                 .owner = weak_from_this(),
-                                 .callback = [this](GameSystem::EventType inEventType) {
-                                     if (inEventType == GameSystem::EventType::Start)
-                                     {
-
-                                         this->AddPendingAction(GameSystem::ActionType::MoveRight);
-                                     }
-                                     else
-                                     {
-                                         this->RemovePendingAction(GameSystem::ActionType::MoveRight);
-                                     }
-                                 }}};
-    for (const auto &subscription : subscriptionArr)
-    {
-        GameSystem::AppInstance::GetInputManager()->Subscribe(subscription);
-    }
+    GameSystem::EventManager::SubscribeInput(GameSystem::InputActionDelegate{
+        .invoker = weak_from_this(),
+        .callback = [this](GameSystem::EventType eventType, GameSystem::ActionType actionType) {
+            OnActionEvent(eventType, actionType);
+        }});
 }
 
-void PlayerController::ApplyCommands(GameBase::Entity *inEntity)
+void PlayerController::OnActionEvent(GameSystem::EventType eventType, GameSystem::ActionType actionType)
 {
-    ApplyMovementCommands(inEntity);
+    switch (eventType)
+    {
+    case GameSystem::EventType::Start: {
+        AddPendingAction(actionType);
+        break;
+    }
+    case GameSystem::EventType::Stop: {
+        RemovePendingAction(actionType);
+        break;
+    }
+    default: {
+        static_assert(true);
+    }
+    }
 }
 
 void PlayerController::ApplyCommands(PlayerShip *inEntity)

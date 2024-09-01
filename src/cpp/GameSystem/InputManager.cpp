@@ -1,15 +1,32 @@
 #include "GameSystem/InputManager.h"
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
+#include "GameSystem/EventManager.h"
+#include "GameSystem/Exceptions.h"
 #include "SDL3/SDL_events.h"
 #include "SDL3/SDL_keyboard.h"
+#include "SDL3/SDL_stdinc.h"
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/ptree_fwd.hpp"
 #include <cassert>
-#include <iostream>
-#include <memory>
 #include <vector>
+
+namespace
+{
+auto GetEventTypeFromSDLEvent(const Uint32 SDLEvent) -> GameSystem::EventType
+{
+    if (SDLEvent == SDL_EVENT_KEY_DOWN)
+    {
+        return GameSystem::EventType::Start;
+    }
+    if (SDLEvent == SDL_EVENT_KEY_UP)
+    {
+        return GameSystem::EventType::Stop;
+    }
+    return GameSystem::EventType::None;
+}
+} // namespace
 
 namespace GameSystem
 {
@@ -29,21 +46,8 @@ InputManager::InputManager()
     }
 }
 
-void InputManager::Unsubscribe(const std::weak_ptr<void> &owner)
-{
-    subscriptionList.remove_if([&owner](auto &A) { return A.owner.lock() == owner.lock(); });
-}
-
-void InputManager::Subscribe(const Subscription &inSubscripiton)
-{
-    assert(!inSubscripiton.owner.expired());
-    subscriptionList.push_back(inSubscripiton);
-}
-
 void InputManager::ProcessInput()
 {
-    RemoveExpiredSubscribers();
-
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -53,34 +57,9 @@ void InputManager::ProcessInput()
             {
                 continue;
             }
-            EventType eventType = EventType::Stop;
-            if (event.type == SDL_EVENT_KEY_DOWN)
+            if (const EventType eventType = GetEventTypeFromSDLEvent(event.type); eventType != EventType::None)
             {
-                eventType = EventType::Start;
-            }
-            else if (event.type == SDL_EVENT_KEY_UP)
-            {
-                eventType = EventType::Stop;
-            }
-            else
-            {
-                continue;
-            }
-
-            for (auto &subscription : subscriptionList)
-            {
-                if (subscription.actionType != mapping.actionType)
-                {
-                    continue;
-                }
-                if (auto _ = subscription.owner.lock())
-                {
-                    subscription.callback(eventType);
-                }
-                else
-                {
-                    std::cerr << "Observer is null!\n";
-                }
+                EventManager::BroadcastInput(eventType, mapping.actionType);
             }
         }
         if (event.type == SDL_EVENT_QUIT)
@@ -88,11 +67,6 @@ void InputManager::ProcessInput()
             AppInstance::Stop();
         }
     }
-}
-
-void InputManager::RemoveExpiredSubscribers()
-{
-    subscriptionList.remove_if([](auto &A) { return A.owner.expired(); });
 }
 
 auto InputManager::GetActionFromName(const std::string &name) -> ActionType

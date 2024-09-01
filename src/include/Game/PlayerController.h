@@ -1,5 +1,6 @@
 #pragma once
 #include "GameBase/BaseController.h"
+#include "GameSystem/InputManager.h"
 #include <memory>
 
 namespace Game
@@ -11,7 +12,7 @@ class PlayerController final : public GameBase::BaseController, public std::enab
   public:
     PlayerController() = default;
 
-    void ApplyCommands(GameBase::Entity *inEntity) override;
+    void OnActionEvent(GameSystem::EventType eventType, GameSystem::ActionType actionType);
     void ApplyCommands(PlayerShip *inEntity) override;
 
     void SubscribeInput();
