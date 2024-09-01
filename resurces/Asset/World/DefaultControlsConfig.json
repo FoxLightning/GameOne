@@ -1,0 +1,30 @@
+[
+    {
+        "key": "Q",
+        "action": "MoveLeft"
+    },
+    {
+        "key": "D",
+        "action": "MoveRight"
+    },
+    {
+        "key": "W",
+        "action": "MoveUp"
+    },
+    {
+        "key": "S",
+        "action": "MoveDown"
+    },
+    {
+        "key": "SPACE",
+        "action": "MainAction"
+    },
+    {
+        "key": "F",
+        "action": "MainAction"
+    },
+    {
+        "key": "ESCAPE",
+        "action": "Escape"
+    }
+]

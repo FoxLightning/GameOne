@@ -32,6 +32,8 @@ const char *const gameWorld = "resurces/Asset/World/GameWorldAsset.json";
 const char *const defaultAppConfig = "resurces/Asset/World/DefaultAppConfigAsset.json";
 const char *const appConfig = "resurces/Config/AppConfig.json";
 const char *const defaultConfig = "resurces/Asset/World/DefaultAppConfigAsset.json";
+const char *const controls = "resurces/Config/ControlsConfig.json";
+const char *const defaultControls = "resurces/Asset/World/DefaultControlsConfig.json";
 } // namespace AssetPaths
 namespace Prototype
 {

@@ -1,5 +1,7 @@
 #pragma once
+#include "GameSystem/Exceptions.h"
 #include "SDL3/SDL_scancode.h"
+#include <cassert>
 #include <functional>
 #include <list>
 #include <memory>
@@ -22,6 +24,14 @@ enum class ActionType : uint8_t
     MoveDown,
     Escape
 };
+
+const char *const MainActionName = "MainAction";
+const char *const AdvancedActionName = "AdvancedAction";
+const char *const MoveLeftName = "MoveLeft";
+const char *const MoveRightName = "MoveRight";
+const char *const MoveUpName = "MoveUp";
+const char *const MoveDownName = "MoveDown";
+const char *const EscapeName = "Escape";
 
 enum class EventType : uint8_t
 {
@@ -53,6 +63,7 @@ class InputManager
 
   private:
     void RemoveExpiredSubscribers();
+    static auto GetActionFromName(const std::string &name) -> ActionType;
 
     std::vector<Mapping> mappingList;
     std::list<Subscription> subscriptionList;

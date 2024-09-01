@@ -32,6 +32,8 @@ extern const char *const gameWorld;
 extern const char *const defaultAppConfig;
 extern const char *const appConfig;
 extern const char *const defaultConfig;
+extern const char *const controls;
+extern const char *const defaultControls;
 } // namespace AssetPaths
 namespace Prototype
 {

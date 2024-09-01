@@ -38,4 +38,20 @@ class InvalidDataException : public std::exception
   private:
     std::string reason;
 };
+
+class InvalidControlBinding : public std::exception
+{
+  public:
+    explicit InvalidControlBinding(std::string type, std::string value) : reason(std::format("{}: '{}'.", type, value))
+    {
+    }
+
+    [[nodiscard]] auto what() const noexcept -> const char * override
+    {
+        return reason.c_str();
+    }
+
+  private:
+    std::string reason;
+};
 } // namespace GameSystem

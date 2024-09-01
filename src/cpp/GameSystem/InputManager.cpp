@@ -1,7 +1,11 @@
 #include "GameSystem/InputManager.h"
+#include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "SDL3/SDL_events.h"
-#include "SDL3/SDL_scancode.h"
+#include "SDL3/SDL_keyboard.h"
+#include "boost/property_tree/json_parser.hpp"
+#include "boost/property_tree/ptree.hpp"
+#include "boost/property_tree/ptree_fwd.hpp"
 #include <cassert>
 #include <iostream>
 #include <memory>
@@ -12,16 +16,17 @@ namespace GameSystem
 
 InputManager::InputManager()
 {
-    // TODO get it from config NOLINT
-    mappingList = std::vector<Mapping>{
-        {.keycode = SDL_SCANCODE_A, .actionType = ActionType::MoveLeft},
-        {.keycode = SDL_SCANCODE_D, .actionType = ActionType::MoveRight},
-        {.keycode = SDL_SCANCODE_W, .actionType = ActionType::MoveUp},
-        {.keycode = SDL_SCANCODE_S, .actionType = ActionType::MoveDown},
-        {.keycode = SDL_SCANCODE_SPACE, .actionType = ActionType::MainAction},
-        {.keycode = SDL_SCANCODE_F, .actionType = ActionType::MainAction},
-        {.keycode = SDL_SCANCODE_ESCAPE, .actionType = ActionType::Escape},
-    };
+    boost::property_tree::ptree controlsAssetTree;
+    boost::property_tree::read_json(Const::AssetPaths::controls, controlsAssetTree);
+
+    for (const auto &binding : controlsAssetTree)
+    {
+        const auto &actionName = binding.second.get<std::string>("action");
+        const auto &action = GetActionFromName(actionName);
+        const auto &keyName = binding.second.get<std::string>("key");
+        const auto &key = SDL_GetScancodeFromName(keyName.c_str());
+        mappingList.push_back({.keycode = key, .actionType = action});
+    }
 }
 
 void InputManager::Unsubscribe(const std::weak_ptr<void> &owner)
@@ -88,6 +93,39 @@ void InputManager::ProcessInput()
 void InputManager::RemoveExpiredSubscribers()
 {
     subscriptionList.remove_if([](auto &A) { return A.owner.expired(); });
+}
+
+auto InputManager::GetActionFromName(const std::string &name) -> ActionType
+{
+    if (name == MainActionName)
+    {
+        return ActionType::MainAction;
+    }
+    if (name == AdvancedActionName)
+    {
+        return ActionType::AdvancedAction;
+    }
+    if (name == MoveLeftName)
+    {
+        return ActionType::MoveLeft;
+    }
+    if (name == MoveRightName)
+    {
+        return ActionType::MoveRight;
+    }
+    if (name == MoveUpName)
+    {
+        return ActionType::MoveUp;
+    }
+    if (name == MoveDownName)
+    {
+        return ActionType::MoveDown;
+    }
+    if (name == EscapeName)
+    {
+        return ActionType::Escape;
+    }
+    throw GameSystem::InvalidControlBinding("Invalid action:", name);
 }
 
 }; // namespace GameSystem
