@@ -1,5 +1,6 @@
 #include "Game/PlayerShip.h"
 #include "Constants.h"
+#include "Game/BottomBorder.h"
 #include "Game/Bullet.h"
 #include "Game/PlayerController.h"
 #include "GameBase/Entity.h"
@@ -47,14 +48,12 @@ PlayerShip::PlayerShip(std::string inConfigName) : configName(std::move(inConfig
     }
 }
 
-void PlayerShip::CheckCollision(GameSystem::Collider *inCollider)
+void PlayerShip::BlockMovement(GameSystem::Collider *&inCollider)
 {
-    inCollider->CheckCollision(this);
-
     double xPenitration = 0.;
     double yPenitration = 0.;
     Vector2D speedToApply = GetSpeedToApply();
-    Vector2D CollisionDirection = inCollider->GetPosition() - GetPosition();
+    const Vector2D CollisionDirection = inCollider->GetPosition() - GetPosition();
     if (CollisionDirection.x() > 0.)
     {
         xPenitration = GetDesiredRectangle().max_corner().x() - inCollider->GetDesiredRectangle().min_corner().x();
@@ -82,6 +81,27 @@ void PlayerShip::CheckCollision(GameSystem::Collider *inCollider)
         speedToApply.y(speedToApply.y() - yPenitration);
     }
     TryMove(speedToApply);
+}
+
+void PlayerShip::CheckCollision(GameSystem::Collider *inCollider)
+{
+    inCollider->CheckCollision(this);
+}
+
+void PlayerShip::CheckCollision(BottomBorder *inCollider)
+{
+    if (auto *collider = dynamic_cast<GameSystem::Collider *>(inCollider))
+    {
+        BlockMovement(collider);
+    }
+}
+
+void PlayerShip::CheckCollision(SideBorder *inCollider)
+{
+    if (auto *collider = dynamic_cast<GameSystem::Collider *>(inCollider))
+    {
+        BlockMovement(collider);
+    }
 }
 
 void PlayerShip::Update(double deltaTime)

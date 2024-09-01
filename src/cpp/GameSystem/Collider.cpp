@@ -1,5 +1,6 @@
 #include "GameSystem/Collider.h"
 #include "Types.h"
+#include <cassert>
 
 namespace GameSystem
 {
@@ -36,6 +37,7 @@ void Collider::SetSize(Vector2D inSize)
 
     rectangle = Box2D(Vector2D(curPosX - leftPadding, curPosY - topPadding),
                       Vector2D(curPosX + RightPadding, curPosY + bottomPadding));
+    desiredRectangle = rectangle;
 }
 
 void Collider::SetPosition(Vector2D inPosition)
@@ -49,10 +51,13 @@ void Collider::SetPosition(Vector2D inPosition)
 
     desiredRectangle = Box2D(Vector2D(inPosition.x() - leftPadding, inPosition.y() - topPadding),
                              Vector2D(inPosition.x() + RightPadding, inPosition.y() + bottomPadding));
+    rectangle = desiredRectangle;
 }
 
 void Collider::SetPivot(Vector2D inPivot, bool updateRectangle)
 {
+    assert(inPivot.x() >= 0. && inPivot.x() <= 1.);
+    assert(inPivot.y() >= 0. && inPivot.y() <= 1.);
     pivot = inPivot;
     if (updateRectangle)
     {

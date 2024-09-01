@@ -5,14 +5,6 @@
 #include "Types.h"
 #include <memory>
 
-namespace Game
-{
-class Bullet;
-class Enemy;
-class Explosion;
-class PlayerShip;
-} // namespace Game
-
 namespace GameSystem
 {
 class BaseAnimation;

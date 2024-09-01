@@ -1,5 +1,7 @@
 #include "GameBase/GameWorld.h"
 #include "Constants.h"
+#include "Game/BottomBorder.h"
+#include "Game/SideBorder.h"
 #include "GameBase/Background.h"
 #include "GameBase/Entity.h"
 #include "GameBase/Scenario.h"
@@ -23,6 +25,11 @@ GameWorld::GameWorld()
         Vector2D{worldAssetTree.get<double>("worldScreenOffset.x"), worldAssetTree.get<double>("worldScreenOffset.y")};
     assert(worldSize.x() > worldSize.y());
     currentScenario = std::make_shared<Scenario>(worldSize);
+    for (const auto &side : {Game::SideBorder::Side::left, Game::SideBorder::Side::right, Game::SideBorder::Side::top})
+    {
+        AddEntity<Game::SideBorder>(worldSize, side);
+    }
+    AddEntity<Game::BottomBorder>(worldSize);
     background = std::make_shared<Background>(Const::Prototype::World::background, worldSize);
 }
 

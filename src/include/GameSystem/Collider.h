@@ -7,6 +7,8 @@ class Bullet;
 class Enemy;
 class Explosion;
 class PlayerShip;
+class BottomBorder;
+class SideBorder;
 } // namespace Game
 
 namespace GameSystem
@@ -22,6 +24,8 @@ class Collider
     virtual void CheckCollision(Game::Enemy *inCollider) {};
     virtual void CheckCollision(Game::Explosion *inCollider) {};
     virtual void CheckCollision(Game::PlayerShip *inCollider) {};
+    virtual void CheckCollision(Game::BottomBorder *inCollider) {};
+    virtual void CheckCollision(Game::SideBorder *inCollider) {};
     [[nodiscard]] auto GetRectangle() const -> const Box2D &;
     [[nodiscard]] auto GetPosition() const -> Vector2D;
     [[nodiscard]] auto GetDesiredRectangle() const -> const Box2D &;
