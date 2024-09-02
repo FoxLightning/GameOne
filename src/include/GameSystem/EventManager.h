@@ -20,7 +20,7 @@ struct InputActionDelegate
 struct EnemyDeathDelegate
 {
     std::weak_ptr<void> invoker;
-    std::function<void(double reward)> callback;
+    std::function<void(uint64_t reward)> callback;
 };
 
 class EventManager
@@ -34,7 +34,7 @@ class EventManager
 
     static void SubscribeEnemyDeath(const EnemyDeathDelegate &delegate);
     static void UnsubscribeEnemyDeath(const std::weak_ptr<void> &invoker);
-    static void BroadcastEnemyDeath(double reward);
+    static void BroadcastEnemyDeath(uint64_t reward);
 
   private:
     static std::vector<InputActionDelegate> inputActionSubscribers;

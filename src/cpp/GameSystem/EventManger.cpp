@@ -1,6 +1,7 @@
 #include "GameSystem/EventManager.h"
 #include "GameSystem/InputManager.h"
 #include <algorithm>
+#include <cstdint>
 #include <memory>
 #include <vector>
 
@@ -44,7 +45,7 @@ void EventManager::UnsubscribeEnemyDeath(const std::weak_ptr<void> &invoker)
     enemyDeathSubscribers.erase(range.begin(), range.end());
 }
 
-void EventManager::BroadcastEnemyDeath(double reward)
+void EventManager::BroadcastEnemyDeath(uint64_t reward)
 {
     for (const auto &subscriber : enemyDeathSubscribers)
     {

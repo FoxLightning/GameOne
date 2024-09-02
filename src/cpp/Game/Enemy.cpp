@@ -9,6 +9,7 @@
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/BaseAnimation.h"
 #include "GameSystem/Collider.h"
+#include "GameSystem/EventManager.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/Renderer.h"
@@ -81,6 +82,7 @@ void Enemy::CheckCollision(Bullet *inCollider)
         SetWaitForDelete();
         PlayHitSound();
         PlayExplosionSound();
+        GameSystem::EventManager::BroadcastEnemyDeath(reward);
     }
     else
     {

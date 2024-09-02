@@ -22,6 +22,11 @@ Image::Image(const std::string &inTexturePath, const Vector2D &inSize, const Vec
     texture = resurceManager->GetTexture(inTexturePath);
 }
 
+Image::Image(const std::shared_ptr<Texture> &inTexture, const Vector2D &inSize, const Vector2D &inPivot)
+    : texture(inTexture), size(inSize), pivot(inPivot)
+{
+}
+
 Image::Image(std::string inName) : configName(std::move(inName))
 {
     boost::property_tree::ptree imageAssetTree;

@@ -1,0 +1,14 @@
+{
+    "text": "Score:",
+    "font": "resurces/Font/Exo2Bold.ttf",
+    "fontSize": 30,
+    "fontColor": {
+        "r": 255,
+        "g": 253,
+        "b": 153
+    },
+    "position": {
+        "x": 10,
+        "y": 50
+    }
+}

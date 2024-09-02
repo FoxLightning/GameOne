@@ -23,6 +23,7 @@ class Enemy final : public GameBase::Entity
     static void PlayExplosionSound();
     static void PlayHitSound();
     double HP;
+    uint64_t reward{1};
 
     std::string configName;
 };

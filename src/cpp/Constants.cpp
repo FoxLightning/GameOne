@@ -54,5 +54,9 @@ namespace World
 {
 const char *const background = "resurces/Asset/World/BackgroundAsset.json";
 } // namespace World
+namespace UI
+{
+const char *const scoreWidget = "resurces/Asset/UI/ScoreWidget.json";
+}
 } // namespace Prototype
 } // namespace Const

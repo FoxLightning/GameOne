@@ -54,5 +54,9 @@ namespace World
 {
 extern const char *const background;
 } // namespace World
+namespace UI
+{
+extern const char *const scoreWidget;
+}
 } // namespace Prototype
 } // namespace Const

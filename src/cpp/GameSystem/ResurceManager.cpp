@@ -2,15 +2,19 @@
 #include "Constants.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Exceptions.h"
+#include "GameSystem/Font.h"
 #include "GameSystem/Texture.h"
 #include "SDL3/SDL_audio.h"
 #include "SDL3/SDL_error.h"
 #include "SDL3/SDL_init.h"
 #include "SDL3_image/SDL_image.h"
 #include "SDL3_mixer/SDL_mixer.h"
+#include "SDL3_ttf/SDL_ttf.h"
+#include <cstdint>
 #include <cstdlib>
 #include <format>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -22,6 +26,10 @@ ResurceManager::ResurceManager()
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
         throw CriticalException(std::format("SDL_image could not initialize! IMG_Error: {}", IMG_GetError()));
+    }
+    if (TTF_Init() == -1)
+    {
+        throw CriticalException(std::format("TTF could not initialize! TTF_Error: {}", TTF_GetError()));
     }
 
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
@@ -47,6 +55,24 @@ auto ResurceManager::GetTexture(const std::string &path) -> std::shared_ptr<Text
     auto textureToAdd = std::make_shared<Texture>(path);
     textureHolder[path] = textureToAdd;
     return textureToAdd;
+}
+
+auto ResurceManager::GetFont(const std::string &path, int32_t size) -> std::shared_ptr<Font>
+{
+    if (auto fontSizeMapItr = fontHolder.find(path); fontSizeMapItr != fontHolder.end())
+    {
+        if (auto font = fontSizeMapItr->second.find(size);
+            font != fontSizeMapItr->second.end() && !font->second.expired())
+        {
+            return font->second.lock();
+        }
+        fontSizeMapItr->second[size] = std::make_shared<Font>(path, size);
+    }
+    std::shared_ptr<Font> font = std::make_shared<Font>(path, size);
+    std::map<int32_t, std::weak_ptr<Font>> subMap;
+    subMap[size] = std::weak_ptr<Font>(font);
+    fontHolder[path] = subMap;
+    return font;
 }
 
 auto ResurceManager::GetAudio(const char *audioPath) -> Mix_Chunk *

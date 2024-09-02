@@ -12,6 +12,7 @@ class Image : IRendereble
 {
   public:
     Image(const std::string &inTexturePath, const Vector2D &inSize, const Vector2D &inPivot);
+    Image(const std::shared_ptr<Texture> &inTexture, const Vector2D &inSize, const Vector2D &inPivot);
     explicit Image(std::string name);
     Image(const Image &other) = default;
 
