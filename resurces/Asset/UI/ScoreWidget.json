@@ -1,6 +1,7 @@
 {
-    "text": "Score:",
-    "font": "resurces/Font/Exo2Bold.ttf",
+    "text": "score:",
+    "fontText": "resurces/Font/Exo2Bold.ttf",
+    "fontScore": "resurces/Font/FiraCodeBold.ttf",
     "fontSize": 30,
     "fontColor": {
         "r": 255,
@@ -8,7 +9,7 @@
         "b": 153
     },
     "position": {
-        "x": 10,
-        "y": 50
+        "x": 33,
+        "y": 15
     }
 }
