@@ -43,7 +43,7 @@ Renderer::Renderer()
             (static_cast<double>(resolution.y()) - (static_cast<double>(defaultResolution.y()) * viewScale)) / 2);
     }
 
-    window = SDL_CreateWindow("SDL Game Loop Example", resolution.x(), resolution.y(), 0);
+    window = SDL_CreateWindow("GameOne", resolution.x(), resolution.y(), 0);
     if (window == nullptr)
     {
         throw GameSystem::CriticalException(std::format("SDL_CreateWindow Error: {}", SDL_GetError()));
