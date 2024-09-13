@@ -22,6 +22,9 @@ class Enemy final : public GameBase::Entity
   private:
     static void PlayExplosionSound();
     static void PlayHitSound();
+
+    void Die();
+    void Suffer();
     double HP;
     uint64_t reward{1};
 

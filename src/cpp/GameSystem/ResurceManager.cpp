@@ -97,7 +97,7 @@ auto ResurceManager::LoadAudio(const char *const audioPath) -> Mix_Chunk *
 void ResurceManager::LoadSounds()
 {
     for (const char *const audioPath :
-         {Const::Sound::enemyHit, Const::Sound::enemyExplosion, Const::Sound::shipRocketLounch})
+         {Const::Sound::enemyHit, Const::Sound::enemyExplosion, Const::Sound::shipRocketLounch, Const::Sound::shitHit})
     {
         try
         {

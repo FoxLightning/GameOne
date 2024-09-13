@@ -76,20 +76,17 @@ void Enemy::CheckCollision(Bullet *inCollider)
 
     if (HP <= 0.)
     {
-        const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
-        currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(
-            GetPosition(), GetDirection(), GetMaxSpeed(), Const::Prototype::Animation::enemyExplosionAnimation);
-        SetWaitForDelete();
-        PlayHitSound();
-        PlayExplosionSound();
-        GameSystem::EventManager::BroadcastEnemyDeath(reward);
+        Die();
     }
     else
     {
-        PlayAnimation(Const::Prototype::Animation::enemyDamageAnimation);
-        GetCurrentAnimation()->BindOnAnimationFinished([this]() { StartIdleAnimation(); });
-        PlayHitSound();
+        Suffer();
     }
+}
+
+void Enemy::CheckCollision(PlayerShip * /*inCollider*/)
+{
+    Die();
 }
 
 void Enemy::PlayExplosionSound()
@@ -121,9 +118,22 @@ void Enemy::PlayHitSound()
     }
 }
 
-void Enemy::CheckCollision(PlayerShip * /*inCollider*/)
+void Enemy::Die()
 {
+    const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
+    currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(GetPosition(), GetDirection(), GetMaxSpeed(),
+                                                                 Const::Prototype::Animation::enemyExplosionAnimation);
     SetWaitForDelete();
+    PlayHitSound();
+    PlayExplosionSound();
+    GameSystem::EventManager::BroadcastEnemyDeath(reward);
+}
+
+void Enemy::Suffer()
+{
+    PlayAnimation(Const::Prototype::Animation::enemyDamageAnimation);
+    GetCurrentAnimation()->BindOnAnimationFinished([this]() { StartIdleAnimation(); });
+    PlayHitSound();
 }
 
 } // namespace Game

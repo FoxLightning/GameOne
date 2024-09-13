@@ -8,6 +8,7 @@
 #include "GameBase/GameWorld.h"
 #include "GameSystem/AppInstance.h"
 #include "GameSystem/Collider.h"
+#include "GameSystem/EventManager.h"
 #include "GameSystem/Exceptions.h"
 #include "GameSystem/PrototypeHolder.h"
 #include "GameSystem/ResurceManager.h"
@@ -15,6 +16,7 @@
 #include "Types.h"
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/property_tree/ptree_fwd.hpp"
+#include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -88,6 +90,17 @@ void PlayerShip::CheckCollision(GameSystem::Collider *inCollider)
     inCollider->CheckCollision(this);
 }
 
+void PlayerShip::CheckCollision(Enemy * /*inCollider*/)
+{
+    currentIntegrity--;
+    GameSystem::EventManager::BroadcastPlayerShipIntegrityChange(currentIntegrity);
+    PlayHitSound();
+    if (currentIntegrity < 0)
+    {
+        exit(0);
+    }
+}
+
 void PlayerShip::CheckCollision(BottomBorder *inCollider)
 {
     if (auto *collider = dynamic_cast<GameSystem::Collider *>(inCollider))
@@ -131,6 +144,19 @@ void PlayerShip::Update(double deltaTime)
     }
 }
 
+void PlayerShip::PlayHitSound()
+{
+    try
+    {
+        Mix_Chunk *shipHitSound = GameSystem::AppInstance::GetResurceManager()->GetAudio(Const::Sound::shitHit);
+        GameSystem::SoundManager::playSound(shipHitSound);
+    }
+    catch (GameSystem::InvalidDataException &e)
+    {
+        std::cerr << "Hit sound is not played\n";
+        std::cerr << e.what();
+    }
+}
 void PlayerShip::PullTrigger(bool isPoolingTrigger)
 {
     triggerPulled = isPoolingTrigger;

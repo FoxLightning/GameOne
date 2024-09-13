@@ -23,6 +23,12 @@ struct EnemyDeathDelegate
     std::function<void(uint64_t reward)> callback;
 };
 
+struct PlayerShipIntegrityDelegate
+{
+    std::weak_ptr<void> invoker;
+    std::function<void(uint64_t currentIntegrity)> callback;
+};
+
 class EventManager
 {
   public:
@@ -36,9 +42,14 @@ class EventManager
     static void UnsubscribeEnemyDeath(const std::weak_ptr<void> &invoker);
     static void BroadcastEnemyDeath(uint64_t reward);
 
+    static void SubscribePlayerShipIntegrityChange(const PlayerShipIntegrityDelegate &delegate);
+    static void UnsubscribePlayerShipIntegrityChange(const std::weak_ptr<void> &invoker);
+    static void BroadcastPlayerShipIntegrityChange(uint64_t currentIntegrity);
+
   private:
     static std::vector<InputActionDelegate> inputActionSubscribers;
     static std::vector<EnemyDeathDelegate> enemyDeathSubscribers;
+    static std::vector<PlayerShipIntegrityDelegate> playerShipIntegritySubscribers;
 };
 
 } // namespace GameSystem

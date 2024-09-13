@@ -17,6 +17,7 @@ const double bulletLifeTime = 10.;
 } // namespace System
 namespace Gameplay
 {
+const uint64_t maxIntegrity = 6;
 const double timeToSpawnEnemy = 3.;
 const int64_t waveNumber = 3;
 } // namespace Gameplay
@@ -25,6 +26,7 @@ namespace Sound
 const char *const shipRocketLounch = "resurces/sound/rocket_launch.wav";
 const char *const enemyHit = "resurces/sound/enemy_hit.wav";
 const char *const enemyExplosion = "resurces/sound/enemy_explosion.wav";
+const char *const shitHit = "resurces/sound/ShipDamage.wav";
 } // namespace Sound
 namespace AssetPaths
 {
@@ -57,6 +59,7 @@ const char *const background = "resurces/Asset/World/BackgroundAsset.json";
 namespace UI
 {
 const char *const scoreWidget = "resurces/Asset/UI/ScoreWidget.json";
-}
+const char *const integrityWidget = "resurces/Asset/UI/IntegrityWidget.json";
+} // namespace UI
 } // namespace Prototype
 } // namespace Const

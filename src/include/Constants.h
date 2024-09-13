@@ -17,6 +17,7 @@ extern const double bulletLifeTime;
 } // namespace System
 namespace Gameplay
 {
+extern const uint64_t maxIntegrity;
 extern const double timeToSpawnEnemy;
 extern const int64_t waveNumber;
 } // namespace Gameplay
@@ -25,6 +26,7 @@ namespace Sound
 extern const char *const shipRocketLounch;
 extern const char *const enemyHit;
 extern const char *const enemyExplosion;
+extern const char *const shitHit;
 } // namespace Sound
 namespace AssetPaths
 {
@@ -57,6 +59,7 @@ extern const char *const background;
 namespace UI
 {
 extern const char *const scoreWidget;
-}
+extern const char *const integrityWidget;
+} // namespace UI
 } // namespace Prototype
 } // namespace Const
