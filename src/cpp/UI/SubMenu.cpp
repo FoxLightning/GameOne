@@ -3,6 +3,7 @@
 #include "GameSystem/Image.h"
 #include "GameSystem/InputManager.h"
 #include "GameSystem/TextBlock.h"
+#include "UI/ButtonActionHolder.h"
 #include "UI/Canvas.h"
 #include "UI/CanvasSlot.h"
 #include "UI/Menu.h"
@@ -40,10 +41,11 @@ SubMenu::SubMenu(Menu *inParent, std::string inConfigName)
     double offset = 0.;
     for (const auto &option : subViewTree.get_child("buttonData"))
     {
-        const Vector2D pos{0, offset};
-        const Vector2D piv{0., 0.};
-        auto buttonToAdd =
-            std::make_shared<MenuButton>(option.second.get<std::string>("buttonName"), buttonStyle, pos, piv, [] {});
+        const Vector2D pos{0., offset};
+        const Vector2D piv{0.5, 0.5};
+        auto buttonToAdd = std::make_shared<MenuButton>(
+            option.second.get<std::string>("buttonName"), buttonStyle, pos, piv,
+            ButtonActionHolder::GetAction(option.second.get<std::string>("actionId"), this));
         AddChild(std::dynamic_pointer_cast<UI::CanvasSlot>(buttonToAdd));
         buttonList.push_back(buttonToAdd);
         offset += (buttonStyle.size + padding);
@@ -122,6 +124,11 @@ void SubMenu::HandleInput(GameSystem::EventType eventType, GameSystem::ActionTyp
     {
         PressButton();
     }
+}
+
+void SubMenu::ResumeFromPause()
+{
+    parent->Pop();
 }
 
 void SubMenu::PressButton()

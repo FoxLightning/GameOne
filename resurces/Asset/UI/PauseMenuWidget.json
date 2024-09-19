@@ -2,8 +2,8 @@
     "background": "resurces/textures/tmp.jpg",
     "padding": 10,
     "position": {
-        "x": 500,
-        "y": 200
+        "x": 640,
+        "y": 360
     },
     "size": {
         "x": 300,
@@ -12,8 +12,8 @@
     "buttonStyle": "resurces/Asset/UI/MenuButtonStyle.json",
     "buttonData": [
         {
-            "buttonName": "Continue",
-            "actionId": "Continue"
+            "buttonName": "Resume",
+            "actionId": "resume"
         },
         {
             "buttonName": "Options",
@@ -21,7 +21,7 @@
         },
         {
             "buttonName": "Exit",
-            "actionId": "Exit"
+            "actionId": "exitGame"
         }
     ]
 }
