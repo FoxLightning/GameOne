@@ -12,16 +12,16 @@
     "buttonStyle": "resurces/Asset/UI/MenuButtonStyle.json",
     "buttonData": [
         {
-            "buttonName": "Resume",
+            "buttonName": "One",
             "actionId": "resume"
         },
         {
-            "buttonName": "Options",
+            "buttonName": "Two",
             "actionId": "goTo",
             "destination": "resurces/Asset/UI/OptionsMenuWidget.json"
         },
         {
-            "buttonName": "Exit",
+            "buttonName": "Three",
             "actionId": "exitGame"
         }
     ]

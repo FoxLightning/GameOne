@@ -13,6 +13,7 @@
 #include <cassert>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <memory>
 #include <string>
 #include <utility>
@@ -43,9 +44,20 @@ SubMenu::SubMenu(Menu *inParent, std::string inConfigName)
     {
         const Vector2D pos{0., offset};
         const Vector2D piv{0.5, 0.5};
-        auto buttonToAdd = std::make_shared<MenuButton>(
-            option.second.get<std::string>("buttonName"), buttonStyle, pos, piv,
-            ButtonActionHolder::GetAction(option.second.get<std::string>("actionId"), this));
+
+        std::function<void()> buttonAction;
+        auto actionName = option.second.get<std::string>("actionId");
+        if (actionName == "goTo")
+        {
+            buttonAction =
+                ButtonActionHolder::GetAction(actionName, this, option.second.get<std::string>("destination"));
+        }
+        else
+        {
+            buttonAction = ButtonActionHolder::GetAction(actionName, this);
+        }
+        auto buttonToAdd = std::make_shared<MenuButton>(option.second.get<std::string>("buttonName"), buttonStyle, pos,
+                                                        piv, buttonAction);
         AddChild(std::dynamic_pointer_cast<UI::CanvasSlot>(buttonToAdd));
         buttonList.push_back(buttonToAdd);
         offset += (buttonStyle.size + padding);
@@ -129,6 +141,11 @@ void SubMenu::HandleInput(GameSystem::EventType eventType, GameSystem::ActionTyp
 void SubMenu::ResumeFromPause()
 {
     parent->Pop();
+}
+
+void SubMenu::PushMenu(const std::string &configName)
+{
+    parent->Push<UI::SubMenu>(parent, configName);
 }
 
 void SubMenu::PressButton()

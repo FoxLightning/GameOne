@@ -23,6 +23,7 @@ class SubMenu : public Canvas, public std::enable_shared_from_this<SubMenu>
     void HandleInput(GameSystem::EventType eventType, GameSystem::ActionType actionType);
 
     void ResumeFromPause();
+    void PushMenu(const std::string &configName);
 
   private:
     std::string configName;
