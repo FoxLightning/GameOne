@@ -25,20 +25,20 @@ ResurceManager::ResurceManager()
 {
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
-        throw CriticalException(std::format("SDL_image could not initialize! IMG_Error: {}", IMG_GetError()));
+        throw CriticalException(std::format("SDL_image could not initialize! IMG_Error: {}", SDL_GetError()));
     }
-    if (TTF_Init() == -1)
+    if (!TTF_Init())
     {
-        throw CriticalException(std::format("TTF could not initialize! TTF_Error: {}", TTF_GetError()));
+        throw CriticalException(std::format("TTF could not initialize! TTF_Error: {}", SDL_GetError()));
     }
 
-    if (SDL_Init(SDL_INIT_AUDIO) < 0)
+    if (!SDL_Init(SDL_INIT_AUDIO))
     {
         throw GameSystem::CriticalException(std::format("SDL_CreateRenderer Error: {}", SDL_GetError()));
     }
 
     auto AudioSpec = SDL_AudioSpec{.format = SDL_AUDIO_U8, .channels = 2, .freq = 44100}; // NOLINT
-    if (Mix_OpenAudio(0, &AudioSpec) < 0)
+    if (!Mix_OpenAudio(0, &AudioSpec))
     {
         throw GameSystem::CriticalException(std::format("SDL_CreateRenderer Error: {}", SDL_GetError()));
     }

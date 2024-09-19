@@ -1,0 +1,27 @@
+{
+    "background": "resurces/textures/tmp.jpg",
+    "padding": 10,
+    "position": {
+        "x": 500,
+        "y": 200
+    },
+    "size": {
+        "x": 300,
+        "y": 500
+    },
+    "buttonStyle": "resurces/Asset/UI/MenuButtonStyle.json",
+    "buttonData": [
+        {
+            "buttonName": "Continue",
+            "actionId": "Continue"
+        },
+        {
+            "buttonName": "Options",
+            "actionId": "PushOptions"
+        },
+        {
+            "buttonName": "Exit",
+            "actionId": "Exit"
+        }
+    ]
+}

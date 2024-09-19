@@ -16,6 +16,7 @@
 #include "Types.h"
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/property_tree/ptree_fwd.hpp"
+#include <cassert>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -164,17 +165,17 @@ void PlayerShip::PullTrigger(bool isPoolingTrigger)
 
 void PlayerShip::SpawnMissle()
 {
-    if (const std::shared_ptr<GameBase::GameState> currentState = GameSystem::AppInstance::GetCurrentAppState())
+    const std::shared_ptr<GameBase::GameState> currentState =
+        GameSystem::AppInstance::GetTopState<GameBase::GameState>();
+    assert(currentState);
+
+    if (const std::shared_ptr<GameBase::GameWorld> gameWorld = currentState->GetGameWorld())
     {
-        if (const std::shared_ptr<GameBase::GameWorld> gameWorld = currentState->GetGameWorld())
-        {
-            const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder =
-                GameSystem::AppInstance::GetPrototypeHolder();
-            const std::shared_ptr<Game::Bullet> bullet =
-                prototypeHolder->GetBullet(Const::Prototype::Entity::missleEntity);
-            bullet->SetPosition(GetPosition());
-            gameWorld->AddEntity(bullet);
-        }
+        const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder =
+            GameSystem::AppInstance::GetPrototypeHolder();
+        const std::shared_ptr<Game::Bullet> bullet = prototypeHolder->GetBullet(Const::Prototype::Entity::missleEntity);
+        bullet->SetPosition(GetPosition());
+        gameWorld->AddEntity(bullet);
     }
 }
 

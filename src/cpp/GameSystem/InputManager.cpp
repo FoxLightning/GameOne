@@ -59,7 +59,7 @@ void InputManager::ProcessInput()
             }
             if (const EventType eventType = GetEventTypeFromSDLEvent(event.type); eventType != EventType::None)
             {
-                EventManager::BroadcastInput(eventType, mapping.actionType);
+                EventManager::BroadcastInput(eventType, mapping.actionType, currentInputContext);
             }
         }
         if (event.type == SDL_EVENT_QUIT)
@@ -67,6 +67,11 @@ void InputManager::ProcessInput()
             AppInstance::Stop();
         }
     }
+}
+
+void InputManager::SetCurrentInputContext(InputContext inputContext)
+{
+    currentInputContext = inputContext;
 }
 
 auto InputManager::GetActionFromName(const std::string &name) -> ActionType

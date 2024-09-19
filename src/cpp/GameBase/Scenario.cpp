@@ -23,7 +23,9 @@ namespace
 {
 void SpawnEnemies(const std::vector<Vector2D> &positions)
 {
-    const std::shared_ptr<GameState> currentState = GameSystem::AppInstance::GetCurrentAppState();
+    const std::shared_ptr<GameBase::GameState> currentState =
+        GameSystem::AppInstance::GetTopState<GameBase::GameState>();
+    assert(currentState);
     const std::shared_ptr<GameSystem::PrototypeHolder> prototypeHolder = GameSystem::AppInstance::GetPrototypeHolder();
     if (!prototypeHolder)
     {

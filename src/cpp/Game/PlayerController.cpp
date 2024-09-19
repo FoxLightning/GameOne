@@ -10,6 +10,7 @@ namespace Game
 void PlayerController::SubscribeInput()
 {
     GameSystem::EventManager::SubscribeInput(GameSystem::InputActionDelegate{
+        .inputContext = GameSystem::InputContext::game,
         .invoker = weak_from_this(),
         .callback = [this](GameSystem::EventType eventType, GameSystem::ActionType actionType) {
             OnActionEvent(eventType, actionType);

@@ -23,10 +23,14 @@ void EventManager::UnsubscribeInput(const std::weak_ptr<void> &invoker)
     inputActionSubscribers.erase(range.begin(), range.end());
 }
 
-void EventManager::BroadcastInput(EventType eventyType, ActionType actionType)
+void EventManager::BroadcastInput(EventType eventyType, ActionType actionType, InputContext currentContext)
 {
     for (const auto &subscriber : inputActionSubscribers)
     {
+        if (currentContext != subscriber.inputContext)
+        {
+            continue;
+        }
         if (auto _ = subscriber.invoker.lock())
         {
             subscriber.callback(eventyType, actionType);

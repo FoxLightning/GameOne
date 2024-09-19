@@ -1,0 +1,16 @@
+{
+    "font": "resurces/Font/Exo2Bold.ttf",
+    "size": 50,
+    "hoverColor": {
+        "r": 255,
+        "g": 0,
+        "b": 0,
+        "a": 255
+    },
+    "defaultColor": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 255
+    }
+}

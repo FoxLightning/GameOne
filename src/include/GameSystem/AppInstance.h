@@ -1,10 +1,6 @@
 #pragma once
 #include <memory>
-
-namespace GameBase
-{
-class GameState;
-}
+#include <vector>
 
 namespace GameSystem
 {
@@ -14,6 +10,7 @@ class InputManager;
 class ResurceManager;
 class SoundManager;
 class PrototypeHolder;
+class BaseAppState;
 
 class IUpdateble
 {
@@ -31,8 +28,19 @@ class AppInstance
 
     void Start();
     static void Stop();
+    template <typename T, typename... Args>
+    static void PushState(Args... args)
+    {
+        appStatesToPush.push_back(std::dynamic_pointer_cast<BaseAppState>(std::make_shared<T>(args...)));
+    }
+    template <typename T>
+    static auto GetTopState() -> std::shared_ptr<T>
+    {
+        return std::move(std::dynamic_pointer_cast<T>(appStateStack.back()));
+    }
+    static void PopState();
 
-    static auto GetCurrentAppState() -> std::shared_ptr<GameBase::GameState>;
+    static auto GetCurrentAppState() -> std::shared_ptr<BaseAppState>;
 
     static auto GetConfigManager() -> std::shared_ptr<ConfigManager>;
     static auto GetInputManager() -> std::shared_ptr<InputManager>;
@@ -42,7 +50,9 @@ class AppInstance
     static auto GetPrototypeHolder() -> std::shared_ptr<PrototypeHolder>;
 
   private:
-    static std::shared_ptr<GameBase::GameState> currentAppState;
+    static std::vector<std::shared_ptr<BaseAppState>> appStateStack;
+    static std::vector<std::shared_ptr<BaseAppState>> appStatesToPush;
+    static int64_t appStatesToPop;
 
     static std::shared_ptr<ConfigManager> configManagerInstance;
     static std::shared_ptr<Renderer> rendererInstance;
@@ -52,6 +62,11 @@ class AppInstance
     static std::shared_ptr<PrototypeHolder> prototypeHolderInstance;
 
     static bool isRunning;
+
+    static void UpdateStates(const double &deltaTime);
+    static void DrawStates();
+    static void AddPendingStates();
+    static void RemovePendingStates();
 };
 
 }; // namespace GameSystem

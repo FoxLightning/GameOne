@@ -28,6 +28,12 @@ void TextBlock::SetText(const std::string &inText)
     }
 }
 
+void TextBlock::SetColor(LinearColor inColor)
+{
+    color = inColor;
+    GenerateTextImage(text);
+}
+
 void TextBlock::Draw(std::shared_ptr<Renderer> inRenderer)
 {
     if (textImage)

@@ -8,7 +8,7 @@ namespace GameBase
 {
 class BackgroundLayer;
 
-class Background : GameSystem::IUpdateble, GameSystem::IRendereble
+class Background : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
   public:
     explicit Background(const std::string &configName, const Vector2D &size);

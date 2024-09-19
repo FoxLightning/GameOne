@@ -6,6 +6,7 @@ namespace Const
 {
 namespace Color
 {
+extern const LinearColor White;
 extern const LinearColor Black;
 extern const LinearColor Red;
 extern const LinearColor Green;

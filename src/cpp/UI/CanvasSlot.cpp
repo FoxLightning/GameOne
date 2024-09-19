@@ -13,4 +13,9 @@ CanvasSlot::CanvasSlot(Vector2D inPosition) : position(inPosition)
     return position;
 }
 
+void CanvasSlot::SetPosition(const Vector2D &inPosition)
+{
+    position = inPosition;
+}
+
 } // namespace UI

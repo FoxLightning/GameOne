@@ -7,6 +7,7 @@ project(GameOne VERSION 0.1)
 
 if (APPLE)
     enable_language(OBJC)
+    add_compile_options(-Wno-deprecated-declarations)
 endif()
 
 add_subdirectory(lib/SDL)

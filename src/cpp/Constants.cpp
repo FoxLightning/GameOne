@@ -6,8 +6,9 @@ namespace Const
 {
 namespace Color
 {
+const LinearColor White = {.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
 const LinearColor Black = {.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
-const LinearColor Red = {.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
+const LinearColor Red = {.r = 0xFF, .g = 0x00, .b = 0x00, .a = 0xFF};
 const LinearColor Green = {.r = 0x00, .g = 0xFF, .b = 0x00, .a = 0xFF};
 const LinearColor Blue = {.r = 0x00, .g = 0x00, .b = 0xFF, .a = 0xFF};
 } // namespace Color

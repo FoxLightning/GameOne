@@ -7,12 +7,13 @@ namespace GameSystem
 class Image;
 class Font;
 
-class TextBlock : IRendereble
+class TextBlock : public IRendereble
 {
   public:
     TextBlock(std::string inText, const std::string &fontName, int32_t size, const LinearColor &color,
               const Vector2D &inPos, const Vector2D &inPivot);
     void SetText(const std::string &inText);
+    void SetColor(LinearColor inColor);
     void Draw(std::shared_ptr<Renderer> inRenderer) override;
 
   private:

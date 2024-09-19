@@ -21,7 +21,7 @@ namespace GameSystem
 
 Renderer::Renderer()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    if (!SDL_Init(SDL_INIT_VIDEO))
     {
         throw GameSystem::CriticalException(std::format("SDL_Init Error: {}", SDL_GetError()));
     }

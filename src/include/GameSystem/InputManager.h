@@ -10,6 +10,13 @@ class PlayerController;
 
 namespace GameSystem
 {
+enum class InputContext : uint8_t
+{
+    none,
+    game,
+    pause,
+};
+
 enum class ActionType : uint8_t
 {
     MainAction,
@@ -47,10 +54,13 @@ class InputManager
   public:
     InputManager();
     void ProcessInput();
+    void SetCurrentInputContext(InputContext inputContext);
 
   private:
     static auto GetActionFromName(const std::string &name) -> ActionType;
 
     std::vector<Mapping> mappingList;
+
+    InputContext currentInputContext = InputContext::none;
 };
 }; // namespace GameSystem

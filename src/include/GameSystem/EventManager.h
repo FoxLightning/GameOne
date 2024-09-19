@@ -10,9 +10,9 @@ class Enemy;
 
 namespace GameSystem
 {
-
 struct InputActionDelegate
 {
+    InputContext inputContext;
     std::weak_ptr<void> invoker;
     std::function<void(EventType, ActionType)> callback;
 };
@@ -36,7 +36,7 @@ class EventManager
 
     static void SubscribeInput(const InputActionDelegate &delegate);
     static void UnsubscribeInput(const std::weak_ptr<void> &invoker);
-    static void BroadcastInput(EventType eventyType, ActionType actionType);
+    static void BroadcastInput(EventType eventyType, ActionType actionType, InputContext currentContext);
 
     static void SubscribeEnemyDeath(const EnemyDeathDelegate &delegate);
     static void UnsubscribeEnemyDeath(const std::weak_ptr<void> &invoker);

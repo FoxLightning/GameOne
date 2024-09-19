@@ -8,7 +8,7 @@ namespace GameSystem
 {
 class Texture;
 
-class Image : IRendereble
+class Image : public IRendereble
 {
   public:
     Image(const std::string &inTexturePath, const Vector2D &inSize, const Vector2D &inPivot);

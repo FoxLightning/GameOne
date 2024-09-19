@@ -3,15 +3,10 @@
 #include "GameSystem/Image.h"
 #include "GameSystem/Renderer.h"
 #include <memory>
-#include <string>
 
-namespace GameSystem
-{
-
-}
 namespace GameBase
 {
-class BackgroundLayer : GameSystem::IUpdateble, GameSystem::IRendereble
+class BackgroundLayer : public GameSystem::IUpdateble, public GameSystem::IRendereble
 {
   public:
     explicit BackgroundLayer(double inSpeed, const Vector2D &inSize,

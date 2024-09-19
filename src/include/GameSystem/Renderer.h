@@ -1,7 +1,6 @@
 #pragma once
 #include "Types.h"
 #include <memory>
-#include <stack>
 
 struct SDL_Window;
 struct SDL_Renderer;

@@ -18,6 +18,7 @@
 #include "Types.h"
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/property_tree/ptree_fwd.hpp"
+#include <cassert>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -120,7 +121,9 @@ void Enemy::PlayHitSound()
 
 void Enemy::Die()
 {
-    const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
+    const std::shared_ptr<GameBase::GameState> currentGameState =
+        GameSystem::AppInstance::GetTopState<GameBase::GameState>();
+    assert(currentGameState);
     currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(GetPosition(), GetDirection(), GetMaxSpeed(),
                                                                  Const::Prototype::Animation::enemyExplosionAnimation);
     SetWaitForDelete();

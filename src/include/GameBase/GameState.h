@@ -1,19 +1,20 @@
 #pragma once
-#include "GameSystem/AppInstance.h"
-#include "GameSystem/Renderer.h"
+#include "GameSystem/BaseAppState.h"
+#include "GameSystem/InputManager.h"
 #include <memory>
 
 namespace UI
 {
 class HUD;
-}
+class Menu;
+} // namespace UI
 
 namespace GameBase
 {
 class GameWorld;
 class Scenario;
 
-class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
+class GameState : public GameSystem::BaseAppState
 {
   public:
     GameState();
@@ -22,6 +23,7 @@ class GameState : public GameSystem::IUpdateble, public GameSystem::IRendereble
 
     void Update(double deltaTime) override;
     void Draw(std::shared_ptr<GameSystem::Renderer> inRenderer) override;
+    void OnActionEvent(GameSystem::EventType eventType, GameSystem::ActionType actionType);
 
   private:
     std::shared_ptr<GameWorld> gameWorld;

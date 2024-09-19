@@ -11,6 +11,7 @@
 #include "Types.h"
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/property_tree/ptree_fwd.hpp"
+#include <cassert>
 #include <memory>
 #include <string>
 #include <utility>
@@ -56,7 +57,9 @@ void Bullet::CheckCollision(GameSystem::Collider *inCollider)
 
 void Bullet::CheckCollision(Enemy * /*inCollider*/)
 {
-    const std::shared_ptr<GameBase::GameState> &currentGameState = GameSystem::AppInstance::GetCurrentAppState();
+    const std::shared_ptr<GameBase::GameState> currentGameState =
+        GameSystem::AppInstance::GetTopState<GameBase::GameState>();
+    assert(currentGameState);
     currentGameState->GetGameWorld()->AddEntity<Game::Explosion>(GetPosition(), Vector2D(0., 0.), 0.,
                                                                  Const::Prototype::Animation::missleExplosionAnimation);
     SetWaitForDelete();
