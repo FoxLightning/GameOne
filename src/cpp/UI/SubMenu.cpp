@@ -14,6 +14,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <utility>
@@ -56,8 +57,12 @@ SubMenu::SubMenu(Menu *inParent, std::string inConfigName)
         {
             buttonAction = ButtonActionHolder::GetAction(actionName, this);
         }
-        auto buttonToAdd = std::make_shared<MenuButton>(option.second.get<std::string>("buttonName"), buttonStyle, pos,
-                                                        piv, buttonAction);
+        const auto buttonToAdd =
+            std::make_shared<MenuButton>(option.second.get<std::string>("buttonName"), buttonStyle, pos, piv);
+
+        const std::map<GameSystem::ActionType, std::function<void()>> actionMap{
+            {GameSystem::ActionType::MainAction, buttonAction}};
+        buttonToAdd->InitActions(actionMap);
         AddChild(std::dynamic_pointer_cast<UI::CanvasSlot>(buttonToAdd));
         buttonList.push_back(buttonToAdd);
         offset += (buttonStyle.size + padding);
@@ -132,10 +137,6 @@ void SubMenu::HandleInput(GameSystem::EventType eventType, GameSystem::ActionTyp
             HoverButton(hoveredButtonIndex - 1);
         }
     }
-    if (actionType == GameSystem::ActionType::MainAction && eventType == GameSystem::EventType::Stop)
-    {
-        PressButton();
-    }
 }
 
 void SubMenu::ResumeFromPause()
@@ -146,11 +147,6 @@ void SubMenu::ResumeFromPause()
 void SubMenu::PushMenu(const std::string &configName)
 {
     parent->Push<UI::SubMenu>(parent, configName);
-}
-
-void SubMenu::PressButton()
-{
-    buttonList[hoveredButtonIndex]->Execute();
 }
 
 } // namespace UI
